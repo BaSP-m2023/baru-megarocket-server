@@ -1,4 +1,4 @@
 const arrowFunc = (array) => {
- const arrayPusheado = array.push('ejemplo')
- return arrayPusheado
-}
+  const arrayPusheado = array.pop('ejemplo')
+  return arrayPusheado
+ }
