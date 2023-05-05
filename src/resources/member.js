@@ -13,5 +13,13 @@ membersRouter.get('/:id', (req, res) => {
 });
 
 
-
 module.exports = membersRouter;
+// ------------------------------------------------------------------------------
+const fs = require('fs');
+membersRouter.delete('/:id' , (req, res) => {
+  const memberId = req.id;
+  const filteredMembers = members.filter(member => member.id.toString() !== memberId);
+  fs.writeFile('./src/data/member.json', JSON.stringify(filteredMembers, null, 2), err => {
+    (err) ? res.send('Error!. Member cannot be deleted') : res.send('Member deleted');
+  } )
+});
