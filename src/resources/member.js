@@ -18,4 +18,22 @@ membersRouter.get('/:id', (req, res) => {
   console.log(foundMember);
 });
 
+membersRouter.post('/post', (req, res) => {
+  const newMember = req.body;
+  members.push(newMember);
+  console.log(req.body);
+  fs.writeFile(
+    'src/data/member.json',
+    JSON.stringify(members, null, 2),
+    (error) => {
+      if (error) {
+        res.send('User cant be created, Error!');
+      } else {
+        res.send('User created!');
+      }
+    }
+  );
+  console.log(members);
+});
+
 module.exports = membersRouter;
