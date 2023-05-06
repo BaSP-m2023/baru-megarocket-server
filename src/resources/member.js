@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 
 const membersRouter = express.Router();
 
@@ -12,13 +13,28 @@ membersRouter.get('/:id', (req, res) => {
   return foundMember ? res.send(foundMember) : res.send('Member not found');
 });
 
-module.exports = membersRouter;
-// ------------------------------------------------------------------------------
-/* const fs = require('fs');
-membersRouter.delete('/:id' , (req, res) => {
+membersRouter.post('/', (req, res) => {
+  const newMember = req.body;
+  members.push(newMember);
+  fs.writeFile('src/data/member.json', JSON.stringify(members, null, 2), (err) => {
+    if (err) {
+      res.send('Error!: member cannot be created');
+    } else {
+      res.send('Member created');
+    }
+  });
+});
+
+membersRouter.delete('/:id', (req, res) => {
   const memberId = req.id;
-  const filteredMembers = members.filter(member => member.id.toString() !== memberId);
-  fs.writeFile('./src/data/member.json', JSON.stringify(filteredMembers, null, 2), err => {
-    (err) ? res.send('Error!. Member cannot be deleted') : res.send('Member deleted');
-  } )
-}); */
+  const filteredMembers = members.filter((member) => member.id.toString() !== memberId);
+  fs.writeFile('./src/data/member.json', JSON.stringify(filteredMembers, null, 2), (err) => {
+    if (err) {
+      res.send('Error!. Member cannot be deleted');
+    } else {
+      res.send('Member deleted');
+    }
+  });
+});
+
+module.exports = membersRouter;
