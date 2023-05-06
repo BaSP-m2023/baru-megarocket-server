@@ -38,4 +38,34 @@ membersRouter.delete('/:id', (req, res) => {
 	});
 });
 
+membersRouter.put('/:id', (req, res) => {
+  const memberId = req.params.id;
+  const foundMember = members.find((member) => member.id.toString() === memberId);
+  if (foundMember) {
+    const newMemb = req.body;
+    members.forEach((member, index) => {
+      if (member.id.toString() === memberId) {
+        members[index] = {
+          ...member,
+          email: newMemb.email ? newMemb.email : member.email,
+          last_name: newMemb.last_name ? newMemb.last_name : member.last_name,
+          name: newMemb.name ? newMemb.name : member.name,
+          password: newMemb.password ? newMemb.password : member.password,
+          phone: newMemb.phone ? newMemb.phone : member.phone,
+          subscription: newMemb.subscription ? newMemb.subscription : member.subscription,
+        };
+      }
+    });
+    fs.writeFile('./src/data/member.json', JSON.stringify(members, null, 2), (err) => {
+      if (err) {
+        res.send('Error');
+      } else {
+        res.send('Successfully edited!');
+      }
+    });
+  } else {
+    res.send('Member not found');
+  }
+});
+
 module.exports = membersRouter;
