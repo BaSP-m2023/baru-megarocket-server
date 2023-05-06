@@ -1,15 +1,15 @@
 const express = require('express');
 
-const router = express.Router();
+const routerClass = express.Router();
 
 const classes = require('../data/class.json');
 
-router.get('/all', (req, res) => res.send(classes));
+routerClass.get('/all', (req, res) => res.send(classes));
 
-router.delete('/delete/:id', (req, res) => {
-  const found = classes.some((element) => element.id === parseInt(req.params.id, 10));
+routerClass.delete('/delete/:id', (req, res) => {
+  const foundClass = classes.some((element) => element.id === parseInt(req.params.id, 10));
 
-  if (found) {
+  if (foundClass) {
     res.send({
       msg: 'Class deleted',
       class: classes.filter((element) => element.id === parseInt(req.params.id, 10)),
@@ -20,4 +20,4 @@ router.delete('/delete/:id', (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = routerClass;
