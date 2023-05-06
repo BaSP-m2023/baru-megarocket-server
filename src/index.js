@@ -18,16 +18,16 @@ app.use('/member', membersRouter);
 app.use('/admins', adminsRouter);
 
 app.get('/', (req, res) => {
-	res.send('Hello World!');
+  res.send('Hello World!');
 });
 
 app.get('/admins', (req, res) => {
-	res.status(200).json({
-		data: admins,
-	});
+  res.status(200).json({
+    data: admins,
+  });
 });
 
 app.listen(port, () => {
-	// eslint-disable-next-line no-console
-	console.log(`Example app listening on port ${port}`);
+  // eslint-disable-next-line no-console
+  console.log(`Example app listening on port ${port}`);
 });
