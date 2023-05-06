@@ -8,18 +8,17 @@ membersRouter.get('/', (req, res) => res.send(members));
 
 membersRouter.get('/:id', (req, res) => {
   const memberId = req.params.id;
-  const foundMember = members.find(member => member.id.toString() === memberId);
-  (foundMember) ? res.send(foundMember) : res.send('Member not found');
+  const foundMember = members.find((member) => member.id.toString() === memberId);
+  return foundMember ? res.send(foundMember) : res.send('Member not found');
 });
-
 
 module.exports = membersRouter;
 // ------------------------------------------------------------------------------
-const fs = require('fs');
+/* const fs = require('fs');
 membersRouter.delete('/:id' , (req, res) => {
   const memberId = req.id;
   const filteredMembers = members.filter(member => member.id.toString() !== memberId);
   fs.writeFile('./src/data/member.json', JSON.stringify(filteredMembers, null, 2), err => {
     (err) ? res.send('Error!. Member cannot be deleted') : res.send('Member deleted');
   } )
-});
+}); */
