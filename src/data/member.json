@@ -268,5 +268,13 @@
     "subscription": "only_classes",
     "email": "klittledyket@guardian.co.uk",
     "password": "ci57Id"
+  },
+  {
+    "id": 31,
+    "first_name": "Breanne",
+    "last_name": "Kynvin",
+    "subscription": "premium",
+    "email": "bkynvint@umn.edu",
+    "password": "kAqJ7Y3QMb"
   }
 ]
