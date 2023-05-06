@@ -1,0 +1,91 @@
+[
+	{
+		"id":1,
+		"activity":"crossfit",
+		"trainer":"Lauren",
+		"day":"Friday",
+		"time":"18:00",
+		"capacity":6
+	},
+
+	{
+		"id":2,
+		"activity":"weightlifting",
+		"trainer":"Doyle",
+		"day":"Friday",
+		"time":"11:45",
+		"capacity":17
+	},
+
+	{
+		"id":3,
+		"activity":"functional",
+		"trainer":"Ann",
+		"day":"Wednesday",
+		"time":"17:30",
+		"capacity":23
+	},
+
+	{
+		"id":4,
+		"activity":"weightlifting",
+		"trainer":"Doyle",
+		"day":"Wednesday",
+		"time":"12:30",
+		"capacity":21
+	},
+
+	{
+		"id":5,
+		"activity":"boxing",
+		"trainer":"Jose",
+		"day":"Thursday",
+		"time":"13:00",
+		"capacity":24
+	},
+
+	{
+		"id":6,
+		"activity":"boxing",
+		"trainer":"Jose",
+		"day":"Wednesday",
+		"time":"11:00",
+		"capacity":25
+	},
+	
+	{
+		"id":7,
+		"activity":"weightlifting",
+		"trainer":"Doyle",
+		"day":"Thursday",
+		"time":"17:00",
+		"capacity":25
+	},
+
+	{
+		"id":8,
+		"activity":"spinning",
+		"trainer":"Merissa",
+		"day":"Saturday",
+		"time":"9:00",
+		"capacity":19
+	},
+
+	{
+		"id":9,
+		"activity":"spinning",
+		"trainer":"Merissa",
+		"day":"Monday",
+		"time":"10:00",
+		"capacity":15
+	},
+
+	{
+		"id":10,
+		"activity":"spinning",
+		"trainer":"Merissa",
+		"day":"Tuesday",
+		"time":"21:30",
+		"capacity":9
+	}
+]
