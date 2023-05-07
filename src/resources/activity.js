@@ -1,11 +1,21 @@
-const express = require('express')
+const express = require('express');
 
-const activity = require('../data/activity.json')
-const activityRouter = express.router()
+const activities = require('../data/activity.json');
 
+const router = express.Router();
 
-activityRouter.get('/', (req, res) => {
-    res.send(activity)
+router.get('/', (req, res) => {
+  res.send(activities);
 });
 
-module.exports = activityRouter
+router.get('/:id', (req, res) => {
+  const activityId = req.params.id;
+  const foundActivity = activities.find((activity) => activity.id.toString() === activityId);
+  if (foundActivity) {
+    res.send(foundActivity);
+  } else {
+    res.send('Activity not found!');
+  }
+});
+
+module.exports = router;
