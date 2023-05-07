@@ -1,10 +1,12 @@
 const express = require('express');
 
+const fs = require('fs');
+
 const admins = require('../data/admins.json');
 
-const router = express.Router();
+const adminRouter = express.Router();
 
-router.get('/:id', (req, res) => {
+adminRouter.get('/:id', (req, res) => {
   const adminId = req.params.id;
   const foundAdmin = admins.find((admin) => admin.id.toString() === adminId);
   if (foundAdmin) {
@@ -14,4 +16,16 @@ router.get('/:id', (req, res) => {
   }
 });
 
-module.exports = router;
+adminRouter.delete('/:id', (req, res) => {
+  const adminId = req.params.id;
+  const filterAdmins = admins.filter((admin) => admin.id.toString() !== adminId);
+  fs.writeFile('./src/data/admins.json', JSON.stringify(filterAdmins, null, 2), (err) => {
+    if (err) {
+      res.send('Error! Admin not be deleted!');
+    } else {
+      res.send('Admin deleted!');
+    }
+  });
+});
+
+module.exports = adminRouter;
