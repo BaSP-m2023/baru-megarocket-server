@@ -7,6 +7,7 @@ const admins = require('./data/admins.json');
 
 const membersRouter = require('./resources/member');
 const superAdminRouter = require('./resources/super-admins');
+const classRouter = require('./resources/class');
 const trainersRouter = require('./resources/trainer');
 
 const adminsRouter = require('./resources/admins');
@@ -20,6 +21,7 @@ app.use('/member', membersRouter);
 app.use('/super-admins', superAdminRouter);
 app.use('/trainer', trainersRouter);
 app.use('/admins', adminsRouter);
+app.use('/class', classRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
