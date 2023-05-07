@@ -4,15 +4,17 @@ import cors from 'cors';
 
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
-
+const activityRouter = require ('./resources/activity')
 const member = require('./data/member.json')
 const membersRouter = require('./resources/member');
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
 app.use('/member', membersRouter);
+
+app.use('./activity', activityRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -28,3 +30,4 @@ app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Example app listening on port ${port}`);
 });
+
