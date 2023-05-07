@@ -21,11 +21,11 @@ superAdminRouter.delete('/:id', (req, res) => {
     const newSuperAdmins = superAdmins.filter(
       (superAdmin) => superAdmin.id.toString() !== req.params.id,
     );
-    fs.writeFile('../data/super-admins.json', JSON.stringify(newSuperAdmins, null, 2), (err) => {
-      if (!err) {
-        res.status(400).json({ msg: 'Error' });
+    fs.writeFile('src/data/super-admins.json', JSON.stringify(newSuperAdmins, null, 2), (error) => {
+      if (error) {
+        res.status(400).json({ msg: 'Error the Super Admin can not be deleted' });
       } else {
-        res.json(newSuperAdmins);
+        res.status(200).json({ msg: 'Super Admin Deleted', newSuperAdmins });
       }
     });
   } else {
