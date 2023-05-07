@@ -7,6 +7,7 @@ const admins = require('./data/admins.json');
 
 const membersRouter = require('./resources/member');
 const classRouter = require('./resources/class');
+const trainersRouter = require('./resources/trainer');
 
 const adminsRouter = require('./resources/admins');
 
@@ -16,6 +17,7 @@ const port = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.json());
 app.use('/member', membersRouter);
+app.use('/trainer', trainersRouter);
 app.use('/admins', adminsRouter);
 
 app.use('/class', classRouter);
