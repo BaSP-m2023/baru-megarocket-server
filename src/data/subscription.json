@@ -1,0 +1,36 @@
+[
+  {
+    "id": "1",
+    "class": {
+      "id": "1",
+      "name": "musculation",
+      "date": "05/08/2023",
+      "trainer": {
+        "id": "1",
+        "name": "Mike",
+        "lastName": "Lol",
+        "salary": 10000
+      },
+      "members": [
+        {
+          "id": "1",
+          "name": "John",
+          "lastName": "Doe",
+          "membership": {
+            "id": "1",
+            "type": "Black"
+          }
+        },
+        {
+          "id": "2",
+          "name": "Jane",
+          "lastName": "Vane",
+          "membership": {
+            "id": "2",
+            "type": "Classic"
+          }
+        }
+      ]
+    }
+  }
+]
