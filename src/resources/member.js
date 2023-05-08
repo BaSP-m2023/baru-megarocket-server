@@ -15,18 +15,27 @@ membersRouter.get('/:id', (req, res) => {
 
 membersRouter.post('/', (req, res) => {
   const newMember = req.body;
-  members.push(newMember);
-  fs.writeFile('src/data/member.json', JSON.stringify(members, null, 2), (err) => {
-    if (err) {
-      res.send('Error!: member cannot be created');
+  if (newMember.id) {
+    const lastmember = members.slice(-1)[0];
+    if (newMember.id === lastmember.id) {
+      res.send('Error!: member all ready created');
     } else {
-      res.send('Member created');
+      members.push(newMember);
+      fs.writeFile('src/data/member.json', JSON.stringify(members, null, 2), (err) => {
+        if (err) {
+          res.send('Error!: member cannot be created');
+        } else {
+          res.send('Member created');
+        }
+      });
     }
-  });
+  } else {
+    res.send('Error!: member must have an Id');
+  }
 });
 
 membersRouter.delete('/:id', (req, res) => {
-  const memberId = req.id;
+  const memberId = req.params.id;
   const filteredMembers = members.filter((member) => member.id.toString() !== memberId);
   fs.writeFile('./src/data/member.json', JSON.stringify(filteredMembers, null, 2), (err) => {
     if (err) {
