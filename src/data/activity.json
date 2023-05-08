@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "Functional",
+    "name": "yoga",
     "description": "A type of strength training that readies your body for daily activities."
   },
   {
@@ -23,15 +23,5 @@
     "id": 5,
     "name": "Crossfit",
     "description": "A strength and conditioning workout that is made up of functional movement performed at a high intensity level."
-  },
-  {
-    "id": 6,
-    "name": "Zumba",
-    "description": "High- and low-intensity dance moves designed to get your heart rate up and boost cardio endurance.."
-  },
-  {
-    "id": 6,
-    "name": "Zumba",
-    "description": "High- and low-intensity dance moves designed to get your heart rate up and boost cardio endurance.."
   }
 ]
