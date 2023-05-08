@@ -9,11 +9,11 @@
   },
   {
     "id": 2,
-    "activity": "weightlifting",
-    "trainer": "Doyle",
+    "activity": "spinning",
+    "trainer": "Lauren",
     "day": "Friday",
-    "time": "11:45",
-    "capacity": 17
+    "time": "19:00",
+    "capacity": 6
   },
   {
     "id": 3,
@@ -73,10 +73,34 @@
   },
   {
     "id": 10,
-    "activity": "kick boxing",
-    "trainer": "Shani",
+    "activity": "spinning",
+    "trainer": "Merissa",
     "day": "Tuesday",
     "time": "21:30",
     "capacity": 9
+  },
+  {
+    "id": 11,
+    "activity": "spinning",
+    "trainer": "Lauren",
+    "day": "Friday",
+    "time": "18:00",
+    "capacity": 6
+  },
+  {
+    "id": 12,
+    "activity": "spinning",
+    "trainer": "Lauren",
+    "day": "Friday",
+    "time": "19:00",
+    "capacity": 6
+  },
+  {
+    "id": 13,
+    "activity": "spinning",
+    "trainer": "Lauren",
+    "day": "Friday",
+    "time": "19:00",
+    "capacity": 6
   }
 ]
