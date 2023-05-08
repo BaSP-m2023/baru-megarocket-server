@@ -9,6 +9,7 @@ const membersRouter = require('./resources/member');
 const superAdminRouter = require('./resources/super-admins');
 const classRouter = require('./resources/class');
 const trainersRouter = require('./resources/trainer');
+const activityRouter = require('./resources/activity');
 
 const adminsRouter = require('./resources/admins');
 
@@ -22,6 +23,7 @@ app.use('/super-admins', superAdminRouter);
 app.use('/trainer', trainersRouter);
 app.use('/admins', adminsRouter);
 app.use('/class', classRouter);
+app.use('/activity', activityRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
