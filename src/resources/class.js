@@ -36,7 +36,7 @@ routerClass.get('/search/:filter', (req, res) => {
   }
 });
 
-routerClass.get('/find/:id', (req, res) => {
+routerClass.get('/:id', (req, res) => {
   // read the json file and convert it to an array
   const data = JSON.parse(fs.readFileSync('./src/data/class.json', 'utf8'));
 
