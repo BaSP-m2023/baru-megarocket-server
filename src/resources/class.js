@@ -8,7 +8,7 @@ const activities = require('../data/activity.json');
 const classes = require('../data/class.json');
 const trainers = require('../data/trainer.json');
 
-routerClass.get('/all/:filter', (req, res) => {
+routerClass.get('/search/:filter', (req, res) => {
   const filterCall = req.params.filter;
 
   if (filterCall !== 'all') {
