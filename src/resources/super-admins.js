@@ -69,4 +69,29 @@ superAdminRouter.post('/', (req, res) => {
   }
 });
 
+superAdminRouter.put('/:id', (req, res) => {
+  const searchId = superAdmins.some((superAdmin) => superAdmin.id.toString() === req.params.id);
+  const reqSuperAdmin = req.body;
+  if (searchId) {
+    const editList = [...superAdmins];
+    const iObj = editList.findIndex((obj) => obj.id.toString() === req.params.id);
+    editList[iObj] = {
+      id: editList[iObj].id,
+      first_name: reqSuperAdmin.first_name ? reqSuperAdmin.first_name : editList[iObj].first_name,
+      last_name: reqSuperAdmin.last_name ? reqSuperAdmin.last_name : editList[iObj].last_name,
+      email: reqSuperAdmin.email ? reqSuperAdmin.email : editList[iObj].email,
+      password: reqSuperAdmin.password ? reqSuperAdmin.password : editList[iObj].password,
+    };
+    const editedSupAd = editList[iObj];
+    fs.writeFile('src/data/super-admins.json', JSON.stringify(editList, null, 2), (error) => {
+      if (error) {
+        res.status(400).json({ msg: 'Error the Super Admin can not be created' });
+      } else {
+        res.status(200).json({ msg: 'Super Admin updated', editedSupAd, editList });
+      }
+    });
+  } else {
+    res.status(400).json({ msg: `Super Admin with id of ${req.params.id} not found` });
+  }
+});
 module.exports = superAdminRouter;
