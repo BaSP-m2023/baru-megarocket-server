@@ -16,7 +16,7 @@ adminRouter.get('/:id', (req, res) => {
   if (foundAdmin) {
     res.send(foundAdmin);
   } else {
-    res.send('Admin not found!');
+    res.send(`Admin with ID ${adminId} not found!`);
   }
 });
 
@@ -60,7 +60,7 @@ adminRouter.put('/:id', (req, res) => {
   const adminIndex = admins.findIndex((admin) => admin.id.toString() === adminId);
 
   if (adminIndex === -1) {
-    res.status(404).send('Admin not found');
+    res.status(404).send(`Admin  with ID ${adminId} not found`);
   }
   if (!updateAdmin.name && !updateAdmin.lastName && !updateAdmin.email && !updateAdmin.password) {
     res.status(400).send('At least one value must be modified');
@@ -87,9 +87,9 @@ adminRouter.delete('/:id', (req, res) => {
   const filterAdmins = admins.filter((admin) => admin.id.toString() !== adminId);
   fs.writeFile('src/data/admins.json', JSON.stringify(filterAdmins, null, 2), (err) => {
     if (err) {
-      res.send('Error! Admin not be deleted!');
+      res.send(`Error! with ID ${adminId} not be deleted!`);
     } else {
-      res.send('Admin deleted!');
+      res.send(`Admin with ID ${adminId} deleted!`);
     }
   });
 });
@@ -110,6 +110,18 @@ adminRouter.get('/search/:filter', (req, res) => {
         message: 'Admins not found',
       });
     }
+  }
+});
+
+adminRouter.get('/searchLetters/:letters', (req, res) => {
+  const firstLetters = req.params.letters.toLowerCase();
+  const filter = admins.filter((element) => element.name.toLowerCase().startsWith(firstLetters)
+  || element.lastName.toLowerCase().startsWith(firstLetters)
+  || element.email.toLowerCase().startsWith(firstLetters));
+  if (filter.length > 0) {
+    res.status(200).send(filter);
+  } else {
+    res.status(404).send('No matching admins found');
   }
 });
 
