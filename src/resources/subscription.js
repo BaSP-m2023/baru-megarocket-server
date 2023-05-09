@@ -49,6 +49,7 @@ router.post('/', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const deleteSub = req.params.id;
+  // eslint-disable-next-line max-len
   const filteredSubscriptions = subscriptions.filter((sub) => sub.id && sub.id.toString() !== deleteSub);
   fs.writeFile('src/data/subscription.json', JSON.stringify(filteredSubscriptions, null, 2), (err) => {
     if (err) {
