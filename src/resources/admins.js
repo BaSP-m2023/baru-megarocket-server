@@ -6,10 +6,6 @@ const admins = require('../data/admins.json');
 
 const adminRouter = express.Router();
 
-adminRouter.get('/', (req, res) => {
-  res.send(admins);
-});
-
 adminRouter.get('/:id', (req, res) => {
   const adminId = req.params.id;
   const foundAdmin = admins.find((admin) => admin.id.toString() === adminId);
@@ -96,7 +92,7 @@ adminRouter.delete('/:id', (req, res) => {
 
 adminRouter.get('/search/:filter', (req, res) => {
   const filterAdmins = req.params.filter;
-  if (filterAdmins !== '/') {
+  if (filterAdmins !== 'all') {
     const found = admins.filter((element) => element.name === filterAdmins
       || element.lastName === filterAdmins
       || element.email === filterAdmins);
@@ -110,6 +106,11 @@ adminRouter.get('/search/:filter', (req, res) => {
         message: 'Admins not found',
       });
     }
+  } else {
+    res.status(200).send({
+      message: 'All Admins found',
+      admin: admins,
+    });
   }
 });
 
