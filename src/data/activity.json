@@ -1,0 +1,27 @@
+[
+{ 
+    "id":1,
+    "name":"Functional",
+    "description": "A type of strength training that readies your body for daily activities."
+},
+{
+    "id":2,
+    "name":"Boxing",
+    "description": "Excellent cardio workout that improves strength, aerobic levels, and cognitive skills."
+},
+{
+    "id":3,
+    "name":"Fitness",
+    "description":"one's ability to execute daily activities with optimal performance, endurance, and strength to reduced sedentary behavior"
+},
+{
+    "id":4,
+    "name":"Spinning",
+    "description":"A form of exercise with classes focusing on endurance, strength, intervals, high intensity (race days) and recovery"
+},
+{
+    "id":5,
+    "name":"Crossfit",
+    "description":"A strength and conditioning workout that is made up of functional movement performed at a high intensity level."
+    }
+]
