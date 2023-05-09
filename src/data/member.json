@@ -276,5 +276,14 @@
     "subscription": "premium",
     "email": "bkynvint@umn.edu",
     "password": "pablo"
+  },
+  {
+    "id": 32,
+    "name": "Krisssy",
+    "last_name": "Littledyske",
+    "phone": "979-892-3274",
+    "subscription": "only_classes",
+    "email": "klittledyket@guardian.co.uk",
+    "password": "ci57Id"
   }
 ]
