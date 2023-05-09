@@ -11,6 +11,7 @@ router.put('/:id', (req, res) => {
     const updSub = req.body;
     subscriptions.forEach((sub) => {
       if (sub.id.toString() === subId) {
+        // eslint-disable-next-line no-param-reassign
         sub.class = updSub.class;
       }
     });
