@@ -94,4 +94,23 @@ adminRouter.delete('/:id', (req, res) => {
   });
 });
 
+adminRouter.get('/search/:filter', (req, res) => {
+  const filterAdmins = req.params.filter;
+  if (filterAdmins !== '/') {
+    const found = admins.filter((element) => element.name === filterAdmins
+      || element.lastName === filterAdmins
+      || element.email === filterAdmins);
+    if (found.length !== 0) {
+      res.status(200).send({
+        message: 'Admins found',
+        admin: found,
+      });
+    } else {
+      res.status(404).send({
+        message: 'Admins not found',
+      });
+    }
+  }
+});
+
 module.exports = adminRouter;
