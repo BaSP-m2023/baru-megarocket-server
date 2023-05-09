@@ -8,7 +8,33 @@ const activities = require('../data/activity.json');
 const classes = require('../data/class.json');
 const trainers = require('../data/trainer.json');
 
-routerClass.get('/all', (req, res) => res.send(classes));
+routerClass.get('/all/:filter', (req, res) => {
+  const filterCall = req.params.filter;
+
+  if (filterCall !== 'all') {
+    const found = classes.filter((element) => element.activity === filterCall
+        || element.trainer === filterCall
+        || element.day === filterCall
+        || element.time === filterCall
+        || element.capacity === parseInt(filterCall, 10));
+
+    if (found.length !== 0) {
+      res.status(200).send({
+        msg: `Listing all Classes with ${filterCall}`,
+        classes: found,
+      });
+    } else {
+      res.status(404).send({
+        msg: `Classes with ${filterCall} doesn't exists`,
+      });
+    }
+  } else {
+    res.status(200).send({
+      msg: 'Listing all Classes',
+      class: classes,
+    });
+  }
+});
 
 routerClass.get('/find/:id', (req, res) => {
   // read the json file and convert it to an array
