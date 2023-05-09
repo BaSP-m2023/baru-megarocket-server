@@ -17,21 +17,27 @@ router.put('/:id', (req, res) => {
     });
     fs.writeFile('src/data/subscription.json', JSON.stringify(subscriptions, null, 2), (e) => {
       if (e) {
-        res.send('Error, can not be modified');
+        res.status(500).send('Error, can not be modified');
       } else {
-        res.send('Subscription updated');
+        res.status(200).send('Subscription updated');
       }
     });
   } else {
-    res.status(400).send('Subscription does not exist');
+    res.status(404).send('Subscription does not exist');
   }
 });
 
-router.get('/', (req, res) => {
+router.get('/filter', (req, res) => {
+  const param = req.query.class;
+  const filteredSubs = subscriptions.filter((sub) => sub.class.name === param);
   try {
-    res.send(subscriptions);
+    if (param) {
+      res.status(200).send(filteredSubs);
+    } else {
+      throw new Error();
+    }
   } catch (e) {
-    res.send('Error, can not get the element');
+    res.status(400).send('Error, can not get the element');
   }
 });
 
