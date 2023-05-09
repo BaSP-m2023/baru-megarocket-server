@@ -10,7 +10,7 @@ membersRouter.get('/', (req, res) => res.send(members));
 membersRouter.get('/:id', (req, res) => {
   const memberId = req.params.id;
   const foundMember = members.find((member) => member.id.toString() === memberId);
-  return foundMember ? res.send(foundMember) : res.send('Member not found');
+  return foundMember ? res.send(foundMember) : res.status(400).send('Member not found');
 });
 
 membersRouter.post('/', (req, res) => {
@@ -18,19 +18,19 @@ membersRouter.post('/', (req, res) => {
   if (newMember.id) {
     const lastmember = members.slice(-1)[0];
     if (newMember.id === lastmember.id) {
-      res.send('Error!: member all ready created');
+      res.status(400).send('Error!: member all ready created');
     } else {
       members.push(newMember);
       fs.writeFile('src/data/member.json', JSON.stringify(members, null, 2), (err) => {
         if (err) {
-          res.send('Error!: member cannot be created');
+          res.status(400).send('Error!: member cannot be created');
         } else {
           res.send('Member created');
         }
       });
     }
   } else {
-    res.send('Error!: member must have an Id');
+    res.status(400).send('Error!: member must have an Id');
   }
 });
 
@@ -39,7 +39,7 @@ membersRouter.delete('/:id', (req, res) => {
   const filteredMembers = members.filter((member) => member.id.toString() !== memberId);
   fs.writeFile('./src/data/member.json', JSON.stringify(filteredMembers, null, 2), (err) => {
     if (err) {
-      res.send('Error!. Member cannot be deleted');
+      res.status(400).send('Error!. Member cannot be deleted');
     } else {
       res.send('Member deleted');
     }
@@ -66,13 +66,13 @@ membersRouter.put('/:id', (req, res) => {
     });
     fs.writeFile('./src/data/member.json', JSON.stringify(members, null, 2), (err) => {
       if (err) {
-        res.send('Error');
+        res.status(400).send('Error');
       } else {
         res.send('Successfully edited!');
       }
     });
   } else {
-    res.send('Member not found');
+    res.status(404).send('Member not found');
   }
 });
 
