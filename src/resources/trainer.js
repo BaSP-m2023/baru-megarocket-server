@@ -59,4 +59,26 @@ trainerRouter.post('/:id', (req, res) => {
   }
 });
 
+trainerRouter.delete('/:id', (req, res) => {
+  const trainerId = req.params.id;
+  const newArray = trainers.filter((trainer) => trainer.id.toString() !== trainerId);
+  fs.writeFile('src/data/trainer.json', JSON.stringify(newArray, null, 2), (error) => {
+    if (error) {
+      res.status(400).send('User cannot be deleted');
+    } else {
+      res.status(200).send('User deleted');
+    }
+  });
+});
+
+trainerRouter.get('/:id', (req, res) => {
+  const trainerId = req.params.id;
+  const trainerr = trainers.find((trainer) => trainer.id.toString() === trainerId);
+  if (trainerr) {
+    res.send(trainerr);
+  } else {
+    res.status(404).json({ error: 'Trainer not found' });
+  }
+});
+
 module.exports = trainerRouter;
