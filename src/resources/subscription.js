@@ -35,6 +35,21 @@ router.get('/', (req, res) => {
   }
 });
 
+router.get('/search/:memberships', (req, res) => {
+  const memberSubs = req.params.memberships;
+  const filteredSubs = subscriptions.filter((sub) => {
+    if (typeof sub.class === 'string') {
+      return sub.class === memberSubs;
+    }
+    return sub.class.name === memberSubs;
+  });
+  if (!filteredSubs.length) {
+    res.send('Could not find the membership');
+  } else {
+    res.send(filteredSubs);
+  }
+});
+
 router.post('/', (req, res) => {
   const newSubscription = req.body;
   subscriptions.push(newSubscription);
