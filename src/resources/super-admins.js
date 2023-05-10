@@ -6,7 +6,7 @@ const superAdmins = require('../data/super-admins.json');
 
 superAdminRouter.get('/', (req, res) => res.json(superAdmins));
 
-superAdminRouter.get('/:id', (req, res) => {
+superAdminRouter.get('/find/:id', (req, res) => {
   const searchId = superAdmins.some((superAdmin) => superAdmin.id.toString() === req.params.id);
   if (searchId) {
     res.json(superAdmins.filter((superAdmin) => superAdmin.id.toString() === req.params.id));
@@ -23,7 +23,7 @@ superAdminRouter.delete('/:id', (req, res) => {
     );
     fs.writeFile('src/data/super-admins.json', JSON.stringify(newSuperAdmins, null, 2), (error) => {
       if (error) {
-        res.status(400).json({ msg: 'Error the Super Admin can not be deleted' });
+        res.status(400).json({ msg: 'Error the Super Admin cannot be deleted' });
       } else {
         res.status(200).json({ msg: 'Super Admin Deleted', newSuperAdmins });
       }
@@ -92,6 +92,33 @@ superAdminRouter.put('/:id', (req, res) => {
     });
   } else {
     res.status(400).json({ msg: `Super Admin with id of ${req.params.id} not found` });
+  }
+});
+
+superAdminRouter.get('/search', (req, res) => {
+  const searchParams = req.query;
+  const errorSearch = [];
+  if (Object.keys(searchParams).length > 1) {
+    errorSearch.push({ msg: 'You can only search one param' });
+  }
+  if (Object.values(searchParams).length === 1 && !Object.values(searchParams)[0]) {
+    errorSearch.push({ msg: 'You must provide a value to search' });
+  }
+  if (searchParams.password) {
+    errorSearch.push({ msg: 'You cannot search by password' });
+  }
+  const searchValue = Object.values(searchParams)[0].toString().toLowerCase();
+  const searchKey = Object.keys(searchParams)[0];
+  const superAdminFound = superAdmins.filter(
+    (superAdmin) => superAdmin[searchKey].toString().toLowerCase().indexOf(searchValue) !== -1,
+  );
+  if (superAdminFound.length === 0) {
+    errorSearch.push({ msg: 'Super Admin Not found' });
+  }
+  if (errorSearch.length === 0) {
+    res.json(superAdminFound);
+  } else {
+    res.status(400).json(errorSearch);
   }
 });
 module.exports = superAdminRouter;
