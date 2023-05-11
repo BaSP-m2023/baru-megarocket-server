@@ -6,13 +6,17 @@ const admins = require('../data/admins.json');
 
 const adminRouter = express.Router();
 
+adminRouter.get('/', (req, res) => {
+  res.send(admins);
+});
+
 adminRouter.get('/:id', (req, res) => {
   const adminId = req.params.id;
   const foundAdmin = admins.find((admin) => admin.id.toString() === adminId);
   if (foundAdmin) {
     res.send(foundAdmin);
   } else {
-    res.send(`Admin with ID ${adminId} not found!`);
+    res.send('Admin not found!');
   }
 });
 
@@ -56,7 +60,7 @@ adminRouter.put('/:id', (req, res) => {
   const adminIndex = admins.findIndex((admin) => admin.id.toString() === adminId);
 
   if (adminIndex === -1) {
-    res.status(404).send(`Admin  with ID ${adminId} not found`);
+    res.status(404).send('Admin not found');
   }
   if (!updateAdmin.name && !updateAdmin.lastName && !updateAdmin.email && !updateAdmin.password) {
     res.status(400).send('At least one value must be modified');
@@ -83,16 +87,16 @@ adminRouter.delete('/:id', (req, res) => {
   const filterAdmins = admins.filter((admin) => admin.id.toString() !== adminId);
   fs.writeFile('src/data/admins.json', JSON.stringify(filterAdmins, null, 2), (err) => {
     if (err) {
-      res.send(`Error! with ID ${adminId} not be deleted!`);
+      res.send('Error! Admin not be deleted!');
     } else {
-      res.send(`Admin with ID ${adminId} deleted!`);
+      res.send('Admin deleted!');
     }
   });
 });
 
 adminRouter.get('/search/:filter', (req, res) => {
   const filterAdmins = req.params.filter;
-  if (filterAdmins !== 'all') {
+  if (filterAdmins !== '/') {
     const found = admins.filter((element) => element.name === filterAdmins
       || element.lastName === filterAdmins
       || element.email === filterAdmins);
@@ -106,23 +110,6 @@ adminRouter.get('/search/:filter', (req, res) => {
         message: 'Admins not found',
       });
     }
-  } else {
-    res.status(200).send({
-      message: 'All Admins found',
-      admin: admins,
-    });
-  }
-});
-
-adminRouter.get('/searchLetters/:letters', (req, res) => {
-  const firstLetters = req.params.letters.toLowerCase();
-  const filter = admins.filter((element) => element.name.toLowerCase().startsWith(firstLetters)
-  || element.lastName.toLowerCase().startsWith(firstLetters)
-  || element.email.toLowerCase().startsWith(firstLetters));
-  if (filter.length > 0) {
-    res.status(200).send(filter);
-  } else {
-    res.status(404).send('No matching admins found');
   }
 });
 

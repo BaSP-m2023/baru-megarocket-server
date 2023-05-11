@@ -8,7 +8,7 @@ const activities = require('../data/activity.json');
 const classes = require('../data/class.json');
 const trainers = require('../data/trainer.json');
 
-routerClass.get('/search/:filter', (req, res) => {
+routerClass.get('/all/:filter', (req, res) => {
   const filterCall = req.params.filter;
 
   if (filterCall !== 'all') {
@@ -36,7 +36,7 @@ routerClass.get('/search/:filter', (req, res) => {
   }
 });
 
-routerClass.get('/:id', (req, res) => {
+routerClass.get('/find/:id', (req, res) => {
   // read the json file and convert it to an array
   const data = JSON.parse(fs.readFileSync('./src/data/class.json', 'utf8'));
 

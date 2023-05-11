@@ -1,15 +1,22 @@
 // use "import" to import libraries
 import express from 'express';
 import cors from 'cors';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import mongoose from 'mongoose';
+
+mongoose
+  .connect('mongodb+srv://baru-team:x60lbGF6arRYrycR@megarocket-databases.inpprte.mongodb.net')
+  .then(() => console.log('Connected to MR DB'))
+  .catch((e) => console.log('Error: ', e));
 
 // use "require" to import JSON files
-const subscriptions = require('./resources/subscription');
-const membersRouter = require('./resources/member');
-const superAdminRouter = require('./resources/super-admins');
-const classRouter = require('./resources/class');
-const trainersRouter = require('./resources/trainer');
-const activityRouter = require('./resources/activity');
-const adminsRouter = require('./resources/admins');
+const subscriptions = require('./controllers/subscription');
+const membersRouter = require('./controllers/member');
+const superAdminRouter = require('./controllers/super-admins');
+const classRouter = require('./controllers/class');
+const trainersRouter = require('./controllers/trainer');
+const activityRouter = require('./controllers/activity');
+const adminsRouter = require('./controllers/admins');
 
 const app = express();
 const port = process.env.PORT || 4000;
