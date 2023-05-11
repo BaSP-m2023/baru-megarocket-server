@@ -38,7 +38,6 @@
     "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "husky": "^7.0.4",
-    "mongoose": "^7.1.1"
+    "husky": "^7.0.4"
   }
 }
