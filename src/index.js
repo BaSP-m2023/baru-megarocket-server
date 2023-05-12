@@ -5,7 +5,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 
 mongoose
-  .connect('mongodb+srv://baru-team:x60lbGF6arRYrycR@megarocket-databases.inpprte.mongodb.net')
+  .connect('mongodb+srv://baru-team:x60lbGF6arRYrycR@megarocket-databases.inpprte.mongodb.net/baru-database')
   .then(() => console.log('Connected to MR DB'))
   .catch((e) => console.log('Error: ', e));
 
