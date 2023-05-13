@@ -12,4 +12,4 @@ const trainerSchema = new mongoose.Schema({
   is_active: Boolean,
 });
 
-module.exports(mongoose.model('Trainer', trainerSchema));
+module.exports = mongoose.model('Trainer', trainerSchema);

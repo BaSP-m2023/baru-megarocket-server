@@ -4,6 +4,8 @@ import cors from 'cors';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import mongoose from 'mongoose';
 
+const routes = require('./routes');
+
 mongoose
   .connect('mongodb+srv://baru-team:x60lbGF6arRYrycR@megarocket-databases.inpprte.mongodb.net/baru-database')
   .then(() => console.log('Connected to MR DB'))
@@ -14,7 +16,7 @@ const subscriptions = require('./controllers/subscription');
 const membersRouter = require('./controllers/member');
 const superAdminRouter = require('./controllers/super-admins');
 const classRouter = require('./controllers/class');
-const trainersRouter = require('./controllers/trainer');
+// const trainersRouter = require('./controllers/trainer');
 const activityRouter = require('./controllers/activity');
 const adminsRouter = require('./controllers/admins');
 
@@ -23,10 +25,12 @@ const port = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
+app.use('/api', routes);
+
 app.use('/subscriptions', subscriptions);
 app.use('/member', membersRouter);
 app.use('/super-admins', superAdminRouter);
-app.use('/trainer', trainersRouter);
+// app.use('/trainer', trainersRouter);
 app.use('/admins', adminsRouter);
 app.use('/class', classRouter);
 app.use('/activity', activityRouter);
