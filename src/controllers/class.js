@@ -31,7 +31,7 @@ const getClassById = (req, res) => {
 
   Class.findById(id)
     .then((classId) => res.status(200).json({
-      message: `Class ${classId.name} found! `,
+      message: `Class ${classId.activity} found! `,
       data: classId,
       error: false,
     }))
