@@ -1,6 +1,6 @@
 const express = require('express');
-
 const fs = require('fs');
+const Class = require('../models/class');
 
 const routerClass = express.Router();
 
@@ -8,33 +8,24 @@ const activities = require('../data/activity.json');
 const classes = require('../data/class.json');
 const trainers = require('../data/trainer.json');
 
-routerClass.get('/all/:filter', (req, res) => {
-  const filterCall = req.params.filter;
+const getAllClass = (req, res) => {
+  const { query } = req;
 
-  if (filterCall !== 'all') {
-    const found = classes.filter((element) => element.activity === filterCall
-        || element.trainer === filterCall
-        || element.day === filterCall
-        || element.time === filterCall
-        || element.capacity === parseInt(filterCall, 10));
-
-    if (found.length !== 0) {
-      res.status(200).send({
-        msg: `Listing all Classes with ${filterCall}`,
-        classes: found,
+  Class.find(query)
+    .then((allClass) => {
+      res.status(200).json({
+        message: 'Complete class list',
+        data: allClass,
+        error: false,
       });
-    } else {
-      res.status(404).send({
-        msg: `Classes with ${filterCall} doesn't exists`,
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: 'An error ocurred',
+        error,
       });
-    }
-  } else {
-    res.status(200).send({
-      msg: 'Listing all Classes',
-      class: classes,
     });
-  }
-});
+};
 
 routerClass.get('/find/:id', (req, res) => {
   // read the json file and convert it to an array
@@ -209,4 +200,6 @@ routerClass.put('/assign/activity/:id', (req, res) => {
   }
 });
 
-module.exports = routerClass;
+module.exports = {
+  routerClass, getAllClass,
+};
