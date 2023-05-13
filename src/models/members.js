@@ -11,7 +11,7 @@ const memberSchema = new mongoose.Schema({
   zip: 'number',
   isActive: 'boolean',
   membership: ['classic', 'only-classes', 'black'],
-  password: 'any',
+  password: 'string',
 });
 
 module.exports = mongoose.model('member', memberSchema);
