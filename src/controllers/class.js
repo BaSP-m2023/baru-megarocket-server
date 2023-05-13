@@ -26,26 +26,20 @@ const getAllClass = (req, res) => {
       });
     });
 };
+const getClassById = (req, res) => {
+  const { id } = req.params;
 
-routerClass.get('/find/:id', (req, res) => {
-  // read the json file and convert it to an array
-  const data = JSON.parse(fs.readFileSync('./src/data/class.json', 'utf8'));
-
-  // create id variable and assign the id from the request
-  const id = parseInt(req.params.id, 10);
-
-  // find the index of the element with the id from the request
-  const classIndex = data.findIndex((element) => element.id === id);
-
-  // if the element doesn't exists, return an error
-  if (classIndex === -1) {
-    return res
-      .status(404)
-      .json({ msg: `Class with id: ${req.params.id} doesn't exist.` }); // if the element doesn't exists, return an error
-  }
-
-  return res.json({ msg: 'Class finded', class: data[classIndex] }); // return a message and the updated element
-});
+  Class.findById(id)
+    .then((classId) => res.status(200).json({
+      message: `Class ${classId.name} found! `,
+      data: classId,
+      error: false,
+    }))
+    .catch((error) => res.json({
+      message: 'An error ocurred',
+      error,
+    }));
+};
 
 // create a new class
 routerClass.post('/create', (req, res) => {
@@ -201,5 +195,5 @@ routerClass.put('/assign/activity/:id', (req, res) => {
 });
 
 module.exports = {
-  routerClass, getAllClass,
+  routerClass, getAllClass, getClassById,
 };
