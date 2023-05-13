@@ -40,48 +40,19 @@ const getClassById = (req, res) => {
       error,
     }));
 };
-
-// create a new class
-routerClass.post('/create', (req, res) => {
-  // read the json file and convert it to an array
-  const data = JSON.parse(fs.readFileSync('./src/data/class.json', 'utf8'));
-
-  // create the new user
-  const newClass = {
-    id: data.length + 1,
-    activity: req.body.activity,
-    trainer: req.body.trainer,
-    day: req.body.day,
-    time: req.body.time,
-    capacity: req.body.capacity,
-  };
-
-  // if any of the fields is missing, return an error
-  if (
-    !newClass.activity
-    || !newClass.trainer
-    || !newClass.day
-    || !newClass.time
-    || !newClass.capacity
-  ) {
-    res.status(400).send({ msg: 'Please include all fields' });
-  }
-
-  // create new array with previous data and the new user
-  const newData = [...data, newClass];
-
-  // save the new array in the file
-  fs.writeFile(
-    './src/data/class.json',
-    JSON.stringify(newData, null, 2),
-    (err) => {
-      if (err) {
-        res.status(500).send({ msg: err });
-      }
-      res.send(newClass);
-    },
-  );
-});
+const createClass = (req, res) => {
+  const {
+    activity, trainer, day, time, capacity,
+  } = req.body;
+  Class.create({
+    activity, trainer, day, time, capacity,
+  })
+    .then((result) => res.status(201).json(result))
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
 
 // update a class
 routerClass.put('/update/:id', (req, res) => {
@@ -195,5 +166,5 @@ routerClass.put('/assign/activity/:id', (req, res) => {
 });
 
 module.exports = {
-  routerClass, getAllClass, getClassById,
+  routerClass, getAllClass, getClassById, createClass,
 };
