@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const memberSchema = new mongoose.Schema({
-  id: 'number',
   name: 'string',
   lastName: 'string',
   dni: 'number',
@@ -9,7 +8,7 @@ const memberSchema = new mongoose.Schema({
   email: 'string',
   city: 'string',
   dob: 'date',
-  zip: 'any',
+  zip: 'number',
   isActive: 'boolean',
   membership: ['classic', 'only-classes', 'black'],
   password: 'any',

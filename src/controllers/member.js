@@ -11,7 +11,7 @@ const deleteMember = (req, res) => {
       }
       return res.status(204);
     })
-    .catch((error) => res.tatus(400).json({
+    .catch((error) => res.Status(400).json({
       message: 'Something went wrong',
       error,
     }));
