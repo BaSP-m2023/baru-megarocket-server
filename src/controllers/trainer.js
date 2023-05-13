@@ -6,13 +6,37 @@
 
 // ACA SE HACE EL MANEJO DE BD
 
-// const Trainer = require('../models/Trainer');
+const Trainer = require('../models/Trainer');
 
 // trainerRouter.get('/', (req, res) => res.json(trainers));
 
-// const createTrainer = (req, res) => {
-//   Trainer.find();
-// };
+const createTrainer = (req, res) => {
+  const {
+    firstName,
+    lastName,
+    dni,
+    phone,
+    email,
+    password,
+    salary,
+    isActive,
+  } = req.body;
+  Trainer.create({
+    firstName,
+    lastName,
+    dni,
+    phone,
+    email,
+    password,
+    salary,
+    isActive,
+  })
+    .then((result) => res.status(201).json(result))
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
 
 // const updatearTrainer = (req, res) => {
 
@@ -98,10 +122,8 @@
 //   }
 // });
 
-// module.exports = trainerRouter;
-
-// module.exports = {
-//   createTrainer,
-//   updatearTrainer,
-//   getTrainer,
-// };
+module.exports = {
+  createTrainer,
+  // updatearTrainer,
+  // getTrainer,
+};

@@ -1,11 +1,13 @@
 const express = require('express');
 
-const router = express.Router();
+const trainerRouter = express.Router();
 
 const trainerController = require('../controllers/trainer');
 
-router.get('/', trainerController.getTrainer);
+const trainerValidation = require('../validations/trainer');
 
-router.put();
+trainerRouter.get('/', trainerController.getTrainer)
+  .post('/', trainerValidation.validateTrainerCreate, trainerController.createTrainer)
+  .put();
 
-router.post();
+module.exports = trainerRouter;

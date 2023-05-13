@@ -1000,10 +1000,10 @@
 				{
 					"name": "Edit trainer",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4000/trainer/:id",
+							"raw": "http://localhost:4000/api/trainer/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
