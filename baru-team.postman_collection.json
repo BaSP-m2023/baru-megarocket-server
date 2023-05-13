@@ -904,13 +904,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4000/trainer",
+							"raw": "http://localhost:4000/api/trainer",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "4000",
 							"path": [
+                "api",
 								"trainer"
 							]
 						}
@@ -924,7 +925,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {\r\n    \"id\": 16,\r\n    \"name\": \"Giffy\",\r\n    \"last_name\": \"Frankiss\",\r\n    \"phone\": \"694-854-2440\",\r\n    \"hourly_wage\": \"$115.08\",\r\n    \"activity\": \"yoga\",\r\n    \"email\": \"gfrankisse@reference.com\",\r\n    \"password\": \"cdpnTWYmVf\"\r\n  }",
+							"raw": " {\r\n    \"firstName\": \"Fka\",\r\n    \"lastName\": \"Twigs\",\r\n    \"dni\": \"35685214\",\r\n    \"phone\": \"7644213054\",\r\n    \"email\": \"thatsinger@gmail.com\",\r\n    \"password\": \"3ph3ao3KdW\",\r\n    \"salary\": \"$40090.27\",\r\n    \"isActive\": true\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -932,13 +933,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:4000/trainer",
+							"raw": "http://localhost:4000/api/trainer",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "4000",
 							"path": [
+                "api",
 								"trainer"
 							]
 						}
@@ -951,13 +953,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4000/trainer/:id",
+							"raw": "http://localhost:4000/api/trainer/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "4000",
 							"path": [
+                "api",
 								"trainer",
 								":id"
 							],
@@ -977,13 +980,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4000/trainer/:id",
+							"raw": "http://localhost:4000/api/trainer/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "4000",
 							"path": [
+                "api",
 								"trainer",
 								":id"
 							],
@@ -1010,6 +1014,7 @@
 							],
 							"port": "4000",
 							"path": [
+                "api",
 								"trainer",
 								":id"
 							],

@@ -1,11 +1,3 @@
-// const express = require('express');
-
-// const trainerRouter = express.Router();
-
-// const Trainer = require('../models/Trainer');
-
-// ACA SE HACE EL MANEJO DE BD
-
 const Trainer = require('../models/Trainer');
 
 // trainerRouter.get('/', (req, res) => res.json(trainers));
@@ -38,38 +30,22 @@ const createTrainer = (req, res) => {
     }));
 };
 
-// const updatearTrainer = (req, res) => {
+const getTrainers = (req, res) => {
+  Trainer.find()
+    .then((trainers) => res.status(200).json({
+      message: 'Complete trainers list',
+      data: trainers,
+      error: false,
+    }))
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
+
+// const updateTrainer = (req, res) => {
 
 // };
-
-// const getTrainer = (req, res) => {
-
-// };
-
-// trainerRouter.post('/', (req, res) => {
-//   const newTrainer = req.body;
-//   let flag = false;
-//   // validate if there is a trainer with an existing id
-//   trainers.forEach((trainer) => {
-//     if ((trainer.id === newTrainer.id)) {
-//       flag = true;
-//     }
-//   });
-//   if (flag) {
-//     res.status(400).send(`there's and existing trainer with id ${newTrainer.id}`);
-//   } else if (newTrainer.id.length === 0) {
-//     res.status(400).send('id cannot be empty');
-//   } else {
-//     trainers.push(newTrainer);
-//     fs.writeFile('src/data/trainer.json', JSON.stringify(trainers, null, 2), (error) => {
-//       if (error) {
-//         res.status(400).send('User cannot be created');
-//       } else {
-//         res.status(201).send('User created');
-//       }
-//     });
-//   }
-// });
 
 // trainerRouter.put('/:id', (req, res) => {
 //   const idTrainer = parseInt(req.params.id, 10);
@@ -124,6 +100,6 @@ const createTrainer = (req, res) => {
 
 module.exports = {
   createTrainer,
-  // updatearTrainer,
-  // getTrainer,
+  // updateTrainer,
+  getTrainers,
 };
