@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 
 const adminSchema = new Schema(
   {
-    id: Number,
     firstName: {
       type: String,
       required: true,
