@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 
 const adminSchema = new Schema(
   {
-    id: Number,
     firstName: {
       type: String,
       required: true,
@@ -42,4 +41,4 @@ const adminSchema = new Schema(
   },
 );
 
-module.exports = mongoose.model('admins', adminSchema);
+module.exports = mongoose.model('Admin', adminSchema);

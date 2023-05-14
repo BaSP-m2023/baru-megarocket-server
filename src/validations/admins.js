@@ -21,6 +21,28 @@ const validateCreation = (req, res, next) => {
   });
 };
 
+const validateUpdate = (req, res, next) => {
+  const adminValidation = Joi.object({
+    firstName: Joi.string().min(3).max(50),
+    lastName: Joi.string().min(3).max(50),
+    dni: Joi.number().min(8),
+    phone: Joi.number().min(10),
+    email: Joi.string().regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
+    city: Joi.string().min(3).max(50),
+    password: Joi.string().min(8),
+  }).min(1);
+
+  const validation = adminValidation.validate(req.body);
+
+  if (!validation.error) return next();
+  return res.status(400).json({
+    message: `There was an error: ${validation.error.details[0].message}`,
+    data: undefined,
+    error: true,
+  });
+};
+
 module.exports = {
   validateCreation,
+  validateUpdate,
 };
