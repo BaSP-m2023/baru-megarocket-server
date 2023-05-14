@@ -8,7 +8,7 @@ const middleWare = (req, res, next) => {
 };
 
 classRouter
-  .get('/search/:filter', classController.getAllClass)
+  .get('/search', classController.getAllClass)
   .get('/:id', classController.getClassById)
   .post('/', middleWare, classController.createClass);
 
