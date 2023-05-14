@@ -8,8 +8,7 @@ const router = express.Router();
 router
   .get('/', activityController.getAllActivity)
   .get('/:id', activityController.getActivityById)
-  // .post('/', validations.validateCreateActivity, veryImportantMiddleware,
-  // activityController.createActivity)
+  // .post('/', validations.validateCreateActivity, activityController.createActivity)
   // .delete('/:id', activityController.deleteActivity)
   .put('/:id', validations.validateUpdateActivity, activityController.updateActivity);
 
