@@ -18,7 +18,7 @@ const getActivityById = (req, res) => {
 
   Activity.findById(id, 'name')
     .then((activity) => res.status(200).json({
-      message: `Activity found! it was ${Activity.name}`,
+      message: `Activity found! it was ${activity.name}`,
       data: activity,
       error: false,
     }))

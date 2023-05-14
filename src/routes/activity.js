@@ -5,12 +5,8 @@ const validations = require('../validations/activity');
 
 const router = express.Router();
 
-// const veryImportantMiddleware = (req, res, next) => {
-//   next();
-// };
-
 router
-  .get('/', validations.validateActivity, activityController.getAllActivity)
+  .get('/', activityController.getAllActivity)
   .get('/:id', activityController.getActivityById)
   // .post('/', validations.validateCreateActivity, veryImportantMiddleware,
   // activityController.createActivity)
