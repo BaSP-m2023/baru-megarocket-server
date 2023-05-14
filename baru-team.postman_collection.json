@@ -1006,6 +1006,15 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+            "body": {
+							"mode": "raw",
+							"raw": "{\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:4000/api/trainer/:id",
 							"protocol": "http",
