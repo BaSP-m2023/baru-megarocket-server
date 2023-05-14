@@ -27,7 +27,7 @@ const trainerSchema = new mongoose.Schema({
   salary: {
     type: String,
   },
-  is_active: {
+  isActive: {
     type: Boolean,
     default: true,
   },
