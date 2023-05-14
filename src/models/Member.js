@@ -4,14 +4,14 @@ const memberSchema = new mongoose.Schema({
   name: 'string',
   lastName: 'string',
   dni: 'number',
-  phone: 'number',
+  phone: 'string',
   email: 'string',
   city: 'string',
-  dob: 'date',
+  dob: 'Date',
   zip: 'number',
   isActive: 'boolean',
   membership: ['classic', 'only-classes', 'black'],
   password: 'string',
 });
 
-module.exports = mongoose.model('member', memberSchema);
+module.exports = mongoose.model('Member', memberSchema);
