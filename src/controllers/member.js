@@ -1,4 +1,4 @@
-const Member = require('../models/members');
+const Member = require('../models/Member');
 
 const getAllMembers = (req, res) => {
   Member.find()
