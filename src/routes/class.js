@@ -1,15 +1,12 @@
 const express = require('express');
 const classController = require('../controllers/class');
+const validations = require('../validations/class');
 
 const classRouter = express.Router();
-
-const middleWare = (req, res, next) => {
-  next();
-};
 
 classRouter
   .get('/search', classController.getAllClass)
   .get('/:id', classController.getClassById)
-  .post('/', middleWare, classController.createClass);
+  .post('/', validations.validateCreation, classController.createClass);
 
 module.exports = classRouter;
