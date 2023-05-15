@@ -1,14 +1,14 @@
 const express = require('express');
 const memberController = require('../controllers/member');
+const validator = require('../validations/members');
 
 const memberRouter = express.Router();
 
-const middleWare = (req, res, next) => {
-  next();
-};
-
 memberRouter
-  .delete('/:id', middleWare, memberController.deleteMember)
-  .put('/:id', memberController.updateMember);
+  .get('/', memberController.getAllMembers)
+  .get('/:id', memberController.getMemberById)
+  .post('/', validator.validateMember, memberController.createMember)
+  .delete('/:id', memberController.deleteMember)
+  .put('/:id', validator.validateMemberUpdate, memberController.updateMember);
 
 module.exports = memberRouter;
