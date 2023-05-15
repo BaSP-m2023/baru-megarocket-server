@@ -1,79 +1,107 @@
-const express = require('express');
-const fs = require('fs');
+const Member = require('../models/Member');
 
-const membersRouter = express.Router();
+const getAllMembers = (req, res) => {
+  Member.find()
+    .then((member) => res.status(200).json({
+      message: 'Complete members list',
+      data: member,
+      error: false,
+    }))
+    .catch((error) => res.status(500).json({
+      message: 'Unexpected error. Please try again later.',
+      error,
+    }));
+};
 
-const members = require('../data/member.json');
+const getMemberById = (req, res) => {
+  const { id } = req.params;
 
-membersRouter.get('/', (req, res) => res.send(members));
-
-membersRouter.get('/:id', (req, res) => {
-  const memberId = req.params.id;
-  const foundMember = members.find((member) => member.id.toString() === memberId);
-  return foundMember ? res.send(foundMember) : res.status(400).send('Member not found');
-});
-
-membersRouter.post('/', (req, res) => {
-  const newMember = req.body;
-  if (newMember.id) {
-    const lastmember = members.slice(-1)[0];
-    if (newMember.id === lastmember.id) {
-      res.status(400).send('Error!: member all ready created');
-    } else {
-      members.push(newMember);
-      fs.writeFile('src/data/member.json', JSON.stringify(members, null, 2), (err) => {
-        if (err) {
-          res.status(400).send('Error!: member cannot be created');
-        } else {
-          res.send('Member created');
-        }
+  Member.findById(id)
+    .then((member) => {
+      res.status(200).json({
+        message: 'Member found!',
+        data: member,
+        error: false,
       });
-    }
-  } else {
-    res.status(400).send('Error!: member must have an Id');
-  }
-});
-
-membersRouter.delete('/:id', (req, res) => {
-  const memberId = req.params.id;
-  const filteredMembers = members.filter((member) => member.id.toString() !== memberId);
-  fs.writeFile('./src/data/member.json', JSON.stringify(filteredMembers, null, 2), (err) => {
-    if (err) {
-      res.status(400).send('Error!. Member cannot be deleted');
-    } else {
-      res.send('Member deleted');
-    }
-  });
-});
-
-membersRouter.put('/:id', (req, res) => {
-  const memberId = req.params.id;
-  const foundMember = members.find((member) => member.id.toString() === memberId);
-  if (foundMember) {
-    const newMemb = req.body;
-    members.forEach((member, index) => {
-      if (member.id.toString() === memberId) {
-        members[index] = {
-          ...member,
-          email: newMemb.email ? newMemb.email : member.email,
-          last_name: newMemb.last_name ? newMemb.last_name : member.last_name,
-          name: newMemb.name ? newMemb.name : member.name,
-          password: newMemb.password ? newMemb.password : member.password,
-          phone: newMemb.phone ? newMemb.phone : member.phone,
-          subscription: newMemb.subscription ? newMemb.subscription : member.subscription,
-        };
-      }
+    })
+    .catch((error) => {
+      res.status(404).json({
+        message: `The member with the id ${id} does not exist`,
+        error,
+      });
     });
-    fs.writeFile('./src/data/member.json', JSON.stringify(members, null, 2), (err) => {
-      if (err) {
-        res.status(400).send('Error');
-      } else {
-        res.send('Successfully edited!');
-      }
-    });
-  } else {
-    res.status(404).send('Member not found');
-  }
-});
+};
 
-module.exports = membersRouter;
+const createMember = (req, res) => {
+  const {
+    name, lastName, phone, dni, city, birthDate, zip, isActive, membership, email, password,
+  } = req.body;
+
+  Member.create({
+    name, lastName, phone, dni, city, birthDate, zip, isActive, membership, email, password,
+  })
+    .then((result) => res.status(201).json(result))
+    .catch((error) => res.status(400).json({
+      message: 'Invalid Request: Incorrect parameters provided.',
+      error,
+    }));
+};
+
+const deleteMember = (req, res) => {
+  const { id } = req.params;
+  Member.findByIdAndDelete(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          msg: `Member with id ${id} not found`,
+        });
+      }
+      return res.status(200).json({
+        message: 'User deleted!',
+      });
+    })
+    .catch((error) => res.Status(400).json({
+      message: 'Something went wrong',
+      error,
+    }));
+};
+const updateMember = (req, res) => {
+  const { id } = req.params;
+  const {
+    name, lastName, dni, phone, email, city, dob, zip, isActive, membership, password,
+  } = req.body;
+  Member.findByIdAndUpdate(
+    id,
+    {
+      name,
+      lastName,
+      dni,
+      phone,
+      email,
+      city,
+      dob,
+      zip,
+      isActive,
+      membership,
+      password,
+    },
+    { new: true },
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          msg: `Member with id ${id} was not found`,
+        });
+      }
+      return res.status(200).json(result);
+    })
+    .catch((error) => res.status(400).json(error));
+};
+
+module.exports = {
+  getAllMembers,
+  getMemberById,
+  createMember,
+  deleteMember,
+  updateMember,
+};
