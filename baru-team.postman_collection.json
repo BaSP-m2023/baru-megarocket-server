@@ -1041,6 +1041,7 @@
 							],
 							"port": "4000",
 							"path": [
+                "api",
 								"activity"
 							]
 						}
@@ -1060,6 +1061,7 @@
 							],
 							"port": "4000",
 							"path": [
+                "api",
 								"activity",
 								":id"
 							],
@@ -1095,8 +1097,8 @@
 							],
 							"port": "4000",
 							"path": [
-								"activity",
-								"post"
+                "api",
+								"activity"
 							]
 						}
 					},
@@ -1124,6 +1126,7 @@
 							],
 							"port": "4000",
 							"path": [
+                "api",
 								"activity",
 								":id"
 							],
@@ -1159,6 +1162,7 @@
 							],
 							"port": "4000",
 							"path": [
+                "api",
 								"activity",
 								":id"
 							],

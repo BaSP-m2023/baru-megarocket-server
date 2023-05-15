@@ -1,73 +1,41 @@
-const express = require('express');
-const fs = require('fs');
+const Activity = require('../models/Activity');
 
-const activities = require('../data/activity.json');
+const createActivity = (req, res) => {
+  const { name, description, isActive } = req.body;
 
-const router = express.Router();
+  Activity.create({
+    name,
+    description,
+    isActive,
+  })
+    .then((result) => res.status(201).json(result))
+    .catch((error) => res.status(400).json({
+      message: 'Invalid Request: Incorrect parameters provided.',
+      error,
+    }));
+};
 
-router.get('/', (req, res) => {
-  res.send(activities);
-});
+const deleteActivity = (req, res) => {
+  const { id } = req.params;
 
-router.get('/:id', (req, res) => {
-  const activityId = req.params.id;
-  const foundActivity = activities.find((activity) => activity.id.toString() === activityId);
-  if (foundActivity) {
-    res.send(foundActivity);
-  } else {
-    res.send('Activity not found!');
-  }
-});
-
-router.post('/post', (req, res) => {
-  const newActivity = req.body;
-  activities.push(newActivity);
-  fs.writeFile('src/data/activity.json', JSON.stringify(activities, null, 2), (err) => {
-    if (err) {
-      res.send('Error. Activity cannot be created!');
-    } else {
-      res.send('User created');
-    }
-  });
-});
-
-router.put('/:id', (req, res) => {
-  const activityId = req.params.id;
-  const foundActivity = activities.find((activity) => activity.id.toString() === activityId);
-  if (foundActivity) {
-    const newActivity = req.body;
-    activities.forEach((activity, index) => {
-      if (activity.id.toString() === activityId) {
-        activities[index] = {
-          ...activity,
-          id: newActivity.id ? newActivity.id : activity.id,
-          name: newActivity.name ? newActivity.name : activity.name,
-          description: newActivity.description ? newActivity.description : activity.description,
-        };
+  Activity.findByIdAndDelete(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(400).json({
+          msg: `Activity with id ${id} was not found`,
+        });
       }
-    });
-    fs.writeFile('src/data/activity.json', JSON.stringify(activities, null, 2), (err) => {
-      if (err) {
-        res.send('Error. Activity cannot be updated!');
-      } else {
-        res.send('Activity updated!');
-      }
-    });
-  } else {
-    res.send('Activity not found!');
-  }
-});
+      return res.status(200).json({
+        message: 'Activity deleted!',
+      });
+    })
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
 
-router.delete('/:id', (req, res) => {
-  const activityId = req.params.id;
-  const filteredActivity = activities.filter((activity) => activity.id.toString() !== activityId);
-  fs.writeFile('src/data/activity.json', JSON.stringify(filteredActivity, null, 2), (err) => {
-    if (err) {
-      res.send('Error! Activity cannot be deleted!');
-    } else {
-      res.send('Activity deleted!');
-    }
-  });
-});
-
-module.exports = router;
+module.exports = {
+  createActivity,
+  deleteActivity,
+};
