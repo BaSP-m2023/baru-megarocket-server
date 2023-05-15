@@ -21,7 +21,24 @@ const createSuperAdmin = (req, res) => {
       error,
     }));
 };
+const deleteSuperAdmin = async (req, res) => {
+  const { id } = req.params;
+  await SuperAdmin.findByIdAndDelete(id)
+    .then((superAdmin) => {
+      if (superAdmin) {
+        return res.status(204).end();
+      }
+      return res.status(404).json({
+        msg: `Super Admin with id: ${id} was not found`,
+      });
+    })
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred',
+      error,
+    }));
+};
 
 module.exports = {
   createSuperAdmin,
+  deleteSuperAdmin,
 };

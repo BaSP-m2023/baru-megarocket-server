@@ -5,6 +5,7 @@ const superAdminsValidator = require('../validations/super-admins');
 const superAdminsRouter = express.Router();
 
 superAdminsRouter
-  .post('/', superAdminsValidator.validateCreation, superAdminsController.createSuperAdmin);
+  .post('/', superAdminsValidator.validateCreation, superAdminsController.createSuperAdmin)
+  .delete('/:id', superAdminsController.deleteSuperAdmin);
 
 module.exports = superAdminsRouter;
