@@ -17,24 +17,28 @@ const createSuperAdmin = (req, res) => {
       error: false,
     }))
     .catch((error) => res.status(400).json({
-      message: 'An error ocurred',
-      error,
+      message: error.toString(),
+      data: undefined,
+      error: true,
     }));
 };
-const deleteSuperAdmin = async (req, res) => {
+const deleteSuperAdmin = (req, res) => {
   const { id } = req.params;
-  await SuperAdmin.findByIdAndDelete(id)
+  SuperAdmin.findByIdAndDelete(id)
     .then((superAdmin) => {
       if (superAdmin) {
-        return res.status(204).end();
+        return res.status(204).json().end();
       }
       return res.status(404).json({
         msg: `Super Admin with id: ${id} was not found`,
+        data: undefined,
+        error: true,
       });
     })
     .catch((error) => res.status(400).json({
-      message: 'An error ocurred',
-      error,
+      message: error.toString(),
+      data: undefined,
+      error: true,
     }));
 };
 const getAllSuperAdmins = (req, res) => {
@@ -45,8 +49,9 @@ const getAllSuperAdmins = (req, res) => {
       error: false,
     }))
     .catch((error) => res.status(400).json({
-      message: 'An error ocurred',
-      error,
+      message: error.toString(),
+      data: undefined,
+      error: true,
     }));
 };
 
@@ -58,6 +63,8 @@ const getSuperAdminById = (req, res) => {
       if (!superAdmin) {
         return res.status(404).json({
           msg: `Super Admin with id: ${id} was not found`,
+          data: undefined,
+          error: true,
         });
       }
       return res.status(200).json({
@@ -67,8 +74,9 @@ const getSuperAdminById = (req, res) => {
       });
     })
     .catch((error) => res.status(400).json({
-      message: 'An error ocurred',
-      error,
+      message: error.toString(),
+      data: undefined,
+      error: true,
     }));
 };
 const updateSuperAdmin = (req, res) => {
@@ -91,6 +99,8 @@ const updateSuperAdmin = (req, res) => {
       if (!result) {
         return res.status(404).json({
           msg: `Super Admin with id: ${id} was not found`,
+          data: undefined,
+          error: true,
         });
       }
       return res.status(200).json({
@@ -100,8 +110,9 @@ const updateSuperAdmin = (req, res) => {
       });
     })
     .catch((error) => res.status(400).json({
-      message: 'An error ocurred',
-      error,
+      message: error.toString(),
+      data: undefined,
+      error: true,
     }));
 };
 
