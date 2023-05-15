@@ -1,12 +1,13 @@
+/* eslint-disable arrow-body-style */
 const Subscription = require('../models/Subscription');
 
 const getAllSubs = (req, res) => {
   Subscription.find()
-    .then((subscriptions) => { 
+    .then((subscriptions) => {
       return res.status(200).json({
-      message: 'All subscriptions list',
-      data: subscriptions,
-      error: false,
+        message: 'All subscriptions list',
+        data: subscriptions,
+        error: false,
       });
     })
     .catch((error) => {
