@@ -1,9 +1,7 @@
 const express = require('express');
 const subsController = require('../controllers/subscription');
-const subsValidations = require('../validations/subscription');
-const router = require('.');
 
-const rounter = express.Router();
+const router = express.Router();
 
 router
   .get('/', subsController.getAllSubs)

@@ -2,17 +2,17 @@ const Subscription = require('../models/Subscription');
 
 const getAllSubs = (req, res) => {
   Subscription.find()
-    .then((subscriptions) => {
+    .then((subscriptions) => { 
       return res.status(200).json({
-        message: "All subscriptions list",
-        data: subscriptions,
-        error: false
+      message: 'All subscriptions list',
+      data: subscriptions,
+      error: false,
       });
     })
     .catch((error) => {
       return res.status(500).json({
-        message: "Internal error",
-        error
+        message: 'Internal error',
+        error,
       });
     });
 };
@@ -25,13 +25,13 @@ const getSubById = (req, res) => {
       return res.status(200).json({
         message: 'Subscription found',
         data: subscription,
-        error: false
+        error: false,
       });
     })
     .catch((error) => {
       return res.json({
-        message: "Internal error",
-        error
+        message: 'Internal error',
+        error,
       });
     });
 };
@@ -43,12 +43,12 @@ const updateSub = (req, res) => {
   Subscription.findByIdAndUpdate(
     id,
     { classes },
-    { new: true }
+    { new: true },
   )
     .then((result) => {
       if (!result) {
         return res.status(404).json({
-          message: '${id} Subscription was not found'
+          message: `${id} Subscription was not found`,
         });
       }
       return res.status(200).json(result);
@@ -56,4 +56,10 @@ const updateSub = (req, res) => {
     .catch((error) => {
       return res.status(400).json(error);
     });
+};
+
+module.exports = {
+  getAllSubs,
+  getSubById,
+  updateSub,
 };
