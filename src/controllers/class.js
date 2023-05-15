@@ -1,141 +1,95 @@
 const express = require('express');
 
 const fs = require('fs');
+const Class = require('../models/Class');
 
 const routerClass = express.Router();
-
 const activities = require('../data/activity.json');
 const classes = require('../data/class.json');
 const trainers = require('../data/trainer.json');
 
-routerClass.get('/all/:filter', (req, res) => {
-  const filterCall = req.params.filter;
+const getAllClass = (req, res) => {
+  const { query } = req;
 
-  if (filterCall !== 'all') {
-    const found = classes.filter((element) => element.activity === filterCall
-        || element.trainer === filterCall
-        || element.day === filterCall
-        || element.time === filterCall
-        || element.capacity === parseInt(filterCall, 10));
-
-    if (found.length !== 0) {
-      res.status(200).send({
-        msg: `Listing all Classes with ${filterCall}`,
-        classes: found,
+  Class.find(query)
+    .then((allClass) => {
+      res.status(200).json({
+        message: 'Complete class list',
+        data: allClass,
+        error: false,
       });
-    } else {
-      res.status(404).send({
-        msg: `Classes with ${filterCall} doesn't exists`,
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: 'An error ocurred',
+        error,
       });
-    }
-  } else {
-    res.status(200).send({
-      msg: 'Listing all Classes',
-      class: classes,
     });
-  }
-});
+};
 
-routerClass.get('/find/:id', (req, res) => {
-  // read the json file and convert it to an array
-  const data = JSON.parse(fs.readFileSync('./src/data/class.json', 'utf8'));
+const getClassById = (req, res) => {
+  const { id } = req.params;
 
-  // create id variable and assign the id from the request
-  const id = parseInt(req.params.id, 10);
+  Class.findById(id)
+    .then((classId) => res.status(200).json({
+      message: `Class ${classId.activity} found! `,
+      data: classId,
+      error: false,
+    }))
+    .catch((error) => res.json({
+      message: 'An error ocurred',
+      error,
+    }));
+};
 
-  // find the index of the element with the id from the request
-  const classIndex = data.findIndex((element) => element.id === id);
+const createClass = (req, res) => {
+  const {
+    activity, trainer, day, time, capacity,
+  } = req.body;
+  Class.create({
+    activity, trainer, day, time, capacity,
+  })
+    .then((result) => res.status(201).json(result))
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
 
-  // if the element doesn't exists, return an error
-  if (classIndex === -1) {
-    return res
-      .status(404)
-      .json({ msg: `Class with id: ${req.params.id} doesn't exist.` }); // if the element doesn't exists, return an error
-  }
+const updateClass = (req, res) => {
+  const { id } = req.params;
+  const {
+    activity,
+    trainer,
+    day,
+    time,
+    capacity,
+  } = req.body;
 
-  return res.json({ msg: 'Class finded', class: data[classIndex] }); // return a message and the updated element
-});
-
-// create a new class
-routerClass.post('/create', (req, res) => {
-  // read the json file and convert it to an array
-  const data = JSON.parse(fs.readFileSync('./src/data/class.json', 'utf8'));
-
-  // create the new user
-  const newClass = {
-    id: data.length + 1,
-    activity: req.body.activity,
-    trainer: req.body.trainer,
-    day: req.body.day,
-    time: req.body.time,
-    capacity: req.body.capacity,
-  };
-
-  // if any of the fields is missing, return an error
-  if (
-    !newClass.activity
-    || !newClass.trainer
-    || !newClass.day
-    || !newClass.time
-    || !newClass.capacity
-  ) {
-    res.status(400).send({ msg: 'Please include all fields' });
-  }
-
-  // create new array with previous data and the new user
-  const newData = [...data, newClass];
-
-  // save the new array in the file
-  fs.writeFile(
-    './src/data/class.json',
-    JSON.stringify(newData, null, 2),
-    (err) => {
-      if (err) {
-        res.status(500).send({ msg: err });
-      }
-      res.send(newClass);
+  Class.findByIdAndUpdate(
+    id,
+    {
+      activity,
+      trainer,
+      day,
+      time,
+      capacity,
     },
-  );
-});
-
-// update a class
-routerClass.put('/update/:id', (req, res) => {
-  // read the json file and convert it to an array
-
-  const data = JSON.parse(fs.readFileSync('./src/data/class.json', 'utf8'));
-
-  // create id variable and assign the id from the request
-  const id = parseInt(req.params.id, 10);
-
-  // find the index of the element with the id from the request
-  const classIndex = data.findIndex((element) => element.id === id);
-
-  // if the element doesn't exists, return an error
-  if (classIndex === -1) {
-    res
-      .status(404)
-      .send({ msg: `Class with id: ${req.params.id} doesn't exist.` }); // if the element doesn't exists, return an error
-  }
-
-  const updateClass = req.body; // create variable with the body of the request
-  const updatedElement = {
-    ...data[classIndex], // spread operator to copy the previous data of the element
-    ...updateClass, // spread operator to copy the body of the request
-    id, // assign the id from the request
-  };
-
-  data[classIndex] = updatedElement; // update the element
-  fs.writeFile(
-    './src/data/class.json',
-    JSON.stringify(data, null, 2),
-    (err) => {
-      if (err) {
-        res.status(500).send({ msg: err });
+    { new: true },
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          msg: `Class with id: ${id} doesn't exist.`,
+        });
       }
-      res.send({ msg: 'Class updated', updatedElement }); // return a message and the updated element
-    },
-  );
-});
+      return res.status(200).json({
+        msg: 'Class updated',
+        result,
+      });
+    })
+    .catch((error) => res.status(400).json(error));
+};
 
 routerClass.delete('/delete/:id', (req, res) => {
   const foundClass = classes.find((element) => element.id === parseInt(req.params.id, 10));
@@ -209,4 +163,6 @@ routerClass.put('/assign/activity/:id', (req, res) => {
   }
 });
 
-module.exports = routerClass;
+module.exports = {
+  routerClass, getAllClass, getClassById, createClass, updateClass,
+};
