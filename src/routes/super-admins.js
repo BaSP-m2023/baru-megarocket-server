@@ -8,6 +8,7 @@ superAdminsRouter
   .post('/', superAdminsValidator.validateCreation, superAdminsController.createSuperAdmin)
   .delete('/:id', superAdminsController.deleteSuperAdmin)
   .get('/', superAdminsController.getAllSuperAdmins)
-  .get('/:id', superAdminsController.getSuperAdminById);
+  .get('/:id', superAdminsController.getSuperAdminById)
+  .put('/:id', superAdminsValidator.validateUpdate, superAdminsController.updateSuperAdmin);
 
 module.exports = superAdminsRouter;

@@ -71,10 +71,44 @@ const getSuperAdminById = (req, res) => {
       error,
     }));
 };
+const updateSuperAdmin = (req, res) => {
+  const { id } = req.params;
+  const {
+    name, lastName, email, password,
+  } = req.body;
+
+  SuperAdmin.findByIdAndUpdate(
+    id,
+    {
+      name,
+      lastName,
+      email,
+      password,
+    },
+    { new: true },
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          msg: `Super Admin with id: ${id} was not found`,
+        });
+      }
+      return res.status(200).json({
+        message: `Super Admin with id: ${id} updated`,
+        data: result,
+        error: false,
+      });
+    })
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred',
+      error,
+    }));
+};
 
 module.exports = {
   createSuperAdmin,
   deleteSuperAdmin,
   getAllSuperAdmins,
   getSuperAdminById,
+  updateSuperAdmin,
 };
