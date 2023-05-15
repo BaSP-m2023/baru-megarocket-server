@@ -1,20 +1,18 @@
 const mongoose = require('mongoose');
 
-const subsSchema = new mongoose.Schema({
-  className: {
-    type: String,
+const { Schema } = mongoose;
+
+const subsSchema = new Schema({
+  classes: {
+    type: Schema.Types.ObjectId,
     required: true,
   },
   members: {
-    type: String,
+    type: [Schema.Types.ObjectId],
     required: true,
   },
   date: {
-    type: Date,
-  },
-  id: {
-    type: Number,
-    require: true,
+    type: String,
   },
 });
 

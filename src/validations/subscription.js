@@ -3,10 +3,9 @@ const Joi = require('joi');
 // eslint-disable-next-line consistent-return
 const validateCreation = (req, res, next) => {
   const subsValidation = Joi.object({
-    className: Joi.string().pattern(/^[a-zA-Z]+$/).min(3).required(),
-    members: Joi.string().pattern(/^[a-zA-Z]+$/).min(3).required(),
-    date: Joi.date().default(Date.now),
-    id: Joi.number(),
+    classes: Joi.string().hex().length(24),
+    members: Joi.array().items(Joi.string().hex().length(24)),
+    date: Joi.string().isoDate(),
   });
 
   const validation = subsValidation.validate(req.body);

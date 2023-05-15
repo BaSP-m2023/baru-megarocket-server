@@ -1,18 +1,15 @@
-const subscription = require('../models/subscription');
+const Subscription = require('../models/Subscription');
 
 const createSubs = (req, res) => {
-  const {
-    className, members, date, id,
-  } = req.body;
-  subscription.create({
-    className, members, date, id,
-  }).then((result) => res.status(201).json(result))
+  Subscription.create(
+    req.body,
+  ).then((result) => res.status(201).json(result))
     .catch((error) => res.status(400).json({ message: 'Invalid request: incorrect parameters provided!', error }));
 };
 
 const deleteSubs = (req, res) => {
   const { id } = req.params;
-  subscription.findByIdAndDelete(id)
+  Subscription.findByIdAndDelete(id)
     .then((result) => {
       if (!result) {
         return res.status(404).json({
