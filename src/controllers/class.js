@@ -53,16 +53,23 @@ const createClass = (req, res) => {
 const deleteClass = (req, res) => {
   const { id } = req.params;
 
-  Class.findByIdAndDelete(id)
+  Class.findByIdAndUpdate(id, { deleted: true })
     .then((result) => {
       if (!result) {
         return res.status(404).json({
           msg: `Class with id: ${id} not found`,
         });
       }
-      return res.status(200).json({
-        msg: `Class with id: ${id} successfully deleted`,
-      });
+      if (result.deleted) {
+        return res.status(404).json({
+          msg: `Class with id: ${id} was already deleted`,
+        });
+      }
+      return Class.find({ deleted: true })
+        .then((filter) => res.status(200).json({
+          msg: 'Deleted classes',
+          filter,
+        }));
     })
     .catch((error) => res.status(400).json({
       message: 'There was an error',

@@ -22,5 +22,9 @@ const classSchema = new Schema({
     type: Number,
     required: true,
   },
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 module.exports = mongoose.model('Class', classSchema);
