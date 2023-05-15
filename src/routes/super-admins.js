@@ -6,6 +6,8 @@ const superAdminsRouter = express.Router();
 
 superAdminsRouter
   .post('/', superAdminsValidator.validateCreation, superAdminsController.createSuperAdmin)
-  .delete('/:id', superAdminsController.deleteSuperAdmin);
+  .delete('/:id', superAdminsController.deleteSuperAdmin)
+  .get('/', superAdminsController.getAllSuperAdmins)
+  .get('/:id', superAdminsController.getSuperAdminById);
 
 module.exports = superAdminsRouter;

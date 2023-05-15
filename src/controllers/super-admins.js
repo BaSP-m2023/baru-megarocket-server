@@ -37,8 +37,44 @@ const deleteSuperAdmin = async (req, res) => {
       error,
     }));
 };
+const getAllSuperAdmins = (req, res) => {
+  SuperAdmin.find()
+    .then((superAdmins) => res.status(200).json({
+      message: 'Super Admins list',
+      data: superAdmins,
+      error: false,
+    }))
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred',
+      error,
+    }));
+};
+
+const getSuperAdminById = (req, res) => {
+  const { id } = req.params;
+
+  SuperAdmin.findById(id, 'name lastName email')
+    .then((superAdmin) => {
+      if (!superAdmin) {
+        return res.status(404).json({
+          msg: `Super Admin with id: ${id} was not found`,
+        });
+      }
+      return res.status(200).json({
+        message: 'Super Admin found',
+        data: superAdmin,
+        error: false,
+      });
+    })
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred',
+      error,
+    }));
+};
 
 module.exports = {
   createSuperAdmin,
   deleteSuperAdmin,
+  getAllSuperAdmins,
+  getSuperAdminById,
 };
