@@ -6,7 +6,7 @@ const classSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true,
   },
-  trainers: {
+  trainer: {
     type: [Schema.Types.ObjectId],
     required: true,
   },
