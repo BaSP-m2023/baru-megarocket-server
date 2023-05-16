@@ -14,11 +14,11 @@ const deleteSubs = (req, res) => {
     .then((result) => {
       if (!result) {
         return res.status(404).json({
-          msg: `Member with ${id} not found`,
+          msg: `Subscription with ${id} not found`,
         });
       }
       return res.status(200).json({
-        message: 'User deleted',
+        message: 'Subscription deleted',
       });
     })
     .catch((error) => res.status(400).json({ message: 'Invalid request: incorrect parameters provided!', error }));
