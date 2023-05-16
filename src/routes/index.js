@@ -16,4 +16,7 @@ router.use('/activity', activity);
 router.use('/class', classes);
 router.use('/subscription', subscriptions);
 
+router.use('/members', members);
+router.use('/activity', activity);
+
 module.exports = router;
