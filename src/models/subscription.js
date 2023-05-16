@@ -4,7 +4,13 @@ const { Schema } = mongoose;
 
 const subSchema = new Schema({
   classes: {
-    type: Object,
+    type: Schema.ObjectId,
+  },
+  members: [{
+    type: Schema.ObjectId,
+  }],
+  date: {
+    type: Date,
   },
 });
 

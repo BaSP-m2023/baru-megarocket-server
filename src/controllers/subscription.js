@@ -39,11 +39,15 @@ const getSubById = (req, res) => {
 
 const updateSub = (req, res) => {
   const { id } = req.params;
-  const { classes } = req.body;
+  const { classes, members, date } = req.body;
 
   Subscription.findByIdAndUpdate(
     id,
-    { classes },
+    {
+      classes,
+      members,
+      date,
+    },
     { new: true },
   )
     .then((result) => {
