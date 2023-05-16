@@ -1,4 +1,4 @@
-const Trainer = require('../models/Trainer');
+const Trainer = require('../models/trainer');
 
 const createTrainer = (req, res) => {
   const {
@@ -85,8 +85,56 @@ const updateTrainer = (req, res) => {
     }));
 };
 
+const deleteTrainer = (req, res) => {
+  Trainer.findByIdAndDelete(req.params.id)
+    .then((trainer) => {
+      if (!trainer) {
+        res.status(404).json({
+          message: 'Trainer not found',
+          data: undefined,
+          error: true,
+        });
+      } else {
+        res.status(200).json({
+          message: 'Trainer deleted',
+          data: trainer,
+          error: false,
+        });
+      }
+    })
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
+
+const getTrainerById = (req, res) => {
+  Trainer.findById(req.params.id)
+    .then((trainer) => {
+      if (!trainer) {
+        res.status(404).json({
+          message: 'Trainer not found',
+          data: undefined,
+          error: true,
+        });
+      } else {
+        res.status(200).json({
+          message: 'Trainer found',
+          data: trainer,
+          error: false,
+        });
+      }
+    })
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
+
 module.exports = {
   createTrainer,
   updateTrainer,
   getTrainers,
+  deleteTrainer,
+  getTrainerById,
 };

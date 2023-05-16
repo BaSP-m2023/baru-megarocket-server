@@ -212,13 +212,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/class/search/:filter",
+              "raw": "http://localhost:4000/api/class/search/:filter",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
                 "search",
                 ":filter"
@@ -239,13 +240,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/class/:id",
+              "raw": "http://localhost:4000/api/class/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
                 ":id"
               ],
@@ -274,13 +276,14 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/class/create",
+              "raw": "http://localhost:4000/api/class/create",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
                 "create"
               ]
@@ -294,15 +297,15 @@
             "method": "PUT",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/class/update/:id",
+              "raw": "http://localhost:4000/api/class/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
-                "update",
                 ":id"
               ],
               "variable": [
@@ -321,15 +324,15 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/class/delete/:id",
+              "raw": "http://localhost:4000/api/class/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
-                "delete",
                 ":id"
               ],
               "variable": [
@@ -357,13 +360,14 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/class/assign/activity/:id",
+              "raw": "http://localhost:4000/api/class/assign/activity/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
                 "assign",
                 "activity",
@@ -394,13 +398,14 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/class/assign/trainer/:id",
+              "raw": "http://localhost:4000/api/class/assign/trainer/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
                 "assign",
                 "trainer",
@@ -645,24 +650,12 @@
 					"response": []
 				},
 				{
-					"name": "Get subscription by filter",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "Delete subscription",
 					"request": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:4000/api/subscription/6462739d88a89be564a81258",
+							"raw": "http://localhost:4000/api/subscription/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -671,20 +664,47 @@
 							"path": [
 								"api",
 								"subscription",
-								"6462739d88a89be564a81258"
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6462735088a89be564a81256"
+								}
 							]
 						}
 					},
 					"response": []
-				},
+        },
         {
-          "name": "Create member",
+          "name": "Get subscription by Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/subscription/6462739d88a89be564a81258",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "subscription",
+                "6462739d88a89be564a81258"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create subscription",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"id\": \"4\",\r\n    \"class\": {\r\n      \"id\": \"1\",\r\n      \"name\": \"musculation\",\r\n      \"date\": \"05/08/2023\",\r\n      \"trainer\": {\r\n        \"id\": \"1\",\r\n        \"name\": \"Mike\",\r\n        \"lastName\": \"Lol\",\r\n        \"salary\": 10000\r\n      },\r\n      \"members\": [\r\n        {\r\n          \"id\": \"1\",\r\n          \"name\": \"John\",\r\n          \"lastName\": \"Doe\",\r\n          \"membership\": {\r\n            \"id\": \"1\",\r\n            \"type\": \"Black\"\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"2\",\r\n          \"name\": \"Jane\",\r\n          \"lastName\": \"Vane\",\r\n          \"membership\": {\r\n            \"id\": \"2\",\r\n            \"type\": \"Classic\"\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }",
+              "raw": "{\r\n    \"classes\": \"64622a0fd5fbdb4707b95366\",\r\n    \"members\": [\"645f0a6b1c7833a336b2c277\", \"645f0a6b1c7833a336b2c200\"],\r\n    \"date\": \"2023-05-15T00:00:00.000Z\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -692,40 +712,16 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/subscriptions",
+              "raw": "http://localhost:4000/api/subscription/",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
-                "subscriptions"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Delete subscription",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:4000/subscriptions/:id",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "subscriptions",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "4"
-                }
+                "api",
+                "subscription",
+                ""
               ]
             }
           },
@@ -1066,6 +1062,7 @@
               ],
               "port": "4000",
               "path": [
+                "api",
                 "activity"
               ]
             }
@@ -1085,6 +1082,7 @@
               ],
               "port": "4000",
               "path": [
+                "api",
                 "activity",
                 ":id"
               ],
@@ -1105,7 +1103,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"asdasd\"\r\n    }",
+              "raw": "{\r\n    \"name\": \"Boxing\",\r\n \"description\": \"activity\",\r\n \"isActive\": true }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1120,8 +1118,8 @@
               ],
               "port": "4000",
               "path": [
-                "activity",
-                "post"
+                "api",
+                "activity"
               ]
             }
           },
@@ -1149,6 +1147,7 @@
               ],
               "port": "4000",
               "path": [
+                "api",
                 "activity",
                 ":id"
               ],
@@ -1184,6 +1183,7 @@
               ],
               "port": "4000",
               "path": [
+                "api",
                 "activity",
                 ":id"
               ],
