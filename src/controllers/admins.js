@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-const Admin = require('../models/admins');
-=======
 const Admin = require('../models/Admin');
->>>>>>> master
 
 const createAdmin = (req, res) => {
   const {

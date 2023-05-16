@@ -1,8 +1,6 @@
 /* eslint-disable no-useless-escape */
 const Joi = require('joi');
 
-<<<<<<< HEAD
-=======
 const validateCreation = (req, res, next) => {
   const activityValidation = Joi.object({
     name: Joi.string().min(4).pattern(/^[a-zA-Z]+$/).required(),
@@ -19,7 +17,6 @@ const validateCreation = (req, res, next) => {
   });
 };
 
->>>>>>> master
 const validateUpdateActivity = (req, res, next) => {
   const validationActivity = Joi.object({
     name: Joi.string().min(3).max(20).required(),
@@ -37,9 +34,6 @@ const validateUpdateActivity = (req, res, next) => {
 };
 
 module.exports = {
-<<<<<<< HEAD
-=======
   validateCreation,
->>>>>>> master
   validateUpdateActivity,
 };

@@ -1,25 +1,21 @@
-const activity = require('../models/activity');
+const Activity = require('../models/activity');
 
-const createActivity = (req, res) => {
-  const { name, description, isActive } = req.body;
-
-  activity.create({
-    name,
-    description,
-    isActive,
-  })
-    .then((result) => res.status(201).json(result))
-    .catch((error) => res.status(400).json({
-      message: error,
-      data: undefined,
-      error: true,
-    }));
+const getAllActivity = (req, res) => {
+  Activity.find()
+    .then((activity) => res.status(200).json(
+      activity,
+    ))
+    .catch((error) => {
+      res.status(500).json({
+        message: 'An error ocurred!',
+        error,
+      });
+    });
 };
 
-const deleteActivity = (req, res) => {
+const getActivityById = (req, res) => {
   const { id } = req.params;
 
-<<<<<<< HEAD
   Activity.findById(id, 'name')
     .then((activity) => res.status(200).json({
       message: `Activity found! it was ${activity.name}`,
@@ -28,31 +24,10 @@ const deleteActivity = (req, res) => {
     }))
     .catch((error) => res.status(404).json({
       message: 'An error ocurred',
-=======
-  activity.findByIdAndDelete(id)
-    .then((result) => {
-      if (!result) {
-        return res.status(400).json({
-          msg: `Activity with id ${id} was not found`,
-          data: undefined,
-          error: true,
-        });
-      }
-      return res.status(200).json({
-        message: 'Activity deleted!',
-        data: activity,
-        error: false,
-      });
-    })
-    .catch((error) => res.status(400).json({
-      message: 'An error ocurred!',
-      data: undefined,
->>>>>>> master
       error,
     }));
 };
 
-<<<<<<< HEAD
 const updateActivity = (req, res) => {
   const { id } = req.params;
   const { name, description } = req.body;
@@ -71,16 +46,15 @@ const updateActivity = (req, res) => {
           message: `Activity with id: ${id} was not found`,
         });
       }
-      return res.status(201).json(activity);
+      return res.status(200).json(activity);
     })
     .catch((error) => {
       res.status(400).json(error);
     });
 };
 
-=======
->>>>>>> master
 module.exports = {
-  createActivity,
-  deleteActivity,
+  getAllActivity,
+  getActivityById,
+  updateActivity,
 };
