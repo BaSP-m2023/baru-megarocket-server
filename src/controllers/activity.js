@@ -1,9 +1,9 @@
-const Activity = require('../models/Activity');
+const activity = require('../models/Activity');
 
 const createActivity = (req, res) => {
   const { name, description, isActive } = req.body;
 
-  Activity.create({
+  activity.create({
     name,
     description,
     isActive,
@@ -18,7 +18,7 @@ const createActivity = (req, res) => {
 const deleteActivity = (req, res) => {
   const { id } = req.params;
 
-  Activity.findByIdAndDelete(id)
+  activity.findByIdAndDelete(id)
     .then((result) => {
       if (!result) {
         return res.status(400).json({
