@@ -11,6 +11,6 @@ classRouter
   .put('/:id', validations.validateUpdate, classController.updateClass)
   .put('/assign/trainer/:id', validations.validateAssignTrainer, classController.assignTrainer)
   .put('/assign/activity/:id', validations.validateAssignActivity, classController.assignActivity)
-  .put('/:id', classController.deleteClass);
+  .put('/delete/:id', classController.deleteClass);
 
 module.exports = classRouter;

@@ -54,8 +54,8 @@ const validateAssignActivity = (req, res, next) => {
 
 const validateUpdate = (req, res, next) => {
   const classValidation = Joi.object({
-    activity: Joi.string().min(3),
-    trainer: Joi.string().min(3),
+    activity: Joi.string().hex().length(24).required(),
+    trainer: Joi.array().items(Joi.string().hex().length(24)).required(),
     day: Joi.string().regex(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)$/),
     time: Joi.string().regex(/^([0-9]|[01]\d|2[0-3]):([0-5]\d)$/),
     capacity: Joi.number().min(1),
