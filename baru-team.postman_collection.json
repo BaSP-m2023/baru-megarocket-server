@@ -188,13 +188,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/class/search/:filter",
+              "raw": "http://localhost:4000/api/class/search/:filter",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
                 "search",
                 ":filter"
@@ -215,13 +216,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/class/:id",
+              "raw": "http://localhost:4000/api/class/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
                 ":id"
               ],
@@ -250,13 +252,14 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/class/create",
+              "raw": "http://localhost:4000/api/class/create",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
                 "create"
               ]
@@ -270,15 +273,15 @@
             "method": "PUT",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/class/update/:id",
+              "raw": "http://localhost:4000/api/class/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
-                "update",
                 ":id"
               ],
               "variable": [
@@ -297,15 +300,15 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/class/delete/:id",
+              "raw": "http://localhost:4000/api/class/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
-                "delete",
                 ":id"
               ],
               "variable": [
@@ -333,13 +336,14 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/class/assign/activity/:id",
+              "raw": "http://localhost:4000/api/class/assign/activity/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
                 "assign",
                 "activity",
@@ -370,13 +374,14 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/class/assign/trainer/:id",
+              "raw": "http://localhost:4000/api/class/assign/trainer/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "class",
                 "assign",
                 "trainer",
@@ -642,62 +647,65 @@
           },
           "response": []
         },
-        {
-          "name": "Create member",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"id\": \"4\",\r\n    \"class\": {\r\n      \"id\": \"1\",\r\n      \"name\": \"musculation\",\r\n      \"date\": \"05/08/2023\",\r\n      \"trainer\": {\r\n        \"id\": \"1\",\r\n        \"name\": \"Mike\",\r\n        \"lastName\": \"Lol\",\r\n        \"salary\": 10000\r\n      },\r\n      \"members\": [\r\n        {\r\n          \"id\": \"1\",\r\n          \"name\": \"John\",\r\n          \"lastName\": \"Doe\",\r\n          \"membership\": {\r\n            \"id\": \"1\",\r\n            \"type\": \"Black\"\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"2\",\r\n          \"name\": \"Jane\",\r\n          \"lastName\": \"Vane\",\r\n          \"membership\": {\r\n            \"id\": \"2\",\r\n            \"type\": \"Classic\"\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:4000/subscriptions",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "subscriptions"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Delete subscription",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:4000/subscriptions/:id",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "subscriptions",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "4"
-                }
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
+				{
+					"name": "Create subscription",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"classes\": \"645f0a6b1c7833a336b2c127\",\r\n  \"members\":[\"645f0a6b1c7833a336b2c127\"],\r\n\r\n  \"date\": \"2023-05-15\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/subscription/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"subscription",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete subscription",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/subscription/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"subscription",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6462735088a89be564a81256"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
     {
       "name": "Super-admin",
       "item": [
@@ -707,22 +715,16 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/super-admins/find/:id",
+              "raw": "http://localhost:4000/api/super-admins/6462ab66d10aaeb2865bc341",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "super-admins",
-                "find",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "2"
-                }
+                "6462ab66d10aaeb2865bc341"
               ]
             }
           },
@@ -734,21 +736,16 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/super-admins/:id",
+              "raw": "http://localhost:4000/api/super-admins/6462ab8fd10aaeb2865bc345",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "super-admins",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "1"
-                }
+                "6462ab8fd10aaeb2865bc345"
               ]
             }
           },
@@ -761,7 +758,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "  {\r\n    \"id\": 1,\r\n    \"first_name\": \"Create\",\r\n    \"last_name\": \"Kempson\",\r\n    \"email\": \"jkempson1@nbcnews.com\",\r\n    \"password\": \"Dy7ruK830c33\"\r\n  }",
+              "raw": "  {\r\n    \"name\": \"Create\",\r\n    \"lastName\": \"Kempson\",\r\n    \"email\": \"jkempson1@nbcnews.com\",\r\n    \"password\": \"Dy7ruK830c33\"\r\n  }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -769,20 +766,22 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/super-admins/?=1",
+              "raw": "http://localhost:4000/api/super-admins/",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "super-admins",
                 ""
               ],
               "query": [
                 {
-                  "key": null,
-                  "value": "1"
+                  "key": "",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -796,7 +795,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "  {\r\n    \"id\": 1,\r\n    \"first_name\": \"edited\",\r\n    \"last_name\": \"Kempson\",\r\n    \"email\": \"jkempson1@nbcnews.com\",\r\n    \"password\": \"Dy7ruK830c33\"\r\n  }",
+              "raw": "  {\r\n    \"name\": \"edited\",\r\n    \"lastName\": \"Kempson\",\r\n    \"email\": \"jkempson1@nbcnews.com\",\r\n    \"password\": \"Dy7ruK830c33\"\r\n  }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -804,47 +803,16 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/super-admins/:id",
+              "raw": "http://localhost:4000/api/super-admins/6462abc5d10aaeb2865bc34b",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "super-admins",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "11"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get super admin by filter",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:4000/super-admins/search?first_name=haze",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "super-admins",
-                "search"
-              ],
-              "query": [
-                {
-                  "key": "first_name",
-                  "value": "haze"
-                }
+                "6462abc5d10aaeb2865bc34b"
               ]
             }
           },
@@ -856,13 +824,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/super-admins",
+              "raw": "http://localhost:4000/api/super-admins",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "super-admins"
               ]
             }
@@ -872,149 +841,149 @@
       ]
     },
     {
-			"name": "Trainer",
-			"item": [
-				{
-					"name": "Get all trainers",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/api/trainer",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
+      "name": "Trainer",
+      "item": [
+        {
+          "name": "Get all trainers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/trainer",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
                 "api",
-								"trainer"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create trainer",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": " {\r\n    \"firstName\": \"Fka\",\r\n    \"lastName\": \"Twigs\",\r\n    \"dni\": \"35685214\",\r\n    \"phone\": \"7644213054\",\r\n    \"email\": \"thatsinger@gmail.com\",\r\n    \"password\": \"3ph3ao3KdW\",\r\n    \"salary\": \"$40090.27\",\r\n    \"isActive\": true\n  }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4000/api/trainer",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-                "api",
-								"trainer"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get trainer by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/api/trainer/:id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-                "api",
-								"trainer",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "3"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete trainer",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/api/trainer/:id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-                "api",
-								"trainer",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "16"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Edit trainer",
-					"request": {
-						"method": "PUT",
-						"header": [],
+                "trainer"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create trainer",
+          "request": {
+            "method": "POST",
+            "header": [],
             "body": {
-							"mode": "raw",
-							"raw": "{\n\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4000/api/trainer/:id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
+              "mode": "raw",
+              "raw": " {\r\n    \"firstName\": \"Fka\",\r\n    \"lastName\": \"Twigs\",\r\n    \"dni\": \"35685214\",\r\n    \"phone\": \"7644213054\",\r\n    \"email\": \"thatsinger@gmail.com\",\r\n    \"password\": \"3ph3ao3KdW\",\r\n    \"salary\": \"$40090.27\",\r\n    \"isActive\": true\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/trainer",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
                 "api",
-								"trainer",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": null
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
+                "trainer"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get trainer by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/trainer/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "trainer",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete trainer",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/trainer/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "trainer",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "16"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Edit trainer",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/trainer/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "trainer",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
     {
       "name": "Activity",
       "item": [
@@ -1031,6 +1000,7 @@
               ],
               "port": "4000",
               "path": [
+                "api",
                 "activity"
               ]
             }
@@ -1050,6 +1020,7 @@
               ],
               "port": "4000",
               "path": [
+                "api",
                 "activity",
                 ":id"
               ],
@@ -1070,7 +1041,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"asdasd\"\r\n    }",
+              "raw": "{\r\n    \"name\": \"Boxing\",\r\n \"description\": \"activity\",\r\n \"isActive\": true }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1085,8 +1056,8 @@
               ],
               "port": "4000",
               "path": [
-                "activity",
-                "post"
+                "api",
+                "activity"
               ]
             }
           },
@@ -1114,6 +1085,7 @@
               ],
               "port": "4000",
               "path": [
+                "api",
                 "activity",
                 ":id"
               ],
@@ -1149,6 +1121,7 @@
               ],
               "port": "4000",
               "path": [
+                "api",
                 "activity",
                 ":id"
               ],
