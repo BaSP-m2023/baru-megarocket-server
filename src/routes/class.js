@@ -10,6 +10,6 @@ classRouter
   .post('/', validations.validateCreation, classController.createClass)
   .put('/:id', validations.validateUpdate, classController.updateClass)
   .put('/:id', classController.deleteClass)
-  .put('/assign/trainer', validations.validateAssignTrainer, classController.assignTrainer);
+  .put('/assign/trainer/:id', validations.validateAssignTrainer, classController.assignTrainer);
 
 module.exports = classRouter;

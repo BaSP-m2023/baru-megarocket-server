@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 const validateCreation = (req, res, next) => {
   const classValidation = Joi.object({
-    activity: Joi.string().hex().length(24).required(),
+    activity: Joi.array().items(Joi.string().hex().length(24)).required(),
     trainer: Joi.array().items(Joi.string().hex().length(24)).required(),
     day: Joi.string().regex(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)$/).required(),
     time: Joi.string().regex(/^([0-9]|[01]\d|2[0-3]):([0-5]\d)$/).required(),
@@ -20,14 +20,7 @@ const validateCreation = (req, res, next) => {
 
 const validateAssignTrainer = (req, res, next) => {
   const trainerValidation = Joi.object({
-    firstName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).required(),
-    lastName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).required(),
-    dni: Joi.string().pattern(/^\d+$/).min(8).required(),
-    phone: Joi.string().min(10),
-    email: Joi.string().email().required(),
-    password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/).min(8).required(),
-    salary: Joi.string(),
-    isActive: Joi.boolean(),
+    trainer: Joi.array().items(Joi.string().hex().length(24)).required(),
   });
 
   const validation = trainerValidation.validate(req.body);
@@ -44,8 +37,8 @@ const validateAssignTrainer = (req, res, next) => {
 
 const validateUpdate = (req, res, next) => {
   const classValidation = Joi.object({
-    activity: Joi.string().min(3),
-    trainer: Joi.string().min(3),
+    activity: Joi.array().items(Joi.string().hex().length(24)).required(),
+    trainer: Joi.array().items(Joi.string().hex().length(24)).required(),
     day: Joi.string().regex(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)$/),
     time: Joi.string().regex(/^([0-9]|[01]\d|2[0-3]):([0-5]\d)$/),
     capacity: Joi.number().min(1),

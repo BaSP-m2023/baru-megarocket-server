@@ -117,7 +117,11 @@ const assignTrainer = (req, res) => {
   const { id } = req.params;
   const { trainer } = req.body;
 
-  Class.findByIdAndUpdate(id, trainer, { new: true })
+  Class.findByIdAndUpdate(
+    id,
+    { trainer },
+    { new: true },
+  )
     .then((response) => {
       if (!response) {
         return res.status(404).json({
