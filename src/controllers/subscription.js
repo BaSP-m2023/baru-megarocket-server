@@ -1,5 +1,5 @@
 /* eslint-disable arrow-body-style */
-const Subscription = require('../models/subscription');
+const Subscription = require('../models/Subscription');
 
 const createSubs = (req, res) => {
   Subscription.create(
@@ -46,12 +46,6 @@ const getSubById = (req, res) => {
 
   Subscription.findById(id)
     .then((subscription) => {
-      if (res.data == null) {
-        return res.status(404).json({
-          message: 'Subscription not found',
-          data: undefined,
-        });
-      }
       return res.status(200).json({
         message: 'Subscription found',
         data: subscription,
@@ -59,8 +53,8 @@ const getSubById = (req, res) => {
       });
     })
     .catch((error) => {
-      return res.json({
-        message: 'Internal error',
+      return res.status(404).json({
+        message: `Subscription ${id} not found`,
         error,
       });
     });
