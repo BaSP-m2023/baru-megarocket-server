@@ -36,6 +36,7 @@ const getClassById = (req, res) => {
       error,
     }));
 };
+
 const createClass = (req, res) => {
   const {
     activity, trainer, day, time, capacity,
@@ -48,6 +49,41 @@ const createClass = (req, res) => {
       message: 'An error ocurred!',
       error,
     }));
+};
+
+const updateClass = (req, res) => {
+  const { id } = req.params;
+  const {
+    activity,
+    trainer,
+    day,
+    time,
+    capacity,
+  } = req.body;
+
+  Class.findByIdAndUpdate(
+    id,
+    {
+      activity,
+      trainer,
+      day,
+      time,
+      capacity,
+    },
+    { new: true },
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          msg: `Class with id: ${id} doesn't exist.`,
+        });
+      }
+      return res.status(200).json({
+        msg: 'Class updated',
+        result,
+      });
+    })
+    .catch((error) => res.status(400).json(error));
 };
 
 const deleteClass = (req, res) => {
@@ -78,5 +114,5 @@ const deleteClass = (req, res) => {
 };
 
 module.exports = {
-  routerClass, getAllClass, getClassById, createClass, deleteClass,
+  routerClass, getAllClass, getClassById, createClass, updateClass, deleteClass,
 };

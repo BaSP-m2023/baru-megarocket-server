@@ -8,6 +8,7 @@ classRouter
   .get('/search', classController.getAllClass)
   .get('/:id', classController.getClassById)
   .post('/', validations.validateCreation, classController.createClass)
+  .put('/:id', validations.validateUpdate, classController.updateClass)
   .put('/:id', classController.deleteClass);
 
 module.exports = classRouter;

@@ -1,69 +1,29 @@
-const express = require('express');
-const fs = require('fs');
-const subscriptions = require('../data/subscription.json');
+const Subscription = require('../models/Subscription');
 
-const router = express.Router();
+const createSubs = (req, res) => {
+  Subscription.create(
+    req.body,
+  ).then((result) => res.status(201).json(result))
+    .catch((error) => res.status(400).json({ message: 'Invalid request: incorrect parameters provided!', error }));
+};
 
-router.put('/:id', (req, res) => {
-  const subId = req.params.id;
-  const found = subscriptions.some((sub) => sub.id.toString() === subId);
-  if (found) {
-    const updSub = req.body;
-    subscriptions.forEach((sub) => {
-      if (sub.id.toString() === subId) {
-        // eslint-disable-next-line no-param-reassign
-        sub.class = updSub.class;
+const deleteSubs = (req, res) => {
+  const { id } = req.params;
+  Subscription.findByIdAndDelete(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          msg: `Member with ${id} not found`,
+        });
       }
-    });
-    fs.writeFile('src/data/subscription.json', JSON.stringify(subscriptions, null, 2), (e) => {
-      if (e) {
-        res.status(500).send('Error, can not be modified');
-      } else {
-        res.status(200).send('Subscription updated');
-      }
-    });
-  } else {
-    res.status(404).send('Subscription does not exist');
-  }
-});
+      return res.status(200).json({
+        message: 'User deleted',
+      });
+    })
+    .catch((error) => res.status(400).json({ message: 'Invalid request: incorrect parameters provided!', error }));
+};
 
-router.get('/filter', (req, res) => {
-  const param = req.query.class;
-  const filteredSubs = subscriptions.filter((sub) => sub.class.name === param);
-  try {
-    if (param) {
-      res.status(200).send(filteredSubs);
-    } else {
-      throw new Error();
-    }
-  } catch (e) {
-    res.status(400).send('Error, can not get the element');
-  }
-});
-
-router.post('/', (req, res) => {
-  const newSubscription = req.body;
-  subscriptions.push(newSubscription);
-  fs.writeFile('src/data/subscription.json', JSON.stringify(subscriptions, null, 2), (err) => {
-    if (err) {
-      res.send('Error: subscription could not be created!');
-    } else {
-      res.send('Subscription created successfully!');
-    }
-  });
-});
-
-router.delete('/:id', (req, res) => {
-  const deleteSub = req.params.id;
-  // eslint-disable-next-line max-len
-  const filteredSubscriptions = subscriptions.filter((sub) => sub.id && sub.id.toString() !== deleteSub);
-  fs.writeFile('src/data/subscription.json', JSON.stringify(filteredSubscriptions, null, 2), (err) => {
-    if (err) {
-      res.send('Error: subscription could not be deleted!');
-    } else {
-      res.send('Subscription deleted successfully');
-    }
-  });
-});
-
-module.exports = router;
+module.exports = {
+  createSubs,
+  deleteSubs,
+};
