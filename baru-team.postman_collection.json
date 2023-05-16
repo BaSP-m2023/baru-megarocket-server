@@ -731,7 +731,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/api/super-admins/:id",
+              "raw": "http://localhost:4000/api/super-admins/6462ab66d10aaeb2865bc341",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -740,13 +740,7 @@
               "path": [
                 "api",
                 "super-admins",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "2"
-                }
+                "6462ab66d10aaeb2865bc341"
               ]
             }
           },
@@ -758,7 +752,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/api/super-admins/:id",
+              "raw": "http://localhost:4000/api/super-admins/6462ab8fd10aaeb2865bc345",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -767,13 +761,7 @@
               "path": [
                 "api",
                 "super-admins",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "1"
-                }
+                "6462ab8fd10aaeb2865bc345"
               ]
             }
           },
@@ -794,7 +782,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/api/super-admins",
+              "raw": "http://localhost:4000/api/super-admins/",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -807,8 +795,9 @@
               ],
               "query": [
                 {
-                  "key": null,
-                  "value": "1"
+                  "key": "",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -830,7 +819,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/api/super-admins/:id",
+              "raw": "http://localhost:4000/api/super-admins/6462abc5d10aaeb2865bc34b",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -839,40 +828,7 @@
               "path": [
                 "api",
                 "super-admins",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "11"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get super admin by filter",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:4000/api/super-admins/search?name=haze",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "api",
-                "super-admins",
-                "search"
-              ],
-              "query": [
-                {
-                  "key": "name",
-                  "value": "haze"
-                }
+                "6462abc5d10aaeb2865bc34b"
               ]
             }
           },
