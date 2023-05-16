@@ -464,41 +464,16 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/member",
+              "raw": "http://localhost:4000/api/member/",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
-                "member"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get member by filter",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:4000/member/search/:filter",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
+                "api",
                 "member",
-                "search",
-                ":filter"
-              ],
-              "variable": [
-                {
-                  "key": "filter",
-                  "value": "Celestia"
-                }
+                ""
               ]
             }
           },
@@ -510,20 +485,21 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/member/:id",
+              "raw": "http://localhost:4000/api/member/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "member",
                 ":id"
               ],
               "variable": [
                 {
                   "key": "id",
-                  "value": "2"
+                  "value": "645f0fc56596acb1db833e19"
                 }
               ]
             }
@@ -537,7 +513,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "  {\r\n    \"id\": 35,\r\n    \"name\": \"Celestia\",\r\n    \"last_name\": \"Pain\",\r\n    \"phone\": \"374-698-4393\",\r\n    \"subscription\": \"classic\",\r\n    \"email\": \"cpain0@noaa.gov\",\r\n    \"password\": \"M2hLkMJ\"\r\n  }",
+              "raw": "{\r\n            \"name\": \"Santiago\",\r\n            \"lastName\": \"pain\",\r\n            \"dni\": \"40120999\",\r\n            \"phone\": \"407-354-0283\",\r\n            \"email\": \"lkluge1@theguardian.com\",\r\n            \"city\": \"rosario\",\r\n            \"zip\": 2000,\r\n            \"isActive\": true,\r\n            \"membership\": \"classic\",\r\n            \"password\": \"7CJMPQ\",\r\n            \"dob\": \"1970-01-01T05:32:50.822Z\"\r\n        }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -545,20 +521,16 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/member?=",
+              "raw": "http://localhost:4000/api/member/",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
-                "member"
-              ],
-              "query": [
-                {
-                  "key": null,
-                  "value": ""
-                }
+                "api",
+                "member",
+                ""
               ]
             }
           },
@@ -570,20 +542,21 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/member/:id",
+              "raw": "http://localhost:4000/api/member/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "member",
                 ":id"
               ],
               "variable": [
                 {
                   "key": "id",
-                  "value": "35"
+                  "value": "645f0a6b1c7833a336b2c125"
                 }
               ]
             }
@@ -597,7 +570,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "  {\r\n    \"id\": 2,\r\n    \"name\": \"edited\",\r\n    \"last_name\": \"Kluge\",\r\n    \"phone\": \"407-354-0283\",\r\n    \"subscription\": \"black\",\r\n    \"email\": \"lkluge1@theguardian.com\",\r\n    \"password\": \"7CJMPQ\"\r\n  }",
+              "raw": "{\r\n            \"name\": \"Beto\",\r\n            \"lastName\": \"pain\",\r\n            \"dni\": \"40120999\",\r\n            \"phone\": \"407-354-0283\",\r\n            \"email\": \"lkluge1@theguardian.com\",\r\n            \"city\": \"rosario\",\r\n            \"zip\": 2000,\r\n            \"isActive\": true,\r\n            \"membership\": \"classic\",\r\n            \"password\": \"7CJMPQ\",\r\n            \"dob\": \"1970-01-01T05:32:50.822Z\"\r\n        }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -605,20 +578,21 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/member/:id",
+              "raw": "http://localhost:4000/api/member/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "member",
                 ":id"
               ],
               "variable": [
                 {
                   "key": "id",
-                  "value": "2"
+                  "value": "645f0fc56596acb1db833e19"
                 }
               ]
             }
@@ -630,93 +604,41 @@
     {
       "name": "Subscriptions",
       "item": [
-        {
-          "name": "Edit subscription",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:4000/subscription/:id",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "subscription",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "1"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get subscription by filter",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:4000/subscriptions/filter?class=musculation",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "subscriptions",
-                "filter"
-              ],
-              "query": [
-                {
-                  "key": "class",
-                  "value": "musculation"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
 				{
-					"name": "Create subscription",
+					"name": "Edit subscription",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"classes\": \"645f0a6b1c7833a336b2c127\",\r\n  \"members\":[\"645f0a6b1c7833a336b2c127\"],\r\n\r\n  \"date\": \"2023-05-15\"\r\n}\r\n",
+							"raw": "{\r\n    \"classes\": \"64622a0fd5fbdb4707b95355\",\r\n    \"members\": [\"645f0a6b1c7833a336b2c145\", \"645f0a6b1c7833a336b2c144\"],\r\n    \"date\": \"2023-06-15T00:00:00.000Z\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
+						"url": {
+							"raw": "http://localhost:4000/api/subscription/6462739d88a89be564a81258",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"subscription",
+								"6462739d88a89be564a81258"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all subscriptions",
+					"request": {
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "http://localhost:4000/api/subscription/",
 							"protocol": "http",
@@ -759,9 +681,60 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
+        },
+        {
+          "name": "Get subscription by Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/subscription/6462739d88a89be564a81258",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "subscription",
+                "6462739d88a89be564a81258"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create subscription",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"classes\": \"64622a0fd5fbdb4707b95366\",\r\n    \"members\": [\"645f0a6b1c7833a336b2c277\", \"645f0a6b1c7833a336b2c200\"],\r\n    \"date\": \"2023-05-15T00:00:00.000Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/subscription/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "subscription",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
     {
       "name": "Super-admin",
       "item": [
@@ -1045,31 +1018,23 @@
       "item": [
         {
           "name": "Get all activities",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:4000/activity",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "api",
-                "activity"
-              ]
-            }
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
           },
-          "response": []
-        },
-        {
-          "name": "Get activities by id",
           "request": {
             "method": "GET",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "http://localhost:4000/activity/:id",
+              "raw": "http://localhost:4000/api/activity/",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1078,18 +1043,33 @@
               "path": [
                 "api",
                 "activity",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "2"
-                }
+                ""
               ]
             }
           },
           "response": []
         },
+        {
+					"name": "Get activities by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/Activity/646248fbc5833f8a24601b64",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"Activity",
+								"646248fbc5833f8a24601b64"
+							]
+						}
+					},
+					"response": []
+				},
         {
           "name": "Create new activity",
           "request": {
@@ -1120,41 +1100,35 @@
           "response": []
         },
         {
-          "name": "Edit activity",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"name\": \"edited\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:4000/activity/:id",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "api",
-                "activity",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "1"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
+					"name": "Edit activity",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pilates\",\r\n    \"description\": \"ddskdjbksjdvsñjslndvñsdhljasascjfbvkdjfbv\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/activity/646248fbc5833f8a24601b64",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"activity",
+								"646248fbc5833f8a24601b64"
+							]
+						}
+					},
+					"response": []
+				},
         {
           "name": "Delete activity",
           "request": {
