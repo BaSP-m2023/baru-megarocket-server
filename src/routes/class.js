@@ -9,7 +9,8 @@ classRouter
   .get('/:id', classController.getClassById)
   .post('/', validations.validateCreation, classController.createClass)
   .put('/:id', validations.validateUpdate, classController.updateClass)
-  .put('/:id', classController.deleteClass)
-  .put('/assign/trainer/:id', validations.validateAssignTrainer, classController.assignTrainer);
+  .put('/assign/trainer/:id', validations.validateAssignTrainer, classController.assignTrainer)
+  .put('/assign/activity/:id', validations.validateAssignActivity, classController.assignActivity)
+  .put('/delete/:id', classController.deleteClass);
 
 module.exports = classRouter;
