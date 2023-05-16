@@ -1,4 +1,4 @@
-const Trainer = require('../models/Trainer');
+const Trainer = require('../models/Trainers');
 
 const createTrainer = (req, res) => {
   const {

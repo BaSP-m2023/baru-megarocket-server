@@ -1,5 +1,5 @@
 /* eslint-disable arrow-body-style */
-const Subscription = require('../models/Subscription');
+const Subscription = require('../models/Subscriptions');
 
 const createSubs = (req, res) => {
   Subscription.create(
