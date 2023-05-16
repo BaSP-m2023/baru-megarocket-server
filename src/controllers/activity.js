@@ -10,8 +10,9 @@ const createActivity = (req, res) => {
   })
     .then((result) => res.status(201).json(result))
     .catch((error) => res.status(400).json({
-      message: 'Invalid Request: Incorrect parameters provided.',
-      error,
+      message: error,
+      data: undefined,
+      error: true,
     }));
 };
 
@@ -23,14 +24,19 @@ const deleteActivity = (req, res) => {
       if (!result) {
         return res.status(400).json({
           msg: `Activity with id ${id} was not found`,
+          data: undefined,
+          error: true,
         });
       }
       return res.status(200).json({
         message: 'Activity deleted!',
+        data: activity,
+        error: false,
       });
     })
     .catch((error) => res.status(400).json({
       message: 'An error ocurred!',
+      data: undefined,
       error,
     }));
 };
