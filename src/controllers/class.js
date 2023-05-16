@@ -113,6 +113,63 @@ const deleteClass = (req, res) => {
     }));
 };
 
+const assignTrainer = (req, res) => {
+  const { id } = req.params;
+  const { trainer } = req.body;
+
+  Class.findByIdAndUpdate(
+    id,
+    { trainer },
+    { new: true },
+  )
+    .then((response) => {
+      if (!response) {
+        return res.status(404).json({
+          msg: `Class with id: ${id} not found`,
+        });
+      }
+      return res.status(200).json({
+        msg: 'Trainer updated successfully',
+        response,
+      });
+    })
+    .catch((error) => res.status(400).json({
+      error,
+    }));
+};
+
+const assignActivity = (req, res) => {
+  const { id } = req.params;
+  const { activity } = req.body;
+
+  Class.findByIdAndUpdate(
+    id,
+    { activity },
+    { new: true },
+  )
+    .then((response) => {
+      if (!response) {
+        return res.status(404).json({
+          msg: `Class with id: ${id} not found`,
+        });
+      }
+      return res.status(200).json({
+        msg: 'Activity updated successfully',
+        response,
+      });
+    })
+    .catch((error) => res.status(400).json({
+      error,
+    }));
+};
+
 module.exports = {
-  routerClass, getAllClass, getClassById, createClass, updateClass, deleteClass,
+  routerClass,
+  getAllClass,
+  getClassById,
+  createClass,
+  updateClass,
+  deleteClass,
+  assignTrainer,
+  assignActivity,
 };
