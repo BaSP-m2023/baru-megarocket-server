@@ -7,6 +7,7 @@ const classRouter = express.Router();
 classRouter
   .get('/search', classController.getAllClass)
   .get('/:id', classController.getClassById)
-  .post('/', validations.validateCreation, classController.createClass);
+  .post('/', validations.validateCreation, classController.createClass)
+  .put('/:id', validations.validateUpdate, classController.updateClass);
 
 module.exports = classRouter;
