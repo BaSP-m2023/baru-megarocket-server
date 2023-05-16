@@ -13,6 +13,7 @@ const classSchema = new Schema({
   day: {
     type: String,
     required: true,
+    enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
   },
   time: {
     type: String,
@@ -21,6 +22,10 @@ const classSchema = new Schema({
   capacity: {
     type: Number,
     required: true,
+  },
+  deleted: {
+    type: Boolean,
+    default: false,
   },
 });
 module.exports = mongoose.model('Class', classSchema);

@@ -1,84 +1,140 @@
-const express = require('express');
-const fs = require('fs');
+const Trainer = require('../models/Trainer');
 
-const trainerRouter = express.Router();
-const trainers = require('../data/trainer.json');
+const createTrainer = (req, res) => {
+  const {
+    firstName,
+    lastName,
+    dni,
+    phone,
+    email,
+    password,
+    salary,
+    isActive,
+  } = req.body;
+  Trainer.create({
+    firstName,
+    lastName,
+    dni,
+    phone,
+    email,
+    password,
+    salary,
+    isActive,
+  })
+    .then((result) => res.status(201).json({
+      message: 'Trainer created',
+      data: result,
+      error: false,
+    }))
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
 
-trainerRouter.get('/', (req, res) => res.json(trainers));
+const getTrainers = (req, res) => {
+  Trainer.find()
+    .then((trainers) => res.status(200).json({
+      message: 'Complete trainers list',
+      data: trainers,
+      error: false,
+    }))
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
 
-trainerRouter.post('/', (req, res) => {
-  const newTrainer = req.body;
-  let flag = false;
-  // validate if there is a trainer with an existing id
-  trainers.forEach((trainer) => {
-    if ((trainer.id === newTrainer.id)) {
-      flag = true;
-    }
-  });
-  if (flag) {
-    res.status(400).send(`there's and existing trainer with id ${newTrainer.id}`);
-  } else if (newTrainer.id.length === 0) {
-    res.status(400).send('id cannot be empty');
-  } else {
-    trainers.push(newTrainer);
-    fs.writeFile('src/data/trainer.json', JSON.stringify(trainers, null, 2), (error) => {
-      if (error) {
-        res.status(400).send('User cannot be created');
+const updateTrainer = (req, res) => {
+  const toUpdate = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    dni: req.body.dni,
+    phone: req.body.phone,
+    email: req.body.email,
+    password: req.body.password,
+    salary: req.body.salary,
+    isActive: req.body.isActive,
+  };
+  Trainer.findById(req.params.id)
+    .then((trainer) => {
+      if (!trainer) {
+        res.status(404).json({
+          message: 'Trainer not found',
+          data: undefined,
+          error: true,
+        });
       } else {
-        res.status(201).send('User created');
+        Object.keys(toUpdate).forEach((attr) => {
+          if (toUpdate[attr] !== undefined) {
+            // eslint-disable-next-line no-param-reassign
+            trainer[attr] = toUpdate[attr];
+          }
+        });
+        trainer.save();
+        res.status(200).json({
+          message: 'Trainer updated',
+          data: trainer,
+          error: false,
+        });
       }
-    });
-  }
-});
+    })
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
 
-trainerRouter.post('/:id', (req, res) => {
-  const idTrainer = parseInt(req.params.id, 10);
-  const changeTrainer = req.body;
-  const flag = trainers.some((trainer) => trainer.id === idTrainer);
-  const attributes = ['name', 'last_name', 'phone', 'hourly_wage', 'activity', 'email', 'password'];
-  if (flag) {
-    const updateTrainer = trainers.find((trainer) => trainer.id === idTrainer);
-    // iterate each attribute to validate 1) if it field is written on the body in postman
-    // and 2) if the field is empty not change the attr in .json file
-    attributes.forEach((attr) => {
-      if (changeTrainer[attr] !== undefined) {
-        if (changeTrainer[attr].trim().length !== 0) {
-          updateTrainer[attr] = changeTrainer[attr];
-        }
-      }
-    });
-    fs.writeFile('src/data/trainer.json', JSON.stringify(trainers, null, 2), (error) => {
-      if (error) {
-        res.status(400).send('User cannot be updated');
+const deleteTrainer = (req, res) => {
+  Trainer.findByIdAndDelete(req.params.id)
+    .then((trainer) => {
+      if (!trainer) {
+        res.status(404).json({
+          message: 'Trainer not found',
+          data: undefined,
+          error: true,
+        });
       } else {
-        res.status(200).send('User updated');
+        res.status(200).json({
+          message: 'Trainer deleted',
+          data: trainer,
+          error: false,
+        });
       }
-    });
-  } else {
-    res.status(400).send(`Trainer with id ${idTrainer} NOT FOUND`);
-  }
-});
+    })
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
 
-trainerRouter.delete('/:id', (req, res) => {
-  const trainerId = req.params.id;
-  const newArray = trainers.filter((trainer) => trainer.id.toString() !== trainerId);
-  fs.writeFile('src/data/trainer.json', JSON.stringify(newArray, null, 2), (error) => {
-    if (error) {
-      res.status(400).send('User cannot be deleted');
-    } else {
-      res.status(200).send('User deleted');
-    }
-  });
-});
+const getTrainerById = (req, res) => {
+  Trainer.findById(req.params.id)
+    .then((trainer) => {
+      if (!trainer) {
+        res.status(404).json({
+          message: 'Trainer not found',
+          data: undefined,
+          error: true,
+        });
+      } else {
+        res.status(200).json({
+          message: 'Trainer found',
+          data: trainer,
+          error: false,
+        });
+      }
+    })
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred!',
+      error,
+    }));
+};
 
-trainerRouter.get('/:id', (req, res) => {
-  const trainerId = req.params.id;
-  const trainerr = trainers.find((trainer) => trainer.id.toString() === trainerId);
-  if (trainerr) {
-    res.send(trainerr);
-  } else {
-    res.status(404).json({ error: 'Trainer not found' });
-  }
-});
-
-module.exports = trainerRouter;
+module.exports = {
+  createTrainer,
+  updateTrainer,
+  getTrainers,
+  deleteTrainer,
+  getTrainerById,
+};
