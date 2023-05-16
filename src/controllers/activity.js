@@ -22,7 +22,7 @@ const getActivityById = (req, res) => {
       data: activity,
       error: false,
     }))
-    .catch((error) => res.json({
+    .catch((error) => res.status(404).json({
       message: 'An error ocurred',
       error,
     }));
@@ -42,11 +42,11 @@ const updateActivity = (req, res) => {
   )
     .then((activity) => {
       if (!activity) {
-        return res.status(400).json({
+        return res.status(404).json({
           message: `Activity with id: ${id} was not found`,
         });
       }
-      return res.status(200).json(activity);
+      return res.status(201).json(activity);
     })
     .catch((error) => {
       res.status(400).json(error);

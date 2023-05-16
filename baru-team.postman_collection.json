@@ -1052,49 +1052,58 @@
       "item": [
         {
           "name": "Get all activities",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
             "method": "GET",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "http://localhost:4000/activity",
+              "raw": "http://localhost:4000/api/activity/",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
-                "activity"
+                "api",
+                "activity",
+                ""
               ]
             }
           },
           "response": []
         },
         {
-          "name": "Get activities by id",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:4000/activity/:id",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "activity",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "2"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
+					"name": "Get activities by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/Activity/646248fbc5833f8a24601b64",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"Activity",
+								"646248fbc5833f8a24601b64"
+							]
+						}
+					},
+					"response": []
+				},
         {
           "name": "Create new activity",
           "request": {
@@ -1125,40 +1134,35 @@
           "response": []
         },
         {
-          "name": "Edit activity",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"name\": \"edited\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:4000/activity/:id",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "activity",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "1"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
+					"name": "Edit activity",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pilates\",\r\n    \"description\": \"ddskdjbksjdvsñjslndvñsdhljasascjfbvkdjfbv\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/activity/646248fbc5833f8a24601b64",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"activity",
+								"646248fbc5833f8a24601b64"
+							]
+						}
+					},
+					"response": []
+				},
         {
           "name": "Delete activity",
           "request": {

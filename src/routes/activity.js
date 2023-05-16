@@ -1,5 +1,4 @@
 const express = require('express');
-
 const activityController = require('../controllers/activity');
 const validations = require('../validations/activity');
 
