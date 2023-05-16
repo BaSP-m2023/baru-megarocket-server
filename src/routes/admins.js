@@ -8,7 +8,9 @@ adminsRouter
   .get('/', adminsController.getAllAdmins)
   .get('/:id', adminsController.getAdminById)
   .put('/:id', adminsController.updateAdmin)
+  .put('/recoverAdmin/:id', adminsController.recoverAdmin)
   .post('/', validations.validateCreation, adminsController.createAdmin)
-  .delete('/:id', adminsController.deleteAdmin);
+  .delete('/delete/:id', adminsController.deleteAdmin)
+  .delete('/cleanAdmins', adminsController.cleanAdmins);
 
 module.exports = adminsRouter;
