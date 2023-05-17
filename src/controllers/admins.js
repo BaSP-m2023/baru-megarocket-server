@@ -40,7 +40,7 @@ const getAllAdmins = (req, res) => {
 const getAdminById = (req, res) => {
   const { id } = req.params;
 
-  Admin.findById(id, 'firstName lastName deleted')
+  Admin.findById(id, 'firstName lastName')
     .then((admin) => {
       if (!admin) {
         return res.status(404).json({
@@ -95,7 +95,13 @@ const updateAdmin = (req, res) => {
     firstName, lastName, dni, phone, email, city, password,
   } = req.body;
 
-  Admin.findByIdAndUpdate(
+  if (!firstName && !lastName && !dni && !phone && !email && !city && !password) {
+    return res.status(400).json({
+      message: 'At least one field should be modified',
+    });
+  }
+
+  return Admin.findByIdAndUpdate(
     id,
     {
       firstName,

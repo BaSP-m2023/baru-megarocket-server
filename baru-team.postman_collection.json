@@ -134,8 +134,7 @@
               "port": "4000",
               "path": [
                 "api",
-                "admins",
-                "post"
+                "admins"
               ]
             }
           },
