@@ -2,13 +2,23 @@ const Joi = require('joi');
 
 const validateCreation = (req, res, next) => {
   const adminValidation = Joi.object({
-    firstName: Joi.string().min(3).max(50).required(),
-    lastName: Joi.string().min(3).max(50).required(),
-    dni: Joi.number().min(8).required(),
-    phone: Joi.number().min(10).required(),
-    email: Joi.string().regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/).required(),
-    city: Joi.string().min(3).max(50).required(),
-    password: Joi.string().min(8).required(),
+    firstName: Joi.string().pattern(/^[a-zA-Z]+$/).min(3).max(20)
+      .required(),
+    lastName: Joi.string().pattern(/^[a-zA-Z]+$/).min(3).max(20)
+      .required(),
+    dni: Joi.number().min(10000000).max(100000000).integer()
+      .positive()
+      .required(),
+    phone: Joi.number().min(1000000000).max(10000000000).integer()
+      .positive()
+      .required(),
+    email: Joi.string().email().pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+      .required(),
+    city: Joi.string().pattern(/^[a-zA-Z]+$/).min(3).max(50)
+      .required(),
+    password: Joi.string().alphanum().pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/).min(8)
+      .required(),
+    deleted: Joi.boolean(),
   });
 
   const validation = adminValidation.validate(req.body);
@@ -23,13 +33,16 @@ const validateCreation = (req, res, next) => {
 
 const validateUpdate = (req, res, next) => {
   const adminValidation = Joi.object({
-    firstName: Joi.string().min(3).max(50),
-    lastName: Joi.string().min(3).max(50),
-    dni: Joi.number().min(8),
-    phone: Joi.number().min(10),
-    email: Joi.string().regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
-    city: Joi.string().min(3).max(50),
-    password: Joi.string().min(8),
+    firstName: Joi.string().pattern(/^[a-zA-Z]+$/).min(3).max(20),
+    lastName: Joi.string().pattern(/^[a-zA-Z]+$/).min(3).max(20),
+    dni: Joi.number().min(10000000).max(100000000).integer()
+      .positive(),
+    phone: Joi.number().min(1000000000).max(10000000000).integer()
+      .positive(),
+    email: Joi.string().email().pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
+    city: Joi.string().pattern(/^[a-zA-Z]+$/).min(3).max(50),
+    password: Joi.string().alphanum().pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/).min(8),
+    deleted: Joi.boolean(),
   }).min(1);
 
   const validation = adminValidation.validate(req.body);

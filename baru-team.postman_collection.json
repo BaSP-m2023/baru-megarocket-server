@@ -11,7 +11,7 @@
       "name": "Admin",
       "item": [
         {
-          "name": "Get all admins filter",
+          "name": "Get all admins",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -28,20 +28,19 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/api/admins/search/:filter",
+              "raw": "http://localhost:4000/api/admins",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
-                "admins",
-                "search",
-                ":filter"
+                "api",
+                "admins"
               ],
               "variable": [
                 {
-                  "key": "filter",
+                  "key": "id",
                   "value": "Cello"
                 }
               ]
@@ -62,40 +61,14 @@
               ],
               "port": "4000",
               "path": [
+                "api",
                 "admins",
                 ":id"
               ],
               "variable": [
                 {
                   "key": "id",
-                  "value": "2"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get admins by letters",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:4000/api/admins/searchLetters/:letters",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "4000",
-              "path": [
-                "admins",
-                "searchLetters",
-                ":letters"
-              ],
-              "variable": [
-                {
-                  "key": "letters",
-                  "value": "C"
+                  "value": "2645f13f66b3455d21b523a70"
                 }
               ]
             }
@@ -124,13 +97,14 @@
               ],
               "port": "4000",
               "path": [
+                "api",
                 "admins",
                 ":id"
               ],
               "variable": [
                 {
                   "key": "id",
-                  "value": "1"
+                  "value": "645f13f66b3455d21b523a70"
                 }
               ]
             }
@@ -152,15 +126,70 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/api/activity/post",
+              "raw": "http://localhost:4000/api/admins",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
-                "activity",
-                "post"
+                "api",
+                "admins"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Recover Admin",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/admins/recoverAdmin/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "admins",
+                "recoverAdmin",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "2645f13f66b3455d21b523a70"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Clean Admins",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/admins/cleanAdmins",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "admins",
+                "cleanAdmins"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "2645f13f66b3455d21b523a70"
+                }
               ]
             }
           },
@@ -181,20 +210,22 @@
               }
             },
             "url": {
-              "raw": "http://localhost:4000/api/admins/:id",
+              "raw": "http://localhost:4000/api/admins/delete/:id",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
               "port": "4000",
               "path": [
+                "api",
                 "admins",
+                "delete",
                 ":id"
               ],
               "variable": [
                 {
                   "key": "id",
-                  "value": "6"
+                  "value": "645f13f66b3455d21b523a70"
                 }
               ]
             }

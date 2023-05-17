@@ -2,7 +2,7 @@ const Admin = require('../models/Admin');
 
 const createAdmin = (req, res) => {
   const {
-    firstName, lastName, dni, phone, email, city, password,
+    firstName, lastName, dni, phone, email, city, password, deleted,
   } = req.body;
   Admin.create({
     firstName,
@@ -12,6 +12,7 @@ const createAdmin = (req, res) => {
     email,
     city,
     password,
+    deleted,
   })
     .then((result) => {
       res.status(201).json(result);
@@ -19,20 +20,20 @@ const createAdmin = (req, res) => {
     .catch((error) => {
       res.status(400).json({
         message: 'An error ocurred!',
-        error,
+        error: error.message,
       });
     });
 };
 
 const getAllAdmins = (req, res) => {
-  Admin.find()
+  Admin.find({ deleted: false })
     .then((admins) => res.status(200).json({
       data: admins,
       error: false,
     }))
     .catch((error) => res.status(500).json({
       message: 'An error ocurred',
-      error,
+      error: error.message,
     }));
 };
 
@@ -40,31 +41,51 @@ const getAdminById = (req, res) => {
   const { id } = req.params;
 
   Admin.findById(id, 'firstName lastName')
-    .then((admin) => res.status(200).json({
-      message: `Admin found! It was ${admin.firstName}`,
-      data: admin,
-      error: false,
-    }))
+    .then((admin) => {
+      if (!admin) {
+        return res.status(404).json({
+          message: 'Admin not found',
+        });
+      }
+      if (admin.deleted === true) {
+        return res.status(200).json({
+          message: 'Admin was deleted',
+        });
+      }
+      return res.status(200).json({
+        message: `Admin found! It was ${admin.firstName}`,
+        data: admin,
+        error: false,
+      });
+    })
     .catch((error) => res.status(400).json({
-      message: 'An error ocurred',
-      error,
+      message: 'An error occurred',
+      error: error.message,
     }));
 };
 
 const deleteAdmin = (req, res) => {
   const { id } = req.params;
-  Admin.findByIdAndDelete(id)
-    .then((result) => {
-      if (!result) {
+
+  Admin.findByIdAndUpdate(id, { deleted: true })
+    .then((admin) => {
+      if (!admin) {
         return res.status(404).json({
           message: `Admin with id: ${id} was not found!`,
         });
       }
-      return res.status(204).end();
+      if (admin.deleted) {
+        return res.status(400).json({
+          message: `Admin with id: ${id} has already been deleted!`,
+        });
+      }
+      return res.status(200).json({
+        message: 'Admin deleted',
+      });
     })
     .catch((error) => res.status(400).json({
-      message: 'An error ocurred!',
-      error,
+      message: 'An error ocurred',
+      error: error.message,
     }));
 };
 
@@ -74,7 +95,13 @@ const updateAdmin = (req, res) => {
     firstName, lastName, dni, phone, email, city, password,
   } = req.body;
 
-  Admin.findByIdAndUpdate(
+  if (!firstName && !lastName && !dni && !phone && !email && !city && !password) {
+    return res.status(400).json({
+      message: 'At least one field should be modified',
+    });
+  }
+
+  return Admin.findByIdAndUpdate(
     id,
     {
       firstName,
@@ -99,7 +126,49 @@ const updateAdmin = (req, res) => {
     })
     .catch((error) => res.status(400).json({
       message: 'An error ocurred',
-      error,
+      error: error.message,
+    }));
+};
+
+const recoverAdmin = (req, res) => {
+  const { id } = req.params;
+
+  Admin.findByIdAndUpdate(id, { deleted: false })
+    .then((admin) => {
+      if (!admin) {
+        return res.status(404).json({
+          message: `Admin with id: ${id} was not found!`,
+        });
+      }
+      if (!admin.deleted) {
+        return res.status(400).json({
+          message: `Admin with id: ${id} has never been deleted!`,
+        });
+      }
+      return res.status(200).json({
+        message: `Admin with id: ${id} was successfully recovered!`,
+        data: admin,
+      });
+    })
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred',
+      error: error.message,
+    }));
+};
+
+const cleanAdmins = (req, res) => {
+  Admin.deleteMany({ deleted: true })
+    .then((result) => {
+      if (result.n === 0) {
+        return res.status(404).json({
+          message: 'The DB have not admins to clean',
+        });
+      }
+      return res.status(204).end();
+    })
+    .catch((error) => res.status(400).json({
+      message: 'An error ocurred',
+      error: error.message,
     }));
 };
 
@@ -109,4 +178,6 @@ module.exports = {
   updateAdmin,
   createAdmin,
   deleteAdmin,
+  recoverAdmin,
+  cleanAdmins,
 };
