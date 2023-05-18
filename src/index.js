@@ -1,12 +1,15 @@
+/* eslint-disable import/no-extraneous-dependencies */
 // use "import" to import libraries
 import express from 'express';
 import cors from 'cors';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
 const app = express();
 const port = process.env.PORT || 4000;
 const generalRoute = require('./routes/index');
+
+dotenv.config();
 
 mongoose
   .connect('mongodb+srv://baru-team:x60lbGF6arRYrycR@megarocket-databases.inpprte.mongodb.net/baru-database', { maxPoolSize: process.env.MONGO_POOLSIZE || 1 })
