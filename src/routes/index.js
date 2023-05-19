@@ -1,6 +1,6 @@
 const express = require('express');
 const subscriptions = require('./subscription');
-const members = require('./members');
+const members = require('./member');
 const superAdmins = require('./super-admins');
 const trainers = require('./trainer');
 const admins = require('./admins');
@@ -14,7 +14,7 @@ router.use('/trainer', trainers);
 router.use('/admins', admins);
 router.use('/activity', activity);
 router.use('/class', classes);
-router.use('/members', members);
+router.use('/member', members);
 router.use('/super-admins', superAdmins);
 router.use('/subscription', subscriptions);
 
