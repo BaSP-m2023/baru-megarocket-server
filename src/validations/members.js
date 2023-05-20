@@ -6,7 +6,7 @@ const validateMember = (req, res, next) => {
       .required(),
     lastName: Joi.string().pattern(/^[a-zA-Z]+$/).min(4).max(10)
       .required(),
-    phone: Joi.string().required(),
+    phone: Joi.string().min(10).required(),
     dni: Joi.string().pattern(/^(?!^0)[0-9]{7,11}$/).required(),
     city: Joi.string().min(3).required(),
     dob: Joi.date().greater('1923-01-01').less('2005-01-01').required(),
