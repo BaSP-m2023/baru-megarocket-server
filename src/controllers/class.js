@@ -8,6 +8,7 @@ const getAllClass = (req, res) => {
   const { query } = req;
 
   Class.find(query)
+    .populate('activity trainer')
     .then((allClass) => {
       res.status(200).json({
         message: 'Complete class list',
@@ -26,6 +27,7 @@ const getClassById = (req, res) => {
   const { id } = req.params;
 
   Class.findById(id)
+    .populate('activity trainer')
     .then((classId) => res.status(200).json({
       message: `Class ${classId.activity} found! `,
       data: classId,
@@ -44,7 +46,9 @@ const createClass = (req, res) => {
   Class.create({
     activity, trainer, day, time, capacity,
   })
-    .then((result) => res.status(201).json(result))
+    .then((result) => Class.findById(result.id)
+      .populate('activity trainer'))
+    .then((populatedResult) => res.status(201).json(populatedResult))
     .catch((error) => res.status(400).json({
       message: 'An error ocurred!',
       error,
@@ -72,6 +76,7 @@ const updateClass = (req, res) => {
     },
     { new: true },
   )
+    .populate('activity trainer')
     .then((result) => {
       if (!result) {
         return res.status(404).json({
@@ -80,7 +85,7 @@ const updateClass = (req, res) => {
       }
       return res.status(200).json({
         msg: 'Class updated',
-        result,
+        class: result,
       });
     })
     .catch((error) => res.status(400).json(error));
@@ -90,6 +95,7 @@ const deleteClass = (req, res) => {
   const { id } = req.params;
 
   Class.findByIdAndUpdate(id, { deleted: true })
+    .populate('activity trainer')
     .then((result) => {
       if (!result) {
         return res.status(404).json({
@@ -122,6 +128,7 @@ const assignTrainer = (req, res) => {
     { trainer },
     { new: true },
   )
+    .populate('activity trainer')
     .then((response) => {
       if (!response) {
         return res.status(404).json({
@@ -130,7 +137,7 @@ const assignTrainer = (req, res) => {
       }
       return res.status(200).json({
         msg: 'Trainer updated successfully',
-        response,
+        class: response,
       });
     })
     .catch((error) => res.status(400).json({
@@ -147,6 +154,7 @@ const assignActivity = (req, res) => {
     { activity },
     { new: true },
   )
+    .populate('activity trainer')
     .then((response) => {
       if (!response) {
         return res.status(404).json({
@@ -155,7 +163,7 @@ const assignActivity = (req, res) => {
       }
       return res.status(200).json({
         msg: 'Activity updated successfully',
-        response,
+        class: response,
       });
     })
     .catch((error) => res.status(400).json({

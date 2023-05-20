@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const classSchema = new Schema({
   activity: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Activity',
     required: true,
   },
   trainer: {
-    type: [Schema.Types.ObjectId],
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Trainer',
     required: true,
   },
   day: {
