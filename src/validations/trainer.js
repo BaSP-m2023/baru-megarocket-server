@@ -8,7 +8,7 @@ const validateTrainerCreate = (req, res, next) => {
       .required(),
     dni: Joi.string().pattern(/^\d+$/).min(8).required()
       .max(10),
-    phone: Joi.string().min(10).max(12),
+    phone: Joi.string().pattern(/^\d+$/).min(10).max(12),
     email: Joi.string().email().required(),
     password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/).min(8).max(20)
       .required(),

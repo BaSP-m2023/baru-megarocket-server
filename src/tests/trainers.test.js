@@ -14,6 +14,19 @@ const mockTrainer = {
   isActive: true,
 };
 
+// const mockTrainerToUpdate = {
+//   firstName: 'Jim',
+//   lastName: 'Halpert',
+//   dni: '34120254',
+//   phone: '7691234550',
+//   email: 'jimH@nifty.com',
+//   password: '3p8s8R3KdW',
+//   salary: '$100000.00',
+//   isActive: true,
+// };
+
+let mockTrainerId;
+
 beforeAll(async () => {
   await Trainer.collection.insertMany(seedTrainer);
 }, 10000);
@@ -43,6 +56,8 @@ describe('POST /api/trainer', () => {
     const response = await request(app).post('/api/trainer').send(mockTrainer);
     expect(response.status).toBe(201);
     expect(response.error).toBeFalsy();
+    // eslint-disable-next-line no-underscore-dangle
+    mockTrainerId = response.body.data._id;
   });
 
   test('should return status 404', async () => {
@@ -79,7 +94,33 @@ describe('POST /api/trainer', () => {
     expect(response.body.data.password.length).toBeLessThanOrEqual(20);
   });
 
-  test('', async () => {
+  test('fields must have a valid format', async () => {
+    const response = await request(app).post('/api/trainer').send(mockTrainer);
 
+    expect(response.body.data.firstName).toMatch((/^[a-zA-Z\s]+$/));
+
+    expect(response.body.data.lastName).toMatch((/^[a-zA-Z\s]+$/));
+
+    expect(response.body.data.dni).toMatch((/^\d+$/));
+
+    if (response.body.data.phone) {
+      expect(response.body.data.phone).toMatch((/^\d+$/));
+    }
+
+    expect(response.body.data.email).toMatch(/^[\w.-]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+$/);
+
+    expect(response.body.data.password).toMatch((/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/));
+
+    if (response.body.data.salary) {
+      expect(response.body.data.salary).toMatch((/^\$[1-9]\d{0,6}(?:\.\d{1,2})?$/));
+    }
+  });
+});
+
+describe('PUT /api/trainer/:id', () => {
+  test('should return status 200', async () => {
+    const response = await request(app).put(`/api/trainer/${mockTrainerId}`).send(mockTrainer);
+    expect(response.status).toBe(200);
+    expect(response.error).toBeFalsy();
   });
 });
