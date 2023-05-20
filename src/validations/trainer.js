@@ -12,7 +12,7 @@ const validateTrainerCreate = (req, res, next) => {
     email: Joi.string().email().required(),
     password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/).min(8).max(20)
       .required(),
-    salary: Joi.string().regex(/^\$\d+(?:\.\d+)?$/).max(10000000).min(1),
+    salary: Joi.string().regex(/^\$[1-9]\d{0,6}(?:\.\d{1,2})?$/),
     isActive: Joi.boolean(),
   });
 
@@ -36,7 +36,7 @@ const validateTrainerUpdate = (req, res, next) => {
     phone: Joi.string().pattern(/^\d+$/).min(10).max(12),
     email: Joi.string().email(),
     password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/).min(8).max(20),
-    salary: Joi.string().regex(/^\$\d+(?:\.\d+)?$/).max(10000000).min(1),
+    salary: Joi.string().regex(/^\$[1-9]\d{0,6}(?:\.\d{1,2})?$/),
     isActive: Joi.boolean(),
   });
   const validation = trainerValidation.validate(req.body);
