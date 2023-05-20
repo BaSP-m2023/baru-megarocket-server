@@ -2,8 +2,10 @@ const Joi = require('joi');
 
 const validateTrainerCreate = (req, res, next) => {
   const trainerValidation = Joi.object({
-    firstName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).required(),
-    lastName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).required(),
+    firstName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).max(20)
+      .required(),
+    lastName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).max(20)
+      .required(),
     dni: Joi.string().pattern(/^\d+$/).min(8).required()
       .max(10),
     phone: Joi.string().min(10).max(12),
@@ -28,10 +30,10 @@ const validateTrainerCreate = (req, res, next) => {
 
 const validateTrainerUpdate = (req, res, next) => {
   const trainerValidation = Joi.object({
-    firstName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3),
-    lastName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3),
+    firstName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).max(20),
+    lastName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).max(20),
     dni: Joi.string().pattern(/^\d+$/).min(8).max(10),
-    phone: Joi.string().pattern(/^\d+$/),
+    phone: Joi.string().pattern(/^\d+$/).min(10).max(12),
     email: Joi.string().email(),
     password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/).min(8).max(20),
     salary: Joi.string().regex(/^\$\d+(?:\.\d+)?$/).max(10000000).min(1),
