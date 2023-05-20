@@ -34,11 +34,11 @@ const getMemberById = (req, res) => {
 
 const createMember = (req, res) => {
   const {
-    name, lastName, phone, dni, city, birthDate, zip, isActive, membership, email, password,
+    name, lastName, phone, dni, city, dob, zip, isActive, membership, email, password,
   } = req.body;
 
   Member.create({
-    name, lastName, phone, dni, city, birthDate, zip, isActive, membership, email, password,
+    name, lastName, phone, dni, city, dob, zip, isActive, membership, email, password,
   })
     .then((result) => res.status(201).json(result))
     .catch((error) => res.status(400).json({
