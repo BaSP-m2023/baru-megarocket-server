@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const express = require('express');
 
 const Class = require('../models/Class');
@@ -94,8 +95,7 @@ const updateClass = (req, res) => {
 const deleteClass = (req, res) => {
   const { id } = req.params;
 
-  Class.findByIdAndUpdate(id, { deleted: true })
-    .populate('activity trainer')
+  Class.findById(id, { deleted: true })
     .then((result) => {
       if (!result) {
         return res.status(404).json({
@@ -107,10 +107,11 @@ const deleteClass = (req, res) => {
           msg: `Class with id: ${id} was already deleted`,
         });
       }
-      return Class.find({ deleted: true })
-        .then((filter) => res.status(200).json({
-          msg: 'Deleted classes',
-          filter,
+      return Class.findByIdAndUpdate(id, { deleted: true }, { new: true })
+        .populate('activity trainer')
+        .then((deleted) => res.status(200).json({
+          msg: 'Deleted class',
+          deleted_class: deleted,
         }));
     })
     .catch((error) => res.status(400).json({
@@ -171,6 +172,34 @@ const assignActivity = (req, res) => {
     }));
 };
 
+const restoreClass = (req, res) => {
+  const { id } = req.params;
+
+  Class.findById(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          msg: `Class with id: ${id} not found`,
+        });
+      }
+      if (!result.deleted) {
+        return res.status(404).json({
+          msg: `Class with id: ${id} was not deleted`,
+        });
+      }
+      return Class.findByIdAndUpdate(id, { deleted: false }, { new: true })
+        .populate('activity trainer')
+        .then((restored) => res.status(200).json({
+          msg: 'Class Restored',
+          restored_class: restored,
+        }));
+    })
+    .catch((error) => res.status(400).json({
+      message: 'There was an error',
+      error,
+    }));
+};
+
 module.exports = {
   routerClass,
   getAllClass,
@@ -180,4 +209,5 @@ module.exports = {
   deleteClass,
   assignTrainer,
   assignActivity,
+  restoreClass,
 };
