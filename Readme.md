@@ -8,50 +8,50 @@ It has several features for which the Rest Api server allows different functiona
 
 <br>
 
-### Features: 
+### Features:
 
 <ul>
 
-- <li> Administrator </li>
-<ul>
- <li> http://localhost:4000/admins/</li>
-</ul>
+-   <li> Administrator </li>
+    <ul>
+     <li> http://localhost:4000/api/admins/</li>
+    </ul>
 
-- <li> Members </li>
-<ul>
- <li> http://localhost:4000/member/</li>
-</ul>
+-   <li> Members </li>
+    <ul>
+     <li> http://localhost:4000/api/member/</li>
+    </ul>
 
-- <li> Trainers </li>
-<ul>
- <li> http://localhost:4000/trainer/</li>
-</ul>
+-   <li> Trainers </li>
+    <ul>
+     <li> http://localhost:4000/api/trainer/</li>
+    </ul>
 
-- <li> Activities </li>
-<ul>
- <li> http://localhost:4000/activity/</li>
-</ul>
+-   <li> Activities </li>
+    <ul>
+     <li> http://localhost:4000/api/activity/</li>
+    </ul>
 
-- <li> Classes </li>
-<ul>
- <li> http://localhost:4000/class/</li>
-</ul>
+-   <li> Classes </li>
+    <ul>
+     <li> http://localhost:4000/api/class/</li>
+    </ul>
 
-- <li> Subscriptions </li>
-<ul>
- <li> http://localhost:4000/subscription/</li>
-</ul>
+-   <li> Subscriptions </li>
+    <ul>
+     <li> http://localhost:4000/api/subscription/</li>
+    </ul>
 
-- <li> SuperAdmin </li>
-<ul>
- <li> http://localhost:4000/super-admin/</li>
-</ul>
+-   <li> SuperAdmin </li>
+    <ul>
+     <li> http://localhost:4000/api/super-admins/</li>
+    </ul>
 
 </ul>
 
 <br>
 
-## Quick Start 
+## Quick Start
 
 Install dependencies: 💻
 
@@ -65,11 +65,11 @@ Start the server:
  npm start
 ```
 
- View the server at: http://localhost:4000
+View the server at: http://localhost:4000
 
 <br>
 
- ### Running Linters
+### Running Linters
 
 To run the linters tool [Eslint](https://eslint.org/), first install the dependencies, then run:
 
@@ -85,7 +85,7 @@ npm run lint:fix
 
 <br>
 
-##  This server was built with 👷
+## This server was built with 👷
 
 <ul>
 <li>Javascript ES6</li>
@@ -106,18 +106,17 @@ npm run lint:fix
 <br>
 
 ## <b> Members 👯
+
  <br>
 
-|Photo | Name  | Github
-| :-----: | :-----: | :-----: | 
+| Photo | Name | Github |
+| :---: | :--: | :----: |
 
 ### Admin team
 
+<img src="https://avatars.githubusercontent.com/u/127543742?v=4" height="50" width="50">| Emanuel Lamberti | [@Emanuel-Lamberti](https://github.com/Emanuel-Lamberti)
 
-<img src="https://avatars.githubusercontent.com/u/127543742?v=4" height="50" width="50">| Emanuel Lamberti |  [@Emanuel-Lamberti](https://github.com/Emanuel-Lamberti)
-
-
-<img src="https://avatars.githubusercontent.com/u/101204805?v=4" height="50" width="50">| Lautaro Vercellini |  [@LautaroVercellini](https://github.com/LautaroVercellini)
+<img src="https://avatars.githubusercontent.com/u/101204805?v=4" height="50" width="50">| Lautaro Vercellini | [@LautaroVercellini](https://github.com/LautaroVercellini)
 
 <br>
 
@@ -126,8 +125,7 @@ npm run lint:fix
 <img src="https://avatars.githubusercontent.com/u/101472952?v=4" height="50" width="50">| Gabriela Hollmann | [@gabiholl](https://github.com/gabiholl)
 
 <img src="https://avatars.githubusercontent.com/u/86210748?v=4" height="50" width="50">| Gino Lucci | [@GinoLucci1
-](https://github.com/GinoLucci1
-)
+](https://github.com/GinoLucci1)
 
 <br>
 
@@ -135,7 +133,7 @@ npm run lint:fix
 
 <img src="https://avatars.githubusercontent.com/u/94078324?v=4" height="50" width="50">| Marco Herazo | [@marcohzo](https://github.com/marcohzo)
 
-<img src="https://avatars.githubusercontent.com/u/91099276?v=4" height="50" width="50">| Cristian Lotorto  | [@CristianLotorto](https://github.com/CristianLotorto)
+<img src="https://avatars.githubusercontent.com/u/91099276?v=4" height="50" width="50">| Cristian Lotorto | [@CristianLotorto](https://github.com/CristianLotorto)
 
 <br>
 
@@ -158,11 +156,11 @@ npm run lint:fix
 ### Super-admins
 
 <img src="https://avatars.githubusercontent.com/u/62515196?v=4" height="50" width="50">| Cristian Zufiaurre
- | [@Bigzufi](https://github.com/Bigzufi)
+| [@Bigzufi](https://github.com/Bigzufi)
 
  <br>
 
- ### Trainer
+### Trainer
 
 <img src="https://avatars.githubusercontent.com/u/127527880?v=4" height="50" width="50">| Alejandra Paggiola | [@AlePaggiola](https://github.com/AlePaggiola)
 
