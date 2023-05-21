@@ -14,19 +14,6 @@ const mockTrainer = {
   isActive: true,
 };
 
-// const mockTrainerToUpdate = {
-//   firstName: 'Jim',
-//   lastName: 'Halpert',
-//   dni: '34120254',
-//   phone: '7691234550',
-//   email: 'jimH@nifty.com',
-//   password: '3p8s8R3KdW',
-//   salary: '$100000.00',
-//   isActive: true,
-// };
-
-let mockTrainerId;
-
 beforeAll(async () => {
   await Trainer.collection.insertMany(seedTrainer);
 }, 10000);
@@ -56,8 +43,6 @@ describe('POST /api/trainer', () => {
     const response = await request(app).post('/api/trainer').send(mockTrainer);
     expect(response.status).toBe(201);
     expect(response.error).toBeFalsy();
-    // eslint-disable-next-line no-underscore-dangle
-    mockTrainerId = response.body.data._id;
   });
 
   test('should return status 404', async () => {
@@ -118,9 +103,79 @@ describe('POST /api/trainer', () => {
 });
 
 describe('PUT /api/trainer/:id', () => {
-  test('should return status 200', async () => {
-    const response = await request(app).put(`/api/trainer/${mockTrainerId}`).send(mockTrainer);
+  test('update trainer should return status 200', async () => {
+    const response = await request(app).put('/api/trainer/646f10810596acb1db833e25').send(mockTrainer);
     expect(response.status).toBe(200);
     expect(response.error).toBeFalsy();
+  });
+
+  test('should return status 404', async () => {
+    const response = await request(app).put('/api/trainer/646f10810596acb1db833e28').send(mockTrainer);
+    expect(response.status).toBe(404);
+    expect(response.error).toBeTruthy();
+  });
+
+  test('should only change the sent attributes and follow the validation format', async () => {
+    const response = await request(app).put('/api/trainer/646f10810596acb1db833e25').send({ dni: '42130241', salary: '$63000.43' });
+    const {
+      firstName, lastName, dni, phone, email, password, salary,
+    } = response.body.data;
+
+    if (firstName) {
+      expect(firstName).toMatch((/^[a-zA-Z\s]+$/));
+    }
+
+    if (lastName) {
+      expect(lastName).toMatch((/^[a-zA-Z\s]+$/));
+    }
+
+    if (dni) {
+      expect(dni).toMatch((/^\d+$/));
+    }
+
+    if (phone) {
+      expect(phone).toMatch((/^\d+$/));
+    }
+
+    if (email) {
+      expect(email).toMatch(/^[\w.-]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+$/);
+    }
+
+    if (password) {
+      expect(password).toMatch((/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/));
+    }
+
+    if (salary) {
+      expect(salary).toMatch((/^\$[1-9]\d{0,6}(?:\.\d{1,2})?$/));
+    }
+  });
+
+  test('fields length should be between its defined maximum and minimum chars length', async () => {
+    const response = await request(app).put('/api/trainer/646f10810596acb1db833e25').send({ firstName: 'Rolando' });
+
+    if (response.body.data.firstName) {
+      expect(response.body.data.firstName.length).toBeGreaterThanOrEqual(3);
+      expect(response.body.data.firstName.length).toBeLessThanOrEqual(20);
+    }
+
+    if (response.body.data.lastName) {
+      expect(response.body.data.lastName.length).toBeGreaterThanOrEqual(3);
+      expect(response.body.data.lastName.length).toBeLessThanOrEqual(20);
+    }
+
+    if (response.body.data.dni) {
+      expect(response.body.data.dni.length).toBeGreaterThanOrEqual(8);
+      expect(response.body.data.dni.length).toBeLessThanOrEqual(10);
+    }
+
+    if (response.body.data.phone) {
+      expect(response.body.data.phone.length).toBeGreaterThanOrEqual(10);
+      expect(response.body.data.phone.length).toBeLessThanOrEqual(12);
+    }
+
+    if (response.body.data.password) {
+      expect(response.body.data.password.length).toBeGreaterThanOrEqual(8);
+      expect(response.body.data.password.length).toBeLessThanOrEqual(20);
+    }
   });
 });
