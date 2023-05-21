@@ -3,8 +3,8 @@ const Joi = require('joi');
 
 const validateCreation = (req, res, next) => {
   const activityValidation = Joi.object({
-    name: Joi.string().min(4).pattern(/^[a-zA-Z]+$/).required(),
-    description: Joi.string().min(5).required(),
+    name: Joi.string().min(4).max(20).required(),
+    description: Joi.string().min(5).max(100).required(),
     isActive: Joi.boolean().required(),
   });
 
@@ -19,8 +19,9 @@ const validateCreation = (req, res, next) => {
 
 const validateUpdateActivity = (req, res, next) => {
   const validationActivity = Joi.object({
-    name: Joi.string().min(3).max(20).required(),
-    description: Joi.string().min(20).max(50).required(),
+    name: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+$/)
+      .required(),
+    description: Joi.string().min(20).max(100).required(),
   });
 
   const validation = validationActivity.validate(req.body);
