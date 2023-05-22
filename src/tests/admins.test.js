@@ -88,4 +88,35 @@ describe('POST /api/admins/', () => {
       expect(response.error).toBeTruthy();
     });
   });
+
+  describe('PUT RECOVER /api/admins/recoverAdmin/:id', () => {
+    test('Should return status 200 when "deleted" flag turn on false', async () => {
+      const correctId = '6462d38b2118b6d63daf41f9';
+      const response = await request(app).put(`/api/admins/recoverAdmin/${correctId}`);
+      expect(response.status).toBe(200);
+      expect(response.body.deleted).toBe(false);
+      expect(response.error).toBeFalsy();
+    });
+
+    test('Should return status 404 when the route is wrong', async () => {
+      const correctId = '6462d38b2118b6d63daf41f9';
+      const response = await request(app).put(`/api/admin/recoverAdmin/${correctId}`);
+      expect(response.status).toBe(404);
+      expect(response.error).toBeTruthy();
+    });
+
+    test('Should return status 404 when the admin has been deleted', async () => {
+      const adminDeleted = '6462d3e42118b6d63daf41f9';
+      const response = await request(app).put(`/api/admins/recoverAdmin/${adminDeleted}`);
+      expect(response.status).toBe(404);
+      expect(response.error).toBeTruthy();
+    });
+
+    test('Should return status 404 when the admin is not found', async () => {
+      const incorrectId = '6462d38b2118b6d63daf41f5';
+      const response = await request(app).put(`/api/admins/recoverAdmin/${incorrectId}`);
+      expect(response.status).toBe(404);
+      expect(response.error).toBeTruthy();
+    });
+  });
 });
