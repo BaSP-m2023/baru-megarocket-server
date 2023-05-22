@@ -14,6 +14,7 @@ export default [
     isActive: true,
     membership: 'classic',
     password: 'Chimpance1',
+    deleted: true,
   },
   {
     _id: new mongoose.Types.ObjectId('646f10810596acb1db833e30'),
@@ -28,5 +29,6 @@ export default [
     isActive: true,
     membership: 'only-classes',
     password: 'Gorila12',
+    deleted: false,
   },
 ];
