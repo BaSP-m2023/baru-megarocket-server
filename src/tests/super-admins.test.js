@@ -22,6 +22,7 @@ describe('Get all super admins tests ', () => {
     expect(response.body.error).toBeFalsy();
   });
 });
+
 describe('Get super admins by Id tests', () => {
   test('In a good request the response status should be 200', async () => {
     const response = await request(app).get(`/api/super-admins/${existId}`).send();
@@ -44,5 +45,32 @@ describe('Get super admins by Id tests', () => {
     const response = await request(app).get(`/api/super-admins/${existId}`).send();
     // eslint-disable-next-line no-underscore-dangle
     expect(response.body.data._id).toEqual(existId.valueOf());
+  });
+});
+
+describe('Delete super admins tests', () => {
+  test('In a good request the response status should be 204', async () => {
+    const response = await request(app).delete(`/api/super-admins/${existId}`).send();
+    expect(response.status).toBe(204);
+    expect(response.error).toBeFalsy();
+  });
+  test('Searching for the deleted ID, the response status should be 404', async () => {
+    const response = await request(app).delete(`/api/super-admins/${existId}`).send();
+    expect(response.status).toBe(404);
+    expect(response.error).toBeTruthy();
+    expect(response.body.message).toBeDefined();
+    expect(response.body.error).toBeTruthy();
+  });
+  test('When the ID is not found, the response status should be 404', async () => {
+    const response = await request(app).delete('/api/super-admins/64649c885078b9c723c68355').send();
+    expect(response.status).toBe(404);
+    expect(response.error).toBeTruthy();
+    expect(response.body.message).toBeDefined();
+    expect(response.body.error).toBeTruthy();
+  });
+  test('In a bad request the response status should be 400', async () => {
+    const response = await request(app).delete('/api/super-admins/6ggerger34').send();
+    expect(response.status).toBe(400);
+    expect(response.error).toBeTruthy();
   });
 });
