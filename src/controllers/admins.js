@@ -81,6 +81,7 @@ const deleteAdmin = (req, res) => {
       }
       return res.status(200).json({
         message: 'Admin deleted',
+        deleted: true,
       });
     })
     .catch((error) => res.status(400).json({
@@ -150,6 +151,7 @@ const recoverAdmin = (req, res) => {
       return res.status(200).json({
         message: `Admin with id: ${id} was successfully recovered!`,
         data: admin,
+        deleted: false,
       });
     })
     .catch((error) => res.status(400).json({
