@@ -73,6 +73,8 @@ const updateSub = (req, res) => {
     },
     { new: true },
   )
+    .populate('classes')
+    .populate('members')
     .then((result) => {
       if (!result) {
         return res.status(404).json({
