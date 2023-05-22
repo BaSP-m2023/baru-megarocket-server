@@ -30,7 +30,7 @@ const deleteSuperAdmin = (req, res) => {
         return res.status(204).json().end();
       }
       return res.status(404).json({
-        msg: `Super Admin with id: ${id} was not found`,
+        message: `Super Admin with id: ${id} was not found`,
         data: undefined,
         error: true,
       });
@@ -62,7 +62,7 @@ const getSuperAdminById = (req, res) => {
     .then((superAdmin) => {
       if (!superAdmin) {
         return res.status(404).json({
-          msg: `Super Admin with id: ${id} was not found`,
+          message: `Super Admin with id: ${id} was not found`,
           data: undefined,
           error: true,
         });
@@ -98,7 +98,7 @@ const updateSuperAdmin = (req, res) => {
     .then((result) => {
       if (!result) {
         return res.status(404).json({
-          msg: `Super Admin with id: ${id} was not found`,
+          message: `Super Admin with id: ${id} was not found`,
           data: undefined,
           error: true,
         });
