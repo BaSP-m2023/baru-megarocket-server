@@ -16,7 +16,7 @@ beforeAll(async () => {
   };
 
   await mongoose.connect(uri, mongoOptions);
-}, 2000);
+}, 4000);
 
 // Disconnect from the fake database
 afterAll(async () => {

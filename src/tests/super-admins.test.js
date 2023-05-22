@@ -8,6 +8,12 @@ beforeAll(async () => {
 });
 // eslint-disable-next-line no-underscore-dangle
 const existId = superAdminSeed[0]._id;
+const mockSuperAdmin = {
+  name: 'Keith',
+  lastName: 'Richards',
+  email: 'keithrich@stones.com',
+  password: 'R1ooT42SSa',
+};
 
 describe('Get all super admins tests ', () => {
   test('In a good request the response status should be 200', async () => {
@@ -45,6 +51,34 @@ describe('Get super admins by Id tests', () => {
     const response = await request(app).get(`/api/super-admins/${existId}`).send();
     // eslint-disable-next-line no-underscore-dangle
     expect(response.body.data._id).toEqual(existId.valueOf());
+  });
+});
+
+describe('Post super admins tests', () => {
+  test('If eh super admin was created status should be 201', async () => {
+    const response = await request(app).post('/api/super-admins').send(mockSuperAdmin);
+    expect(response.status).toBe(201);
+    expect(response.error).toBeFalsy();
+    expect(response.body.message).toMatch('Super Admin created');
+    expect(response.body.error).toBeFalsy();
+  });
+  test('Check if the super admin it´s added to the list', async () => {
+    const response = await request(app).get('/api/super-admins').send();
+    expect(response.body.data.length).toEqual(superAdminSeed.length + 1);
+  });
+  test('If one field is missing status should be 400', async () => {
+    const response = await request(app).post('/api/super-admins').send({ name: 'Ronnie', lastName: 'Wood' });
+    expect(response.status).toBe(400);
+    expect(response.error).toBeTruthy();
+    expect(response.body.error).toBeTruthy();
+  });
+  test('If one field is wrong status should be 400', async () => {
+    const response = await request(app).post('/api/super-admins').send({
+      name: 'Ronnie', lastName: 'Wood', email: 'dsaasd', password: 'ddERass88',
+    });
+    expect(response.status).toBe(400);
+    expect(response.error).toBeTruthy();
+    expect(response.body.error).toBeTruthy();
   });
 });
 
