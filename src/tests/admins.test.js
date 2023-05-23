@@ -15,6 +15,11 @@ const mockAdmin = {
   password: 'Password1',
 };
 
+const missingFields = {
+  firstName: 'Rodrigo',
+  lastName: 'Jimenez',
+};
+
 const errorDataAdmin = {
   firstName: 'Juan10',
   lastName: 'Gonzalez',
@@ -78,64 +83,37 @@ describe('GET /api/admins/:id', () => {
   });
 });
 
+describe('POST /api/admins/', () => {
+  test('Should return status 201 when create a admin succsessfully', async () => {
+    const response = await request(app).post('/api/admins').send(mockAdmin);
+    expect(response.status).toBe(201);
+    expect(response.error).toBeFalsy();
+  });
+
+  test('Should return status 404 when the route is wrong', async () => {
+    const response = await request(app).post('/api/admin').send(mockAdmin);
+    expect(response.status).toBe(404);
+    expect(response.error).toBeTruthy();
+  });
+
+  test('Should return a status 400 when have missing data', async () => {
+    const response = await request(app).post('/api/admins').send(missingFields);
+    expect(response.status).toBe(400);
+    expect(response.error).toBeTruthy();
+  });
+
+  test('Should return status 400 when de data is invalid', async () => {
+    const response = await request(app).post('/api/admins').send(errorDataAdmin);
+    expect(response.status).toBe(400);
+    expect(response.error).toBeTruthy();
+  });
+});
+
 describe('PUT /api/admins/:id', () => {
   test('should update an admin with status 200', async () => {
     // eslint-disable-next-line no-template-curly-in-string
     const response = await request(app).put('/api/admins/6462d38b2118b6d63daf41f1').send(mockAdmin);
     expect(response.status).toBe(200);
-  });
-  test('should return status 400 if not found admin to update', async () => {
-    // eslint-disable-next-line no-template-curly-in-string
-    const response = await request(app).put('/api/admins/6462d38b2118b6d63daf41f');
-    expect(response.status).toBe(400);
-  });
-  /*
-  test('should have a valid firstName, lastName and city', async () => {
-    // eslint-disable-next-line no-template-curly-in-string
-    const response = await request(app).put('/api/admins/6462d38b2118b6d63daf41f1').send(mockAdmin);
-    // eslint-disable-next-line no-undef
-    if (response.body.firstName) {
-      expect(response.body.firstName).toMatch(/^[a-zA-Z]+$/);
-    }
-    // eslint-disable-next-line no-undef
-    if (response.body.lastName) {
-      expect(response.body.lastName).toMatch(/^[a-zA-Z]+$/);
-    }
-    // eslint-disable-next-line no-undef
-    if (response.body.city) {
-      expect(response.body.city).toMatch(/^[a-zA-Z]+$/);
-    }
-  });
-  */
-  test('should have a valid dni and phone', async () => {
-    // eslint-disable-next-line no-template-curly-in-string
-    const response = await request(app).put('/api/admins/6462d38b2118b6d63daf41f1');
-    // eslint-disable-next-line no-undef
-    if (response.body.dni) {
-      expect(response.body.dni).toMatch(/^(?!^0)[0-9]$/);
-    }
-    // eslint-disable-next-line no-undef
-    if (response.body.phone) {
-      expect(response.body.phone).toMatch(/^(?!^0)[0-9]$/);
-    }
-  });
-  test('should have a valid email and password', async () => {
-    // eslint-disable-next-line no-template-curly-in-string
-    const response = await request(app).put('/api/admins/6462d38b2118b6d63daf41f1');
-    // eslint-disable-next-line no-undef
-    if (response.body.email) {
-      expect(response.body.email).toMatch(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
-    }
-    // eslint-disable-next-line no-undef
-    if (response.body.password) {
-      expect(response.body.password).toMatch(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
-    }
-  });
-  test('should update an admin with status 200', async () => {
-    const correctId = '6462d3e42118b6d63daf41f2';
-    const response = await request(app).put(`/api/admins/${correctId}`).send(mockAdmin);
-    expect(response.status).toBe(200);
-    expect(response.error).toBeFalsy();
   });
   test('should return status 404 if not found admin to update', async () => {
     const incorrectId = '6462d38b2118b6d63daf41f5';
@@ -150,6 +128,107 @@ describe('PUT /api/admins/:id', () => {
   test('Should return status 400 when de data is invalid', async () => {
     const response = await request(app).post('/api/admins').send(errorDataAdmin);
     expect(response.status).toBe(400);
+    expect(response.error).toBeTruthy();
+  });
+  test('should have a valid firstName, lastName and city', async () => {
+    // eslint-disable-next-line no-template-curly-in-string
+    const response = await request(app).put('/api/admins/6462d38b2118b6d63daf41f1').send(mockAdmin);
+    // eslint-disable-next-line no-undef
+    if (response.body.firstName) {
+      expect(response.body.firstName).toMatch(/^[a-zA-Z]+( [a-zA-Z]+)*$/);
+    }
+    // eslint-disable-next-line no-undef
+    if (response.body.lastName) {
+      expect(response.body.lastName).toMatch(/^[a-zA-Z]+( [a-zA-Z]+)*$/);
+    }
+    // eslint-disable-next-line no-undef
+    if (response.body.city) {
+      expect(response.body.city).toMatch(/^[a-zA-Z]+( [a-zA-Z]+)*$/);
+    }
+  });
+  test('should have a valid dni and phone', async () => {
+    // eslint-disable-next-line no-template-curly-in-string
+    const response = await request(app).put('/api/admins/6462d38b2118b6d63daf41f1');
+    // eslint-disable-next-line no-undef
+    if (response.body.dni) {
+      expect(response.body.dni).min(10000000).max(100000000).integer();
+    }
+    // eslint-disable-next-line no-undef
+    if (response.body.phone) {
+      expect(response.body.phone).min(1000000000).max(10000000000).integer();
+    }
+  });
+  test('should have a valid email and password', async () => {
+    // eslint-disable-next-line no-template-curly-in-string
+    const response = await request(app).put('/api/admins/6462d38b2118b6d63daf41f1');
+    // eslint-disable-next-line no-undef
+    if (response.body.email) {
+      expect(response.body.email).toMatch(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
+    }
+    // eslint-disable-next-line no-undef
+    if (response.body.password) {
+      expect(response.body.password).toMatch(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
+    }
+  });
+});
+
+describe('PUT DELETE /api/admins/delete/:id', () => {
+  test('Should return status 200 when "deleted" flag turn on true', async () => {
+    const correctId = '6462d38b2118b6d63daf41f1';
+    const response = await request(app).delete(`/api/admins/delete/${correctId}`);
+    expect(response.status).toBe(200);
+    expect(response.body.deleted).toBe(true);
+  });
+
+  test('Should return status 404 when the route is wrong', async () => {
+    const correctId = '6462d38b2118b6d63daf41f5';
+    const response = await request(app).delete(`/api/admin/delete/${correctId}`);
+    expect(response.status).toBe(404);
+    expect(response.error).toBeTruthy();
+  });
+
+  test('Should return status 404 when the admin has been deleted', async () => {
+    const adminDeleted = '6462d3e42118b6d63daf41f4';
+    const response = await request(app).delete(`/api/admins/delete/${adminDeleted}`);
+    expect(response.status).toBe(404);
+    expect(response.error).toBeTruthy();
+  });
+
+  test('Should return status 404 when the admin is not found', async () => {
+    const incorrectId = '6462d38b2118b6d63daf41f5';
+    const response = await request(app).delete(`/api/admins/delete/${incorrectId}`);
+    expect(response.status).toBe(404);
+    expect(response.error).toBeTruthy();
+  });
+});
+
+describe('PUT RECOVER /api/admins/recoverAdmin/:id', () => {
+  test('Should return status 200 when "deleted" flag turn on false', async () => {
+    const correctId = '6462d38b2118b6d63daf41f9';
+    const response = await request(app).put(`/api/admins/recoverAdmin/${correctId}`);
+    expect(response.status).toBe(200);
+    expect(response.body.deleted).toBe(false);
+    expect(response.error).toBeFalsy();
+  });
+
+  test('Should return status 404 when the route is wrong', async () => {
+    const correctId = '6462d38b2118b6d63daf41f9';
+    const response = await request(app).put(`/api/admin/recoverAdmin/${correctId}`);
+    expect(response.status).toBe(404);
+    expect(response.error).toBeTruthy();
+  });
+
+  test('Should return status 404 when the admin has been deleted', async () => {
+    const adminDeleted = '6462d3e42118b6d63daf41f9';
+    const response = await request(app).put(`/api/admins/recoverAdmin/${adminDeleted}`);
+    expect(response.status).toBe(404);
+    expect(response.error).toBeTruthy();
+  });
+
+  test('Should return status 404 when the admin is not found', async () => {
+    const incorrectId = '6462d38b2118b6d63daf41f5';
+    const response = await request(app).put(`/api/admins/recoverAdmin/${incorrectId}`);
+    expect(response.status).toBe(404);
     expect(response.error).toBeTruthy();
   });
 });
