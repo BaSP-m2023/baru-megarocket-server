@@ -34,7 +34,7 @@ const getClassById = (req, res) => {
       data: classId,
       error: false,
     }))
-    .catch((error) => res.json({
+    .catch((error) => res.status(404).json({
       message: 'An error ocurred',
       error,
     }));
