@@ -1,3 +1,4 @@
+/* eslint-disable eol-last */
 import mongoose from 'mongoose';
 
 export default [

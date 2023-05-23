@@ -21,9 +21,11 @@ const validateCreation = (req, res, next) => {
 
 const validateUpdateActivity = (req, res, next) => {
   const validationActivity = Joi.object({
-    name: Joi.string().min(3).max(20).pattern(/^[a-zA-Z]+$/)
+    name: Joi.string().min(3).max(20).pattern(/^[A-Za-z\s]+$/)
       .required(),
-    description: Joi.string().min(20).max(100).required(),
+    description: Joi.string().min(20).max(100).pattern(/^[A-Za-z\s]+$/)
+      .required(),
+    isActive: Joi.boolean().required(),
   });
 
   const validation = validationActivity.validate(req.body);

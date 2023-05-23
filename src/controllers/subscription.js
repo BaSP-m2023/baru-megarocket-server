@@ -1,10 +1,16 @@
 /* eslint-disable arrow-body-style */
 const Subscription = require('../models/Subscription');
 
-const createSubs = (req, res) => {
-  Subscription.create(
-    req.body,
-  ).then((result) => res.status(201).json(result))
+const createSubs = async (req, res) => {
+  await Subscription.create(req.body)
+    .then((result) => {
+      Subscription.findById(result.id)
+        .populate('classes')
+        .populate('members')
+        .then((resu) => {
+          res.status(201).json(resu);
+        });
+    })
     .catch((error) => res.status(400).json({ message: 'Invalid request: incorrect parameters provided!', error }));
 };
 

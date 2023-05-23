@@ -31,9 +31,9 @@ const validateCreation = (req, res, next) => {
 };
 
 const adminValidateUpdate = Joi.object({
-  firstName: Joi.string().strict(true).pattern(/^[a-zA-Z]+$/).min(3)
+  firstName: Joi.string().strict(true).pattern(/^[a-zA-Z]+( [a-zA-Z]+)*$/).min(3)
     .max(20),
-  lastName: Joi.string().strict(true).pattern(/^[a-zA-Z]+$/).min(3)
+  lastName: Joi.string().strict(true).pattern(/^[a-zA-Z]+( [a-zA-Z]+)*$/).min(3)
     .max(20),
   dni: Joi.number().strict(true).min(10000000).max(100000000)
     .integer()
@@ -42,7 +42,7 @@ const adminValidateUpdate = Joi.object({
     .integer()
     .positive(),
   email: Joi.string().strict(true).email().pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
-  city: Joi.string().strict(true).pattern(/^[a-zA-Z]+$/).min(3)
+  city: Joi.string().strict(true).pattern(/^[a-zA-Z]+( [a-zA-Z]+)*$/).min(3)
     .max(50),
   password: Joi.string().strict(true).alphanum().pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)
     .min(8),
