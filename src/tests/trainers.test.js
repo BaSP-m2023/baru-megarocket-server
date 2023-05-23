@@ -178,4 +178,33 @@ describe('PUT /api/trainer/:id', () => {
       expect(response.body.data.password.length).toBeLessThanOrEqual(20);
     }
   });
+  describe('get by ID /api /trainer', () => {
+    test('should return status 200', async () => {
+      const response = await request(app).get('/api/trainer/646f10810596acb1db833e25').send();
+      expect(response.status).toBe(200);
+      expect(response.error).toBeFalsy();
+    });
+    test('should return trainer that exist', async () => {
+      const response = await request(app).get('/api/trainer/646f10810596acb1db833e25').send();
+      const trainer = response.body.data;
+      expect(trainer).toBeDefined();
+    });
+    test('should return status 404 when the trainer is not found', async () => {
+      const response = await request(app).get('/api/trainer/646f10810596acb1db633e25').send();
+      expect(response.status).toBe(404);
+      expect(response.error).toBeTruthy();
+    });
+  });
+  describe('delete by ID /api /trainer', () => {
+    test('should return status 200 when the trainer is deleted correctly', async () => {
+      const response = await request(app).delete('/api/trainer/646f10810596acb1db833e25').send();
+      expect(response.status).toBe(200);
+      expect(response.error).toBeFalsy();
+    });
+    test('should return status 404 when the trainer is not found', async () => {
+      const response = await request(app).delete('/api/trainer/646f10810596acb1db873e25').send();
+      expect(response.status).toBe(404);
+      expect(response.error).toBeTruthy();
+    });
+  });
 });
