@@ -46,6 +46,11 @@ const getSubById = (req, res) => {
 
   Subscription.findById(id)
     .then((subscription) => {
+      if (!subscription) {
+        return res.status(404).json({
+          message: `Subscription ${id} not found`,
+        });
+      }
       return res.status(200).json({
         message: 'Subscription found',
         data: subscription,
@@ -53,8 +58,8 @@ const getSubById = (req, res) => {
       });
     })
     .catch((error) => {
-      return res.status(404).json({
-        message: `Subscription ${id} not found`,
+      return res.status(400).json({
+        message: `Bad ID requests with: ${id}`,
         error,
       });
     });
