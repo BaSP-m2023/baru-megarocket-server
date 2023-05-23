@@ -20,8 +20,8 @@ const validateUpdate = (req, res, next) => {
 // eslint-disable-next-line consistent-return
 const validateCreation = (req, res, next) => {
   const subsValidation = Joi.object({
-    classes: Joi.string().hex().length(24),
-    members: Joi.array().items(Joi.string().hex().length(24)),
+    classes: Joi.string(),
+    members: Joi.string(),
     date: Joi.string().isoDate(),
   });
 
