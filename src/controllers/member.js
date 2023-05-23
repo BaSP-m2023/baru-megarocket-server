@@ -60,7 +60,7 @@ const deleteMember = (req, res) => {
         message: 'User deleted!',
       });
     })
-    .catch((error) => res.Status(400).json({
+    .catch((error) => res.status(400).json({
       message: 'Something went wrong',
       error,
     }));
