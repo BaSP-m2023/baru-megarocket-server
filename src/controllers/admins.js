@@ -1,8 +1,9 @@
 const Admin = require('../models/Admin');
+const { validateUpdate } = require('../validations/admins');
 
 const createAdmin = (req, res) => {
   const {
-    firstName, lastName, dni, phone, email, city, password, deleted,
+    firstName, lastName, dni, phone, email, city, password,
   } = req.body;
   Admin.create({
     firstName,
@@ -12,7 +13,6 @@ const createAdmin = (req, res) => {
     email,
     city,
     password,
-    deleted,
   })
     .then((result) => {
       res.status(201).json(result);
@@ -81,6 +81,7 @@ const deleteAdmin = (req, res) => {
       }
       return res.status(200).json({
         message: 'Admin deleted',
+        deleted: true,
       });
     })
     .catch((error) => res.status(400).json({
@@ -101,33 +102,35 @@ const updateAdmin = (req, res) => {
     });
   }
 
-  return Admin.findByIdAndUpdate(
-    id,
-    {
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      password,
-    },
-    {
-      new: true,
-    },
-  )
-    .then((result) => {
-      if (!result) {
-        return res.status(404).json({
-          message: `Admin with id: ${id} was not found!`,
-        });
-      }
-      return res.status(200).json(result);
-    })
-    .catch((error) => res.status(400).json({
-      message: 'An error ocurred',
-      error: error.message,
-    }));
+  return validateUpdate(req, res, () => {
+    Admin.findByIdAndUpdate(
+      id,
+      {
+        firstName,
+        lastName,
+        dni,
+        phone,
+        email,
+        city,
+        password,
+      },
+      {
+        new: true,
+      },
+    )
+      .then((result) => {
+        if (!result) {
+          return res.status(404).json({
+            message: `Admin with id: ${id} was not found!`,
+          });
+        }
+        return res.status(200).json(result);
+      })
+      .catch((error) => res.status(400).json({
+        message: 'An error occurred',
+        error: error.message,
+      }));
+  });
 };
 
 const recoverAdmin = (req, res) => {
@@ -148,6 +151,7 @@ const recoverAdmin = (req, res) => {
       return res.status(200).json({
         message: `Admin with id: ${id} was successfully recovered!`,
         data: admin,
+        deleted: false,
       });
     })
     .catch((error) => res.status(400).json({
