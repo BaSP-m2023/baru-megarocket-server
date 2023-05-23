@@ -8,7 +8,7 @@ import Member from '../models/Member';
 import memberSeed from '../seeds/members';
 
 const mockSub = {
-  classes: '646538ebcc9f43aa1da9ac9e',
+  classes: '6462ea9abb5168b3bbbc8bc0',
   members: '646f10810596acb1db833e25',
   date: '2023-10-15T00:00:00.000+00:00',
 };
