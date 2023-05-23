@@ -114,6 +114,12 @@ describe('Put super admins tests', () => {
     expect(response.error).toBeTruthy();
     expect(response.body.error).toBeTruthy();
   });
+  test('When the ID is invalid, the response status should be 400', async () => {
+    const response = await request(app).put('/api/super-admins/64649c885078b9c').send();
+    expect(response.status).toBe(400);
+    expect(response.error).toBeTruthy();
+    expect(response.body.error).toBeTruthy();
+  });
 });
 
 describe('Delete super admins tests', () => {
