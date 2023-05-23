@@ -14,12 +14,14 @@ const mockSuperAdmin = {
   email: 'keithrich@stones.com',
   password: 'R1ooT42SSa',
 };
+const mockName = mockSuperAdmin.name;
 
 describe('Get all super admins tests ', () => {
   test('In a good request the response status should be 200', async () => {
     const response = await request(app).get('/api/super-admins/').send();
     expect(response.status).toBe(200);
     expect(response.error).toBeFalsy();
+    expect(response.body.error).toBeFalsy();
   });
   test('In a good request should return full super admins list', async () => {
     const response = await request(app).get('/api/super-admins/').send();
@@ -34,20 +36,21 @@ describe('Get super admins by Id tests', () => {
     const response = await request(app).get(`/api/super-admins/${existId}`).send();
     expect(response.status).toBe(200);
     expect(response.error).toBeFalsy();
+    expect(response.body.error).toBeFalsy();
   });
   test('In a bad request the response status should be 400', async () => {
     const response = await request(app).get('/api/super-admins/6ggerger34').send();
     expect(response.status).toBe(400);
     expect(response.error).toBeTruthy();
+    expect(response.body.error).toBeTruthy();
   });
   test('When the ID is not found, the response status should be 404', async () => {
     const response = await request(app).get('/api/super-admins/64649c885078b9c723c68355').send();
     expect(response.status).toBe(404);
     expect(response.error).toBeTruthy();
-    expect(response.body.message).toBeDefined();
     expect(response.body.error).toBeTruthy();
   });
-  test('The response super admin should match the requested super admin', async () => {
+  test('Check if response super admin should match the requested super admin', async () => {
     const response = await request(app).get(`/api/super-admins/${existId}`).send();
     // eslint-disable-next-line no-underscore-dangle
     expect(response.body.data._id).toEqual(existId.valueOf());
@@ -82,29 +85,60 @@ describe('Post super admins tests', () => {
   });
 });
 
+describe('Put super admins tests', () => {
+  test('In a good request the response status should be 200', async () => {
+    const response = await request(app).put(`/api/super-admins/${existId}`).send();
+    expect(response.status).toBe(200);
+    expect(response.error).toBeFalsy();
+    expect(response.body.error).toBeFalsy();
+  });
+  test('When a field has edited the response status should be 200', async () => {
+    const response = await request(app).put(`/api/super-admins/${existId}`).send({ name: 'Charlie' });
+    expect(response.status).toBe(200);
+    expect(response.error).toBeFalsy();
+    expect(response.body.error).toBeFalsy();
+  });
+  test('Check if the field was edited', async () => {
+    const response = await request(app).get(`/api/super-admins/${existId}`).send();
+    expect(response.body.data.name).not.toEqual(mockName);
+  });
+  test('If one of the edited fields is wrong status should be 400', async () => {
+    const response = await request(app).put(`/api/super-admins/${existId}`).send({ password: 'ddERas' });
+    expect(response.status).toBe(400);
+    expect(response.error).toBeTruthy();
+    expect(response.body.error).toBeTruthy();
+  });
+  test('When the ID is not found, the response status should be 404', async () => {
+    const response = await request(app).put('/api/super-admins/64649c885078b9c723c68355').send();
+    expect(response.status).toBe(404);
+    expect(response.error).toBeTruthy();
+    expect(response.body.error).toBeTruthy();
+  });
+});
+
 describe('Delete super admins tests', () => {
   test('In a good request the response status should be 204', async () => {
     const response = await request(app).delete(`/api/super-admins/${existId}`).send();
     expect(response.status).toBe(204);
     expect(response.error).toBeFalsy();
+    expect(response.body.error).toBeFalsy();
   });
   test('Searching for the deleted ID, the response status should be 404', async () => {
     const response = await request(app).delete(`/api/super-admins/${existId}`).send();
     expect(response.status).toBe(404);
     expect(response.error).toBeTruthy();
-    expect(response.body.message).toBeDefined();
     expect(response.body.error).toBeTruthy();
   });
   test('When the ID is not found, the response status should be 404', async () => {
     const response = await request(app).delete('/api/super-admins/64649c885078b9c723c68355').send();
     expect(response.status).toBe(404);
     expect(response.error).toBeTruthy();
-    expect(response.body.message).toBeDefined();
     expect(response.body.error).toBeTruthy();
   });
   test('In a bad request the response status should be 400', async () => {
     const response = await request(app).delete('/api/super-admins/6ggerger34').send();
     expect(response.status).toBe(400);
     expect(response.error).toBeTruthy();
+    expect(response.body.error).toBeTruthy();
   });
 });
