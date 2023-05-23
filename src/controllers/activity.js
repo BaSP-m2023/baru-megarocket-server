@@ -22,7 +22,7 @@ const deleteActivity = (req, res) => {
   Activity.findByIdAndDelete(id)
     .then((result) => {
       if (!result) {
-        return res.status(400).json({
+        return res.status(404).json({
           msg: `Activity with id ${id} was not found`,
           data: undefined,
           error: true,
@@ -71,13 +71,14 @@ const getActivityById = (req, res) => {
 
 const updateActivity = (req, res) => {
   const { id } = req.params;
-  const { name, description } = req.body;
+  const { name, description, isActive } = req.body;
 
   Activity.findByIdAndUpdate(
     id,
     {
       name,
       description,
+      isActive,
     },
     { new: true },
   )
