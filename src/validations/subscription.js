@@ -3,7 +3,7 @@ const Joi = require('joi');
 const validateUpdate = (req, res, next) => {
   const subValidation = Joi.object({
     classes: Joi.string(),
-    members: Joi.array().unique(),
+    members: Joi.string(),
     date: Joi.date(),
   });
 
