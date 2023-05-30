@@ -32,6 +32,8 @@ const deleteSubs = (req, res) => {
 
 const getAllSubs = (req, res) => {
   Subscription.find()
+    .populate('classes')
+    .populate('members')
     .then((subscriptions) => {
       return res.status(200).json({
         message: 'All subscriptions list',

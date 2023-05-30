@@ -9,7 +9,8 @@ const getAllClass = (req, res) => {
   const { query } = req;
 
   Class.find(query)
-    .populate('activity trainer')
+    .populate('activity')
+    .populate('trainer')
     .then((allClass) => {
       res.status(200).json({
         message: 'Complete class list',
@@ -28,9 +29,10 @@ const getClassById = (req, res) => {
   const { id } = req.params;
 
   Class.findById(id)
-    .populate('activity trainer')
+    .populate('activity')
+    .populate('trainer')
     .then((classId) => res.status(200).json({
-      message: `Class ${classId.activity} found! `,
+      message: 'Class found! ',
       data: classId,
       error: false,
     }))
