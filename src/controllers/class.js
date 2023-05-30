@@ -29,10 +29,9 @@ const getClassById = (req, res) => {
   const { id } = req.params;
 
   Class.findById(id)
-    .populate('activity')
-    .populate('trainer')
+    .populate('activity trainer')
     .then((classId) => res.status(200).json({
-      message: 'Class found! ',
+      message: `Class ${classId.activity} found! `,
       data: classId,
       error: false,
     }))
