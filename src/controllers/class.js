@@ -9,8 +9,7 @@ const getAllClass = (req, res) => {
   const { query } = req;
 
   Class.find(query)
-    .populate('activity')
-    .populate('trainer')
+    .populate('activity trainer')
     .then((allClass) => {
       res.status(200).json({
         message: 'Complete class list',
