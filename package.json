@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/radiumlearning/backend-template-basic-2023#readme",
   "engines": {
-    "node": "14.x"
+    "node": "18.x"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
