@@ -40,7 +40,7 @@ const getAllAdmins = (req, res) => {
 const getAdminById = (req, res) => {
   const { id } = req.params;
 
-  Admin.findById(id, 'firstName lastName')
+  Admin.findById(id)
     .then((admin) => {
       if (!admin) {
         return res.status(404).json({
