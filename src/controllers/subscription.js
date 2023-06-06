@@ -1,4 +1,3 @@
-/* eslint-disable arrow-body-style */
 const Subscription = require('../models/Subscription');
 
 const createSubs = async (req, res) => {
@@ -34,25 +33,23 @@ const getAllSubs = (req, res) => {
   Subscription.find()
     .populate('classes')
     .populate('members')
-    .then((subscriptions) => {
-      return res.status(200).json({
-        message: 'All subscriptions list',
-        data: subscriptions,
-        error: false,
-      });
-    })
-    .catch((error) => {
-      return res.status(500).json({
-        message: 'Internal error',
-        error,
-      });
-    });
+    .then((subscriptions) => res.status(200).json({
+      message: 'All subscriptions list',
+      data: subscriptions,
+      error: false,
+    }))
+    .catch((error) => res.status(500).json({
+      message: 'Internal error',
+      error,
+    }));
 };
 
 const getSubById = (req, res) => {
   const { id } = req.params;
 
   Subscription.findById(id)
+    .populate('classes')
+    .populate('members')
     .then((subscription) => {
       if (!subscription) {
         return res.status(404).json({
@@ -65,12 +62,10 @@ const getSubById = (req, res) => {
         error: false,
       });
     })
-    .catch((error) => {
-      return res.status(400).json({
-        message: `Bad ID requests with: ${id}`,
-        error,
-      });
-    });
+    .catch((error) => res.status(400).json({
+      message: `Bad ID requests with: ${id}`,
+      error,
+    }));
 };
 
 const updateSub = (req, res) => {
@@ -96,9 +91,7 @@ const updateSub = (req, res) => {
       }
       return res.status(200).json(result);
     })
-    .catch((error) => {
-      return res.status(400).json(error);
-    });
+    .catch((error) => res.status(400).json(error));
 };
 
 module.exports = {
