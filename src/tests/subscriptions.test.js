@@ -55,7 +55,6 @@ describe('GET /api/subscription/:id', () => {
   test('Should get a subscription searching by ID', async () => {
     const response = await request(app)
       .get(`/api/subscription/${mockSubId}`);
-    console.log(response.body);
     expect(response.status).toBe(200);
     expect(response.error).toBeFalsy();
     expect(response.body.data.classes).toBeDefined();
