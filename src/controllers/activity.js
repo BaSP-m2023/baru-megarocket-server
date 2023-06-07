@@ -57,7 +57,7 @@ const getAllActivity = (req, res) => {
 const getActivityById = (req, res) => {
   const { id } = req.params;
 
-  Activity.findById(id, 'name')
+  Activity.findById(id)
     .then((activity) => res.status(200).json({
       message: `Activity found! it was ${activity.name}`,
       data: activity,
