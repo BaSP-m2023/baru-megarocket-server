@@ -53,6 +53,8 @@ const getSubById = (req, res) => {
   const { id } = req.params;
 
   Subscription.findById(id)
+    .populate('classes')
+    .populate('members')
     .then((subscription) => {
       if (!subscription) {
         return res.status(404).json({
