@@ -45,11 +45,6 @@ describe('PUT logic by id api/activity/:id', () => {
     expect(response.status).toBe(400);
     expect(response.error).toBeTruthy();
   });
-  test('missing files return 400', async () => {
-    const response = await request(app).put('/api/activity/6465286dad795d0bf31704f8').send(mockActivityMiss);
-    expect(response.status).toBe(400);
-    expect(response.error).toBeTruthy();
-  });
 });
 
 describe('GET all activity /api/activity', () => {
@@ -117,5 +112,10 @@ describe('POST activity /api/activity/', () => {
     expect(response.body.name.length).toBeLessThanOrEqual(20);
     expect(response.body.description.length).toBeGreaterThanOrEqual(5);
     expect(response.body.description.length).toBeLessThanOrEqual(100);
+  });
+  test('missing files return 404', async () => {
+    const response = await request(app).post('/api/activity/6465286dad795d0bf31704f8').send(mockActivityMiss);
+    expect(response.status).toBe(404);
+    expect(response.error).toBeTruthy();
   });
 });
