@@ -27,7 +27,11 @@ const deleteSuperAdmin = (req, res) => {
   SuperAdmin.findByIdAndDelete(id)
     .then((superAdmin) => {
       if (superAdmin) {
-        return res.status(204).json().end();
+        return res.status(200).json({
+          message: 'Super Admin deleted',
+          data: superAdmin,
+          error: false,
+        });
       }
       return res.status(404).json({
         message: `Super Admin with id: ${id} was not found`,
