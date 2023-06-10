@@ -123,9 +123,9 @@ describe('Put super admins tests', () => {
 });
 
 describe('Delete super admins tests', () => {
-  test('In a good request the response status should be 204', async () => {
+  test('In a good request the response status should be 200', async () => {
     const response = await request(app).delete(`/api/super-admins/${existId}`).send();
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
     expect(response.error).toBeFalsy();
     expect(response.body.error).toBeFalsy();
   });
