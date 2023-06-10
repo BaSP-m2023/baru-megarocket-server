@@ -12,7 +12,7 @@ const router = express.Router();
 router.use('/subscription', subscriptions);
 router.use('/trainer', trainers);
 router.use('/admins', admins);
-router.use('/activity', activity);
+router.use('/activities', activity);
 router.use('/class', classes);
 router.use('/member', members);
 router.use('/super-admins', superAdmins);
