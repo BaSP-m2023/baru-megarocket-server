@@ -8,7 +8,11 @@ const createActivity = (req, res) => {
     description,
     isActive,
   })
-    .then((result) => res.status(201).json(result))
+    .then((newActivity) => res.status(201).json({
+      message: 'Activity created',
+      data: newActivity,
+      error: false,
+    }))
     .catch((error) => res.status(400).json({
       message: error,
       data: undefined,
@@ -29,7 +33,7 @@ const deleteActivity = (req, res) => {
         });
       }
       return res.status(200).json({
-        message: 'Activity deleted!',
+        message: 'Activity deleted',
         data: Activity,
         error: false,
       });
@@ -43,12 +47,15 @@ const deleteActivity = (req, res) => {
 
 const getAllActivity = (req, res) => {
   Activity.find()
-    .then((activity) => res.status(200).json(
-      activity,
-    ))
+    .then((activities) => res.status(200).json({
+      message: 'Complete Activities list',
+      data: activities,
+      error: false,
+    }))
     .catch((error) => {
       res.status(500).json({
         message: 'An error ocurred!',
+        data: undefined,
         error,
       });
     });
@@ -59,12 +66,13 @@ const getActivityById = (req, res) => {
 
   Activity.findById(id)
     .then((activity) => res.status(200).json({
-      message: `Activity found! it was ${activity.name}`,
+      message: 'Activity found!',
       data: activity,
       error: false,
     }))
     .catch((error) => res.status(404).json({
       message: 'An error ocurred',
+      data: undefined,
       error,
     }));
 };
@@ -86,12 +94,22 @@ const updateActivity = (req, res) => {
       if (!activity) {
         return res.status(404).json({
           message: `Activity with id: ${id} was not found`,
+          data: undefined,
+          error: true,
         });
       }
-      return res.status(200).json(activity);
+      return res.status(200).json({
+        message: 'Activity updated',
+        data: activity,
+        error: false,
+      });
     })
     .catch((error) => {
-      res.status(400).json(error);
+      res.status(400).json({
+        message: 'An error ocurred.',
+        data: undefined,
+        error,
+      });
     });
 };
 
