@@ -12,7 +12,7 @@ const memberSchema = new mongoose.Schema({
   isActive: 'boolean',
   membership: {
     type: String,
-    enum: ['classic', 'only-classes', 'black'],
+    enum: ['classic', 'only_classes', 'black'],
   },
   password: 'string',
 });
