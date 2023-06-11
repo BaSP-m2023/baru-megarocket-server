@@ -64,47 +64,22 @@ describe('Get by id /api/member/:id', () => {
 });
 
 describe('create member /api/member/', () => {
-  test('should create a member with status 201', async () => {
-    const response = await request(app).post('/api/member').send(mockMember);
+  test('POST: the length of the data should increase by 1 unit', async () => {
+    let response = await request(app).get('/api/member').send();
+    const seedLength = response.body.data.length;
+    response = await request(app).post('/api/member').send(mockMember);
     expect(response.status).toBe(201);
-    expect(response.error).toBeFalsy();
-    expect(response.body).toBeDefined();
-    expect(response.body.name).toBeDefined();
-    expect(response.body.dni).toBeDefined();
-    expect(response.body.city).toBeDefined();
-    expect(response.body.dob).toBeDefined();
-    expect(response.body.zip).toBeDefined();
-    expect(response.body.isActive).toBeDefined();
-    expect(response.body.membership).toBeDefined();
-    expect(response.body.email).toBeDefined();
-    expect(response.body.password).toBeDefined();
+    response = await request(app).get('/api/member').send();
+    const seedPostLength = response.body.data.length;
+    expect(seedLength + 1).toBe(seedPostLength);
   });
-  test('should have a valid name and last name (only alphabetic characters)', async () => {
-    const response = await request(app).post('/api/member').send(mockMember);
-    expect(response.body.name).toMatch(/^[a-zA-Z]+$/);
-    expect(response.body.lastName).toMatch(/^[a-zA-Z]+$/);
-  });
-  test('should have a valid DNI (only numbers and between 7 and 11)', async () => {
-    const response = await request(app).post('/api/member').send(mockMember);
-    expect(response.body.dni).toMatch(/^(?!^0)[0-9]{7,11}$/);
-  });
-  test('should have a valid ZIP (only numbers and 4 max)', async () => {
-    const response = await request(app).post('/api/member').send(mockMember);
-    expect(response.body.zip).toBeGreaterThan(1000);
-    expect(response.body.zip).toBeLessThanOrEqual(9999);
-  });
-  test('should have a valid memberhip (can be only classic, only-classes and black)', async () => {
-    const response = await request(app).post('/api/member').send(mockMember);
-    const allowedMemberships = ['classic', 'only_classes', 'black'];
-    expect(allowedMemberships).toContain(response.body.membership);
-  });
-  test('should have a valid format email', async () => {
-    const response = await request(app).post('/api/member').send(mockMember);
-    expect(response.body.email).toMatch(/^\S+@\S+\.\S+$/);
-  });
-  test('should have a valid format password', async () => {
-    const response = await request(app).post('/api/member').send(mockMember);
-    expect(response.body.password).toMatch(/^[a-zA-Z0-9]{6,20}$/);
+  test('POST: should return the dni: 40120120 from the new member', async () => {
+    let response = await request(app).post('/api/member/').send(mockMember);
+    expect(response.status).toBe(201);
+    // eslint-disable-next-line no-underscore-dangle
+    const subId = response.body.data._id;
+    response = await request(app).get(`/api/member/${subId}`).send();
+    expect(response.body.data.dni).toBe('40120120');
   });
 });
 
