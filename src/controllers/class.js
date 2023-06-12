@@ -66,11 +66,13 @@ const createClass = (req, res) => {
       data: populatedResult,
       error: false,
     }))
-    .catch((error) => res.status(400).json({
-      message: 'An error ocurred!',
-      data: undefined,
-      error,
-    }));
+    .catch((error) => {
+      res.status(400).json({
+        message: 'An error ocurred!',
+        data: undefined,
+        error,
+      });
+    });
 };
 
 const updateClass = (req, res) => {
