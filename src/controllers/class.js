@@ -1,9 +1,6 @@
 /* eslint-disable consistent-return */
-const express = require('express');
 
 const Class = require('../models/Class');
-
-const routerClass = express.Router();
 
 const getAllClass = (req, res) => {
   const { query } = req;
@@ -146,7 +143,6 @@ const deleteClass = (req, res) => {
 };
 
 module.exports = {
-  routerClass,
   getAllClass,
   getClassById,
   createClass,
