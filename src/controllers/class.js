@@ -1,9 +1,6 @@
 /* eslint-disable consistent-return */
-const express = require('express');
 
 const Class = require('../models/Class');
-
-const routerClass = express.Router();
 
 const getAllClass = (req, res) => {
   const { query } = req;
@@ -12,30 +9,42 @@ const getAllClass = (req, res) => {
     .populate('activity trainer')
     .then((allClass) => {
       res.status(200).json({
-        message: 'Complete class list',
+        message: 'Successful GET of classes',
         data: allClass,
         error: false,
       });
     })
     .catch((error) => {
-      res.status(500).json({
+      res.status(404).json({
         message: 'An error ocurred',
+        data: undefined,
         error,
       });
     });
 };
+
 const getClassById = (req, res) => {
   const { id } = req.params;
 
   Class.findById(id)
     .populate('activity trainer')
-    .then((classId) => res.status(200).json({
-      message: `Class ${classId.activity} found! `,
-      data: classId,
-      error: false,
-    }))
+    .then((classId) => {
+      if (!classId) {
+        return res.status(404).json({
+          message: `Class with id:${id} was not found`,
+          data: undefined,
+          error: true,
+        });
+      }
+      return res.status(200).json({
+        message: `Class with id:${id} found`,
+        data: classId,
+        error: false,
+      });
+    })
     .catch((error) => res.status(404).json({
       message: 'An error ocurred',
+      data: undefined,
       error,
     }));
 };
@@ -49,11 +58,18 @@ const createClass = (req, res) => {
   })
     .then((result) => Class.findById(result.id)
       .populate('activity trainer'))
-    .then((populatedResult) => res.status(201).json(populatedResult))
-    .catch((error) => res.status(400).json({
-      message: 'An error ocurred!',
-      error,
-    }));
+    .then((populatedResult) => res.status(201).json({
+      message: 'Class created successfully',
+      data: populatedResult,
+      error: false,
+    }))
+    .catch((error) => {
+      res.status(400).json({
+        message: 'An error ocurred!',
+        data: undefined,
+        error,
+      });
+    });
 };
 
 const updateClass = (req, res) => {
@@ -81,133 +97,55 @@ const updateClass = (req, res) => {
     .then((result) => {
       if (!result) {
         return res.status(404).json({
-          msg: `Class with id: ${id} doesn't exist.`,
+          message: `Class with id: ${id} doesn't exist.`,
+          data: undefined,
+          error: true,
         });
       }
       return res.status(200).json({
-        msg: 'Class updated',
-        class: result,
+        message: 'Class updated',
+        data: result,
+        error: false,
       });
     })
-    .catch((error) => res.status(400).json(error));
+    .catch((error) => {
+      res.status(500).json({
+        message: 'An error ocurred. Update Rejected',
+        data: undefined,
+        error,
+      });
+    });
 };
 
 const deleteClass = (req, res) => {
   const { id } = req.params;
 
-  Class.findById(id, { deleted: true })
+  Class.findByIdAndDelete(id)
     .then((result) => {
       if (!result) {
         return res.status(404).json({
-          msg: `Class with id: ${id} not found`,
-        });
-      }
-      if (result.deleted) {
-        return res.status(404).json({
-          msg: `Class with id: ${id} was already deleted`,
-        });
-      }
-      return Class.findByIdAndUpdate(id, { deleted: true }, { new: true })
-        .populate('activity trainer')
-        .then((deleted) => res.status(200).json({
-          msg: 'Deleted class',
-          deleted_class: deleted,
-        }));
-    })
-    .catch((error) => res.status(400).json({
-      message: 'There was an error',
-      error,
-    }));
-};
-
-const assignTrainer = (req, res) => {
-  const { id } = req.params;
-  const { trainer } = req.body;
-
-  Class.findByIdAndUpdate(
-    id,
-    { trainer },
-    { new: true },
-  )
-    .populate('activity trainer')
-    .then((response) => {
-      if (!response) {
-        return res.status(404).json({
-          msg: `Class with id: ${id} not found`,
+          message: `Class with id ${id} was not found`,
+          data: undefined,
+          error: true,
         });
       }
       return res.status(200).json({
-        msg: 'Trainer updated successfully',
-        class: response,
+        message: 'Class deleted',
+        data: result,
+        error: false,
       });
     })
     .catch((error) => res.status(400).json({
-      error,
-    }));
-};
-
-const assignActivity = (req, res) => {
-  const { id } = req.params;
-  const { activity } = req.body;
-
-  Class.findByIdAndUpdate(
-    id,
-    { activity },
-    { new: true },
-  )
-    .populate('activity trainer')
-    .then((response) => {
-      if (!response) {
-        return res.status(404).json({
-          msg: `Class with id: ${id} not found`,
-        });
-      }
-      return res.status(200).json({
-        msg: 'Activity updated successfully',
-        class: response,
-      });
-    })
-    .catch((error) => res.status(400).json({
-      error,
-    }));
-};
-
-const restoreClass = (req, res) => {
-  const { id } = req.params;
-
-  Class.findById(id)
-    .then((result) => {
-      if (!result) {
-        return res.status(404).json({
-          msg: `Class with id: ${id} not found`,
-        });
-      }
-      if (!result.deleted) {
-        return res.status(404).json({
-          msg: `Class with id: ${id} was not deleted`,
-        });
-      }
-      return Class.findByIdAndUpdate(id, { deleted: false }, { new: true })
-        .populate('activity trainer')
-        .then((restored) => res.status(200).json({
-          msg: 'Class Restored',
-          restored_class: restored,
-        }));
-    })
-    .catch((error) => res.status(400).json({
-      message: 'There was an error',
+      message: 'An error ocurred!',
+      data: undefined,
       error,
     }));
 };
 
 module.exports = {
-  routerClass,
   getAllClass,
   getClassById,
   createClass,
   updateClass,
   deleteClass,
-  assignTrainer,
-  assignActivity,
-  restoreClass,
 };
