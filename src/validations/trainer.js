@@ -2,17 +2,25 @@ const Joi = require('joi');
 
 const validateTrainerCreate = (req, res, next) => {
   const trainerValidation = Joi.object({
-    firstName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).max(20)
+    firstName: Joi.string().min(3).max(20).regex(/^[a-zA-Z\s]+$/)
+      .message({ 'string.pattern.base': 'Name must be only letters' })
       .required(),
-    lastName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).max(20)
+    lastName: Joi.string().min(3).max(20).regex(/^[a-zA-Z\s]+$/)
+      .message({ 'string.pattern.base': 'Last name must be only letters' })
       .required(),
-    dni: Joi.string().pattern(/^\d+$/).min(8).required()
-      .max(10),
-    phone: Joi.string().pattern(/^\d+$/).min(10).max(12),
+    dni: Joi.string().min(7).max(10).regex(/^[0-9]+$/)
+      .message({ 'string.pattern.base': 'DNI must be only numbers' })
+      .required(),
+    phone: Joi.string().min(10).max(12).regex(/^[0-9]+$/)
+      .message({ 'string.pattern.base': 'Phone must be only numbers' })
+      .required(),
     email: Joi.string().email().required(),
-    password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/).min(8).max(20)
+    password: Joi.string().min(8).max(20).regex(/^[a-zA-Z0-9]+$/)
+      .message({ 'string.pattern.base': 'Password must be numbers, letters or both' })
       .required(),
-    salary: Joi.string().regex(/^\$[1-9]\d{0,6}(?:\.\d{1,2})?$/),
+    salary: Joi.string().min(2).max(7).regex(/^[0-9]+$/)
+      .message({ 'string.pattern.base': 'Salary must be only numbers' })
+      .required(),
     isActive: Joi.boolean(),
   });
 
@@ -30,13 +38,19 @@ const validateTrainerCreate = (req, res, next) => {
 
 const validateTrainerUpdate = (req, res, next) => {
   const trainerValidation = Joi.object({
-    firstName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).max(20),
-    lastName: Joi.string().pattern(/^[a-zA-Z\s]+$/).min(3).max(20),
-    dni: Joi.string().pattern(/^\d+$/).min(8).max(10),
-    phone: Joi.string().pattern(/^\d+$/).min(10).max(12),
+    firstName: Joi.string().min(3).max(20).regex(/^[a-zA-Z\s]+$/)
+      .message({ 'string.pattern.base': 'Name must be only letters' }),
+    lastName: Joi.string().min(3).max(20).regex(/^[a-zA-Z\s]+$/)
+      .message({ 'string.pattern.base': 'Last name must be only letters' }),
+    dni: Joi.string().min(7).max(10).regex(/^[0-9]+$/)
+      .message({ 'string.pattern.base': 'DNI must be only numbers' }),
+    phone: Joi.string().min(10).max(12).regex(/^[0-9]+$/)
+      .message({ 'string.pattern.base': 'Phone must be only numbers' }),
     email: Joi.string().email(),
-    password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/).min(8).max(20),
-    salary: Joi.string().regex(/^\$[1-9]\d{0,6}(?:\.\d{1,2})?$/),
+    password: Joi.string().min(8).max(20).regex(/^[a-zA-Z0-9]+$/)
+      .message({ 'string.pattern.base': 'Password must be numbers, letters or both' }),
+    salary: Joi.string().min(2).max(7).regex(/^[0-9]+$/)
+      .message({ 'string.pattern.base': 'Salary must be only numbers' }),
     isActive: Joi.boolean(),
   });
   const validation = trainerValidation.validate(req.body);

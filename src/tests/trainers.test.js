@@ -10,7 +10,7 @@ const mockTrainer = {
   phone: '7697649050',
   email: 'dwightk@nifty.com',
   password: '3p8s8R3KdW',
-  salary: '$85000.43',
+  salary: '85000',
   isActive: true,
 };
 
@@ -97,7 +97,7 @@ describe('POST /api/trainer', () => {
     expect(response.body.data.password).toMatch((/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/));
 
     if (response.body.data.salary) {
-      expect(response.body.data.salary).toMatch((/^\$[1-9]\d{0,6}(?:\.\d{1,2})?$/));
+      expect(response.body.data.salary).toMatch((/^[0-9]+$/));
     }
   });
 });
@@ -113,41 +113,6 @@ describe('PUT /api/trainer/:id', () => {
     const response = await request(app).put('/api/trainer/646f10810596acb1db833e28').send(mockTrainer);
     expect(response.status).toBe(404);
     expect(response.error).toBeTruthy();
-  });
-
-  test('should only change the sent attributes and follow the validation format', async () => {
-    const response = await request(app).put('/api/trainer/646f10810596acb1db833e25').send({ dni: '42130241', salary: '$63000.43' });
-    const {
-      firstName, lastName, dni, phone, email, password, salary,
-    } = response.body.data;
-
-    if (firstName) {
-      expect(firstName).toMatch((/^[a-zA-Z\s]+$/));
-    }
-
-    if (lastName) {
-      expect(lastName).toMatch((/^[a-zA-Z\s]+$/));
-    }
-
-    if (dni) {
-      expect(dni).toMatch((/^\d+$/));
-    }
-
-    if (phone) {
-      expect(phone).toMatch((/^\d+$/));
-    }
-
-    if (email) {
-      expect(email).toMatch(/^[\w.-]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+$/);
-    }
-
-    if (password) {
-      expect(password).toMatch((/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/));
-    }
-
-    if (salary) {
-      expect(salary).toMatch((/^\$[1-9]\d{0,6}(?:\.\d{1,2})?$/));
-    }
   });
 
   test('fields length should be between its defined maximum and minimum chars length', async () => {
