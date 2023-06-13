@@ -62,7 +62,7 @@ const deleteMember = (req, res) => {
         });
       }
       return res.status(200).json({
-        message: 'User deleted',
+        message: 'Member deleted',
         data: result,
         error: false,
       });
@@ -102,7 +102,7 @@ const updateMember = (req, res) => {
         });
       }
       return res.status(200).json({
-        message: 'User updated',
+        message: 'Member updated',
         data: result,
         error: false,
       });
