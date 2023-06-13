@@ -100,13 +100,13 @@ const updateClass = (req, res) => {
     .then((result) => {
       if (!result) {
         return res.status(404).json({
-          msg: `Class with id: ${id} doesn't exist.`,
+          message: `Class with id: ${id} doesn't exist.`,
           data: undefined,
           error: true,
         });
       }
       return res.status(200).json({
-        msg: 'Class updated',
+        message: 'Class updated',
         data: result,
         error: false,
       });
@@ -127,13 +127,13 @@ const deleteClass = (req, res) => {
     .then((result) => {
       if (!result) {
         return res.status(404).json({
-          msg: `Activity with id ${id} was not found`,
+          message: `Class with id ${id} was not found`,
           data: undefined,
           error: true,
         });
       }
       return res.status(200).json({
-        message: 'Activity deleted',
+        message: 'Class deleted',
         data: result,
         error: false,
       });
