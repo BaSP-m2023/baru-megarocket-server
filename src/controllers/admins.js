@@ -15,7 +15,10 @@ const createAdmin = (req, res) => {
     password,
   })
     .then((result) => {
-      res.status(201).json(result);
+      res.status(201).json({
+        message: 'Admin created',
+        data: result,
+      });
     })
     .catch((error) => {
       res.status(400).json({
@@ -124,7 +127,10 @@ const updateAdmin = (req, res) => {
             message: `Admin with id: ${id} was not found!`,
           });
         }
-        return res.status(200).json(result);
+        return res.status(200).json({
+          message: 'Admin updated',
+          data: result,
+        });
       })
       .catch((error) => res.status(400).json({
         message: 'An error occurred',

@@ -13,11 +13,11 @@ const adminSchema = new Schema(
       required: true,
     },
     dni: {
-      type: Number,
+      type: String,
       required: true,
     },
     phone: {
-      type: Number,
+      type: String,
       required: true,
     },
     email: {

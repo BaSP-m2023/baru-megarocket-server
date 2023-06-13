@@ -6,11 +6,9 @@ const validateCreation = (req, res, next) => {
       .required(),
     lastName: Joi.string().pattern(/^[a-zA-Z]+( [a-zA-Z]+)*$/).min(3).max(20)
       .required(),
-    dni: Joi.number().min(10000000).max(100000000).integer()
-      .positive()
+    dni: Joi.string().min(7).max(10)
       .required(),
-    phone: Joi.number().min(1000000000).max(10000000000).integer()
-      .positive()
+    phone: Joi.string().min(10).max(12)
       .required(),
     email: Joi.string().email().pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
       .required(),
@@ -35,12 +33,8 @@ const adminValidateUpdate = Joi.object({
     .max(20),
   lastName: Joi.string().strict(true).pattern(/^[a-zA-Z]+( [a-zA-Z]+)*$/).min(3)
     .max(20),
-  dni: Joi.number().strict(true).min(10000000).max(100000000)
-    .integer()
-    .positive(),
-  phone: Joi.number().strict(true).min(1000000000).max(10000000000)
-    .integer()
-    .positive(),
+  dni: Joi.string().strict(true).min(7).max(10),
+  phone: Joi.string().strict(true).min(10).max(12),
   email: Joi.string().strict(true).email().pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
   city: Joi.string().strict(true).pattern(/^[a-zA-Z]+( [a-zA-Z]+)*$/).min(3)
     .max(50),
