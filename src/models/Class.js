@@ -8,7 +8,7 @@ const classSchema = new Schema({
     required: true,
   },
   trainer: {
-    type: [mongoose.Schema.Types.ObjectId],
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Trainer',
     required: true,
   },
@@ -24,10 +24,6 @@ const classSchema = new Schema({
   capacity: {
     type: Number,
     required: true,
-  },
-  deleted: {
-    type: Boolean,
-    default: false,
   },
 });
 module.exports = mongoose.model('Class', classSchema);
