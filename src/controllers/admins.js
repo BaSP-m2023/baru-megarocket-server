@@ -18,6 +18,7 @@ const createAdmin = (req, res) => {
       res.status(201).json({
         message: 'Admin created',
         data: result,
+        error: false,
       });
     })
     .catch((error) => {
@@ -130,6 +131,7 @@ const updateAdmin = (req, res) => {
         return res.status(200).json({
           message: 'Admin updated',
           data: result,
+          error: false,
         });
       })
       .catch((error) => res.status(400).json({
