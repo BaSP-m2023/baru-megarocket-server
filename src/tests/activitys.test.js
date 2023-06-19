@@ -1,26 +1,38 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable eol-last */
 import request from 'supertest';
+import mongoose from 'mongoose';
 import app from '../app';
 import Activity from '../models/Activity';
 import activitySeed from '../seeds/activitys';
+import Trainer from '../models/Trainer';
+import trainersSeed from '../seeds/trainers';
 
 const mockActivity = {
   name: 'Crossfit',
   description: 'A type of strength training that readies your body for daily activities',
   isActive: false,
+  trainers: [
+    new mongoose.Types.ObjectId('6460763768fd665d7bf97f13'),
+  ],
 };
+
 const mockActivityWrong = {
   name: 'Judo2',
   description: 'A type of strength training that readies your body for daily activities',
   isActive: false,
+  trainers: [
+    new mongoose.Types.ObjectId('6460763768fd665d7bf97f13'),
+  ],
 };
+
 const mockActivityMiss = {
   description: 'A type of strength training that readies your body for daily activities',
   isActive: false,
 };
 
 beforeAll(async () => {
+  await Trainer.collection.insertMany(trainersSeed);
   await Activity.collection.insertMany(activitySeed);
 });
 
@@ -62,6 +74,10 @@ describe('GET all activity /api/activities', () => {
     const response = await request(app).get('/api/activities').send();
     expect(response.body.data.length).toBe(2);
   });
+  test('should return all the activities with their trainers', async () => {
+    const response = await request(app).get('/api/activities').send();
+    expect(response.body.data[1].trainers.length).toBe(2);
+  });
 });
 
 describe('GET by id /api/activities/:id', () => {
@@ -74,6 +90,10 @@ describe('GET by id /api/activities/:id', () => {
     const response = await request(app).get('/api/activities/6465286dad795d0bf31794f8').send();
     const activity = response.body.data;
     expect(activity).toBeDefined();
+  });
+  test('should return all the activities with their trainers', async () => {
+    const response = await request(app).get('/api/activities/6465286dad795d0bf31794f8').send();
+    expect(response.body.data.trainers.length).toBe(2);
   });
 });
 
@@ -105,6 +125,12 @@ describe('POST activity /api/activities/', () => {
     const response = await request(app).post('/api/activities/').send(mockActivity);
     expect(response.body.data.name).toMatch(/^[A-Za-z\s]+$/);
     expect(response.body.data.description).toMatch(/^[A-Za-z\s]+$/);
+  });
+  test('should have at least one trainer for the activity', async () => {
+    const response = await request(app).post('/api/activities/').send(mockActivity);
+    expect(response.body.data.trainers.length).toBeGreaterThanOrEqual(0);
+    expect(response.body.error).toBeFalsy();
+    expect(response.status).toBe(201);
   });
   test('fields length should be between its defined maximum and minimum chars length', async () => {
     const response = await request(app).post('/api/activities/').send(mockActivity);
