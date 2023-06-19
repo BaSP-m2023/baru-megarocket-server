@@ -1,13 +1,17 @@
 const Activity = require('../models/Activity');
 
 const createActivity = (req, res) => {
-  const { name, description, isActive } = req.body;
+  const {
+    name, description, isActive, trainers,
+  } = req.body;
 
   Activity.create({
     name,
     description,
     isActive,
+    trainers,
   })
+    .then((newActivity) => Activity.findById(newActivity.id).populate('trainers'))
     .then((newActivity) => res.status(201).json({
       message: 'Activity created',
       data: newActivity,
@@ -47,6 +51,7 @@ const deleteActivity = (req, res) => {
 
 const getAllActivity = (req, res) => {
   Activity.find()
+    .populate('trainers')
     .then((activities) => res.status(200).json({
       message: 'Complete Activities list',
       data: activities,
@@ -65,6 +70,7 @@ const getActivityById = (req, res) => {
   const { id } = req.params;
 
   Activity.findById(id)
+    .populate('trainers')
     .then((activity) => res.status(200).json({
       message: 'Activity found',
       data: activity,
@@ -79,7 +85,9 @@ const getActivityById = (req, res) => {
 
 const updateActivity = (req, res) => {
   const { id } = req.params;
-  const { name, description, isActive } = req.body;
+  const {
+    name, description, isActive, trainers,
+  } = req.body;
 
   Activity.findByIdAndUpdate(
     id,
@@ -87,9 +95,11 @@ const updateActivity = (req, res) => {
       name,
       description,
       isActive,
+      trainers,
     },
     { new: true },
   )
+    .populate('trainers')
     .then((activity) => {
       if (!activity) {
         return res.status(404).json({

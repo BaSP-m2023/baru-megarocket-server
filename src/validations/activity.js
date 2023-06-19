@@ -14,6 +14,7 @@ const validateCreation = (req, res, next) => {
       })
       .required(),
     isActive: Joi.boolean(),
+    trainers: Joi.array().min(1).required(),
   });
 
   const validation = activityValidation.validate(req.body);
@@ -36,6 +37,7 @@ const validateUpdateActivity = (req, res, next) => {
         'string.pattern.base': 'The description must contains only letters.',
       }),
     isActive: Joi.boolean(),
+    trainers: Joi.array().min(1),
   });
 
   const validation = validationActivity.validate(req.body);
