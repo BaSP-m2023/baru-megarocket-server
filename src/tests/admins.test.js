@@ -8,8 +8,8 @@ import adminSeed from '../seeds/admins';
 const mockAdmin = {
   firstName: 'Carlos Luis Regino',
   lastName: 'Rodriguez',
-  dni: 38790908,
-  phone: 1128449713,
+  dni: '38790908',
+  phone: '1128449713',
   email: 'rodriguez@gmail.com',
   city: 'Cordoba',
   password: 'Password1',
@@ -23,8 +23,8 @@ const missingFields = {
 const errorDataAdmin = {
   firstName: 'Juan10',
   lastName: 'Gonzalez',
-  dni: 38790908,
-  phone: 1128779713,
+  dni: '38790908',
+  phone: '1128779713',
   email: 'gonzalezJ@gmail.com',
   city: 'Caseros',
   password: 'locd34pssD',
