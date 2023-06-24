@@ -1,26 +1,44 @@
+const { default: firebaseApp } = require('../helper/firebase');
 const SuperAdmin = require('../models/SuperAdmin');
 
 const createSuperAdmin = (req, res) => {
   const {
-    name, lastName, email, password,
+    name, lastName, email,
   } = req.body;
 
-  SuperAdmin.create({
-    name,
-    lastName,
-    email,
-    password,
-  })
-    .then((result) => res.status(201).json({
-      message: 'Super Admin created',
-      data: result,
-      error: false,
+  let fireBaseUid;
+
+  firebaseApp
+    .auth()
+    .createUser({
+      email: req.body.email,
+      password: req.body.password,
+    })
+    .then((newFireBaseUser) => {
+      fireBaseUid = newFireBaseUser.uid;
+
+      return firebaseApp.auth().setCustomUserClaims(newFireBaseUser.uid, { role: 'SUPER_ADMIN' });
+    })
+    .then(() => SuperAdmin.create({
+      fireBaseUid,
+      name,
+      lastName,
+      email,
     }))
-    .catch((error) => res.status(400).json({
-      message: error.toString(),
-      data: undefined,
-      error: true,
-    }));
+    .then((result) => {
+      res.status(201).json({
+        message: 'Super Admin created',
+        data: result,
+        error: false,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        message: error.toString(),
+        data: undefined,
+        error: true,
+      });
+    });
 };
 const deleteSuperAdmin = (req, res) => {
   const { id } = req.params;

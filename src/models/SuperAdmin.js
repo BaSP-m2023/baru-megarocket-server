@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const superAdminSchema = new Schema({
+  fireBaseUid: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -15,10 +19,6 @@ const superAdminSchema = new Schema({
     type: String,
     required: true,
     lowercase: true,
-  },
-  password: {
-    type: String,
-    required: true,
   },
 });
 
