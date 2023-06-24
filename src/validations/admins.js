@@ -35,11 +35,8 @@ const adminValidateUpdate = Joi.object({
     .max(20),
   dni: Joi.string().strict(true).min(7).max(10),
   phone: Joi.string().strict(true).min(10).max(12),
-  email: Joi.string().strict(true).email().pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
   city: Joi.string().strict(true).pattern(/^[a-zA-Z]+( [a-zA-Z]+)*$/).min(3)
     .max(50),
-  password: Joi.string().strict(true).alphanum().pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)
-    .min(8),
 }).options({ abortEarly: false });
 
 const validateUpdate = (req, res, next) => {

@@ -156,10 +156,10 @@ const deleteAdmin = (req, res) => {
 const updateAdmin = (req, res) => {
   const { id } = req.params;
   const {
-    firstName, lastName, dni, phone, email, city, password,
+    firstName, lastName, dni, phone, city,
   } = req.body;
 
-  if (!firstName && !lastName && !dni && !phone && !email && !city && !password) {
+  if (!firstName && !lastName && !dni && !phone && !city) {
     return res.status(400).json({
       message: 'At least one field should be modified',
       data: req.body,
@@ -167,22 +167,13 @@ const updateAdmin = (req, res) => {
     });
   }
 
-  const adminExists = Admin.findOne({ $or: [{ dni }, { email }] });
+  const adminExists = Admin.findOne({ $or: [{ dni }] });
   if (adminExists) {
-    if (adminExists.dni === dni) {
-      return res.status(400).json({
-        message: 'There is another admin with that DNI.',
-        data: undefined,
-        error: true,
-      });
-    }
-    if (adminExists.email === email) {
-      return res.status(400).json({
-        message: 'There is another admin with that email.',
-        data: undefined,
-        error: true,
-      });
-    }
+    return res.status(400).json({
+      message: 'There is another admin with that DNI.',
+      data: undefined,
+      error: true,
+    });
   }
 
   return validateUpdate(req, res, () => {
@@ -193,7 +184,6 @@ const updateAdmin = (req, res) => {
         lastName,
         dni,
         phone,
-        email,
         city,
       },
       {
