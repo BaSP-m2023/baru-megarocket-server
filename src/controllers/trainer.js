@@ -1,35 +1,42 @@
+const { default: firebaseApp } = require('../helper/firebase');
 const Trainer = require('../models/Trainer');
 
-const createTrainer = (req, res) => {
-  const {
-    firstName,
-    lastName,
-    dni,
-    phone,
-    email,
-    password,
-    salary,
-    isActive,
-  } = req.body;
-  Trainer.create({
-    firstName,
-    lastName,
-    dni,
-    phone,
-    email,
-    password,
-    salary,
-    isActive,
-  })
-    .then((result) => res.status(201).json({
+const createTrainer = async (req, res) => {
+  let firebaseUid;
+  try {
+    const newFirebaseUser = await firebaseApp.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+    firebaseUid = newFirebaseUser.uid;
+
+    await firebaseApp.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'TRAINER' });
+
+    const trainer = new Trainer({
+      firebaseUid,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      dni: req.body.dni,
+      phone: req.body.phone,
+      email: req.body.email,
+      salary: req.body.salary,
+      isActive: true,
+    });
+
+    const trainerSaved = await trainer.save();
+
+    return res.status(201).json({
       message: 'Trainer created',
-      data: result,
+      data: trainerSaved,
       error: false,
-    }))
-    .catch((error) => res.status(400).json({
-      message: 'An error ocurred!',
-      error,
-    }));
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: error.toString(),
+      error: true,
+      data: undefined,
+    });
+  }
 };
 
 const getTrainers = (req, res) => {
@@ -45,43 +52,51 @@ const getTrainers = (req, res) => {
     }));
 };
 
-const updateTrainer = (req, res) => {
+const updateTrainer = async (req, res) => {
   const toUpdate = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     dni: req.body.dni,
     phone: req.body.phone,
     email: req.body.email,
-    password: req.body.password,
     salary: req.body.salary,
     isActive: req.body.isActive,
   };
-  Trainer.findById(req.params.id)
+  const existingTrainer = await Trainer.findOne({ email: req.body.email });
+
+  if (existingTrainer) {
+    return res.status(400).json({
+      message: 'This email is already used by another trainer.',
+      data: existingTrainer,
+      error: true,
+    });
+  }
+  return Trainer.findById(req.params.id)
     .then((trainer) => {
       if (!trainer) {
-        res.status(404).json({
+        return res.status(404).json({
           message: 'Trainer not found',
           data: undefined,
           error: true,
         });
-      } else {
-        Object.keys(toUpdate).forEach((attr) => {
-          if (toUpdate[attr] !== undefined) {
-            // eslint-disable-next-line no-param-reassign
-            trainer[attr] = toUpdate[attr];
-          }
-        });
-        trainer.save();
-        res.status(200).json({
-          message: 'Trainer updated',
-          data: trainer,
-          error: false,
-        });
       }
+      Object.keys(toUpdate).forEach((attr) => {
+        if (toUpdate[attr] !== undefined) {
+          // eslint-disable-next-line no-param-reassign
+          trainer[attr] = toUpdate[attr];
+        }
+      });
+      trainer.save();
+      return res.status(200).json({
+        message: 'Trainer updated',
+        data: trainer,
+        error: false,
+      });
     })
     .catch((error) => res.status(400).json({
       message: 'An error ocurred!',
       error,
+      data: undefined,
     }));
 };
 
