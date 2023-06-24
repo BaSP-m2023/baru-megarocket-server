@@ -53,51 +53,38 @@ const getTrainers = (req, res) => {
 };
 
 const updateTrainer = async (req, res) => {
+  const { id } = req.params;
   const toUpdate = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     dni: req.body.dni,
     phone: req.body.phone,
-    email: req.body.email,
     salary: req.body.salary,
     isActive: req.body.isActive,
   };
-  const existingTrainer = await Trainer.findOne({ email: req.body.email });
 
-  if (existingTrainer) {
-    return res.status(400).json({
-      message: 'This email is already used by another trainer.',
-      data: existingTrainer,
-      error: true,
+  Trainer.findByIdAndUpdate(
+    id,
+    toUpdate,
+    { new: true },
+  ).then((updated) => {
+    if (!updated) {
+      return res.status(404).json({
+        message: `Trainer with id: ${id} doesn't exist.`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Trainer updated',
+      data: updated,
+      error: false,
     });
-  }
-  return Trainer.findById(req.params.id)
-    .then((trainer) => {
-      if (!trainer) {
-        return res.status(404).json({
-          message: 'Trainer not found',
-          data: undefined,
-          error: true,
-        });
-      }
-      Object.keys(toUpdate).forEach((attr) => {
-        if (toUpdate[attr] !== undefined) {
-          // eslint-disable-next-line no-param-reassign
-          trainer[attr] = toUpdate[attr];
-        }
-      });
-      trainer.save();
-      return res.status(200).json({
-        message: 'Trainer updated',
-        data: trainer,
-        error: false,
-      });
-    })
-    .catch((error) => res.status(400).json({
-      message: 'An error ocurred!',
-      error,
-      data: undefined,
-    }));
+  }).catch((error) => res.status(500).json({
+    message: error.toString(),
+    data: undefined,
+    error: true,
+  }));
 };
 
 const deleteTrainer = (req, res) => {
