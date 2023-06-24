@@ -172,82 +172,21 @@ describe('PUT /api/admins/:id', () => {
   });
 });
 
-describe('PUT DELETE /api/admins/delete/:id', () => {
-  test('Should return status 200 when "deleted" flag turn on true', async () => {
-    const correctId = '6462d38b2118b6d63daf41f1';
-    const response = await request(app).delete(`/api/admins/delete/${correctId}`);
+describe('DELETE /api/admins/:id', () => {
+  test('should return status 200 on delete', async () => {
+    // eslint-disable-next-line no-underscore-dangle
+    const firstIdFromSeeds = adminSeed[0]._id;
+    const response = await request(app).delete(`/api/admins/${firstIdFromSeeds}`);
     expect(response.status).toBe(200);
-    expect(response.body.deleted).toBe(true);
   });
-
-  test('Should return status 404 when the route is wrong', async () => {
-    const correctId = '6462d38b2118b6d63daf41f5';
-    const response = await request(app).delete(`/api/admin/delete/${correctId}`);
+  test('should return status 400 when the id is invalid', async () => {
+    const invalidId = '6462d38b211';
+    const response = await request(app).delete(`/api/admins/${invalidId}`);
+    expect(response.status).toBe(400);
+  });
+  test('should return status 404 when the id is not found', async () => {
+    const idNotFound = '6462d38b2118b6d63daf4199';
+    const response = await request(app).delete(`/api/admins/${idNotFound}`);
     expect(response.status).toBe(404);
-    expect(response.error).toBeTruthy();
-  });
-
-  test('Should return status 404 when the admin has been deleted', async () => {
-    const adminDeleted = '6462d3e42118b6d63daf41f4';
-    const response = await request(app).delete(`/api/admins/delete/${adminDeleted}`);
-    expect(response.status).toBe(404);
-    expect(response.error).toBeTruthy();
-  });
-
-  test('Should return status 404 when the admin is not found', async () => {
-    const incorrectId = '6462d38b2118b6d63daf41f5';
-    const response = await request(app).delete(`/api/admins/delete/${incorrectId}`);
-    expect(response.status).toBe(404);
-    expect(response.error).toBeTruthy();
-  });
-});
-
-describe('PUT RECOVER /api/admins/recoverAdmin/:id', () => {
-  test('Should return status 200 when "deleted" flag turn on false', async () => {
-    const correctId = '6462d38b2118b6d63daf41f9';
-    const response = await request(app).put(`/api/admins/recoverAdmin/${correctId}`);
-    expect(response.status).toBe(200);
-    expect(response.body.deleted).toBe(false);
-    expect(response.error).toBeFalsy();
-  });
-
-  test('Should return status 404 when the route is wrong', async () => {
-    const correctId = '6462d38b2118b6d63daf41f9';
-    const response = await request(app).put(`/api/admin/recoverAdmin/${correctId}`);
-    expect(response.status).toBe(404);
-    expect(response.error).toBeTruthy();
-  });
-
-  test('Should return status 404 when the admin has been deleted', async () => {
-    const adminDeleted = '6462d3e42118b6d63daf41f9';
-    const response = await request(app).put(`/api/admins/recoverAdmin/${adminDeleted}`);
-    expect(response.status).toBe(404);
-    expect(response.error).toBeTruthy();
-  });
-
-  test('Should return status 404 when the admin is not found', async () => {
-    const incorrectId = '6462d38b2118b6d63daf41f5';
-    const response = await request(app).put(`/api/admins/recoverAdmin/${incorrectId}`);
-    expect(response.status).toBe(404);
-    expect(response.error).toBeTruthy();
-  });
-});
-
-describe('DELETE /api/admins/cleanAdmins', () => {
-  test('should delete all admins', async () => {
-    const response = await request(app).delete('/api/admins/cleanAdmins');
-    expect(response.status).toBe(204);
-  });
-  test('should not delete all admins with status 404', async () => {
-    const response = await request(app).delete('/api/admin/cleanAdmins');
-    expect(response.status).toBe(404);
-  });
-  test('Should return status 404 if the DB do not have admins to clean', async () => {
-    const response = await request(app).delete('/api/admins/cleanAdmins');
-    const filterAdmins = adminSeed.filter((admin) => admin.deleted);
-    if (filterAdmins === 0) {
-      expect(response.status).toBe(404);
-      expect(response.body.message).toBe('The DB have not admins to clean');
-    }
   });
 });

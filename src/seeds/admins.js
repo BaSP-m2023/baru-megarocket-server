@@ -9,8 +9,7 @@ export default [
     phone: 456789218000,
     email: 'newadmin@gmail.com',
     city: 'Ciudad',
-    password: 'admin_12345',
-    deleted: false,
+    password: 'Asdasd123',
   },
   {
     _id: new mongoose.Types.ObjectId('6462d3e42118b6d63daf41f2'),
@@ -20,8 +19,7 @@ export default [
     phone: 456789218000,
     email: 'newadmin2@gmail.com',
     city: 'Ciudad2',
-    password: 'admin2_12345',
-    deleted: false,
+    password: 'Asdasd123',
   },
   {
     _id: new mongoose.Types.ObjectId('6462d38b2118b6d63daf41f3'),
@@ -31,8 +29,7 @@ export default [
     phone: 456789218000,
     email: 'newadmin3@gmail.com',
     city: 'Ciudad',
-    password: 'admin_12345',
-    deleted: false,
+    password: 'Asdasd123',
   },
   {
     _id: new mongoose.Types.ObjectId('6462d38b2118b6d63daf41f4'),
@@ -42,8 +39,7 @@ export default [
     phone: 456789218000,
     email: 'newadmin@gmail.com',
     city: 'Ciudad',
-    password: 'admin_12345',
-    deleted: true,
+    password: 'Asdasd123',
   },
   {
     _id: new mongoose.Types.ObjectId('6462d38b2118b6d63daf41f9'),
@@ -53,7 +49,6 @@ export default [
     phone: 456789218000,
     email: 'newadmin@gmail.com',
     city: 'Ciudad',
-    password: 'admin_12345',
-    deleted: true,
+    password: 'Asdasd123',
   },
 ];
