@@ -46,16 +46,6 @@ const validateUpdate = (req, res, next) => {
       .trim()
       .min(3)
       .max(50),
-    email: Joi.string()
-      .lowercase()
-      .email()
-      .pattern(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
-      .min(3)
-      .max(80),
-    password: Joi.string()
-      .alphanum()
-      .min(8)
-      .max(50),
   });
   const validation = superAdminValidation.validate(req.body);
 

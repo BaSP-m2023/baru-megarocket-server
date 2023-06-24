@@ -45,6 +45,7 @@ const deleteSuperAdmin = (req, res) => {
   SuperAdmin.findByIdAndDelete(id)
     .then((superAdmin) => {
       if (superAdmin) {
+        firebaseApp.auth().deleteUser(superAdmin.fireBaseUid);
         return res.status(200).json({
           message: 'Super Admin deleted',
           data: superAdmin,
