@@ -121,39 +121,42 @@ const getAdminById = (req, res) => {
     }));
 };
 
-const deleteAdmin = (req, res) => {
+const deleteAdmin = async (req, res) => {
   const { id } = req.params;
+  try {
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({
+        message: 'Invalid id',
+        data: id,
+        error: true,
+      });
+    }
+    const adminToDelete = await Admin.findById(id);
 
-  if (!mongoose.isValidObjectId(id)) {
-    return res.status(400).json({
-      message: 'Invalid id',
-      data: id,
-      error: true,
+    await firebaseApp.auth().deleteUser(adminToDelete.fireBaseUid);
+
+    const adminDeleted = await Admin.deleteOne({ id });
+    if (!adminDeleted) {
+      return res.status(404).json({
+        message: `Admin with id: ${id} was not found!`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Admin deleted',
+      data: adminDeleted,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'An error has ocurred',
+      error: error.message,
     });
   }
-
-  return Admin.findByIdAndDelete(id)
-    .then((admin) => {
-      if (!admin) {
-        return res.status(404).json({
-          message: `Admin with id: ${id} was not found!`,
-          data: undefined,
-          error: true,
-        });
-      }
-      return res.status(200).json({
-        message: 'Admin deleted',
-        data: admin,
-        error: false,
-      });
-    })
-    .catch((error) => res.status(500).json({
-      message: 'An error ocurred',
-      error: error.message,
-    }));
 };
 
-const updateAdmin = (req, res) => {
+const updateAdmin = async (req, res) => {
   const { id } = req.params;
   const {
     firstName, lastName, dni, phone, city,
@@ -167,7 +170,7 @@ const updateAdmin = (req, res) => {
     });
   }
 
-  const adminExists = Admin.findOne({ $or: [{ dni }] });
+  const adminExists = await Admin.findOne({ dni });
   if (adminExists) {
     return res.status(400).json({
       message: 'There is another admin with that DNI.',
