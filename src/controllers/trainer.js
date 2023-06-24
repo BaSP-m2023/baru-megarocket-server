@@ -97,6 +97,7 @@ const deleteTrainer = (req, res) => {
           error: true,
         });
       } else {
+        firebaseApp.auth().deleteUser(trainer.firebaseUid);
         res.status(200).json({
           message: 'Trainer deleted',
           data: trainer,
