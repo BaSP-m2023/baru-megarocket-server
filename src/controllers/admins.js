@@ -11,22 +11,13 @@ const createAdmin = async (req, res) => {
   let firebaseUid;
 
   try {
-    const adminExists = await Admin.findOne({ $or: [{ dni }, { email }] });
+    const adminExists = await Admin.findOne({ dni });
     if (adminExists) {
-      if (adminExists.dni === dni) {
-        return res.status(400).json({
-          message: 'There is another admin with that dni.',
-          data: undefined,
-          error: true,
-        });
-      }
-      if (adminExists.email === email) {
-        return res.status(400).json({
-          message: 'There is another admin with that email.',
-          data: undefined,
-          error: true,
-        });
-      }
+      return res.status(400).json({
+        message: 'There is another admin with that dni.',
+        data: undefined,
+        error: true,
+      });
     }
 
     const newFirebaseUser = await firebaseApp.auth().createUser({
