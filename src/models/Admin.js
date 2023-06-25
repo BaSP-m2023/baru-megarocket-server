@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const adminSchema = new Schema(
   {
-    fireBaseUid: {
+    firebaseUid: {
       type: String,
       required: true,
     },

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const trainerSchema = new mongoose.Schema({
-  fireBaseUid: {
+  firebaseUid: {
     type: String,
     required: true,
   },

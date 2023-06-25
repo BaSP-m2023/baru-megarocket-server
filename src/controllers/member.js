@@ -64,11 +64,11 @@ const createMember = async (req, res) => {
     password: req.body.password,
   });
 
-  const fireBaseUid = newFirebaseUser.uid;
+  const firebaseUid = newFirebaseUser.uid;
   await firebaseApp.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'MEMBER' });
 
   return Member.create({
-    fireBaseUid,
+    firebaseUid,
     name,
     lastName,
     phone,
@@ -172,7 +172,7 @@ const deleteMember = (req, res) => {
           error: true,
         });
       }
-      firebaseApp.auth().deleteUser(result.fireBaseUid);
+      firebaseApp.auth().deleteUser(result.firebaseUid);
       return res.status(200).json({
         message: 'Member deleted',
         data: result,

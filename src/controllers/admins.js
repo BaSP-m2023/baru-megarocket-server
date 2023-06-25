@@ -8,7 +8,7 @@ const createAdmin = async (req, res) => {
   const {
     firstName, lastName, dni, phone, email, city,
   } = req.body;
-  let fireBaseUid;
+  let firebaseUid;
 
   try {
     const adminExists = await Admin.findOne({ $or: [{ dni }, { email }] });
@@ -33,12 +33,12 @@ const createAdmin = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
     });
-    fireBaseUid = newFirebaseUser.uid;
+    firebaseUid = newFirebaseUser.uid;
 
     await firebaseApp.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'ADMIN' });
 
     const admin = new Admin({
-      fireBaseUid,
+      firebaseUid,
       firstName,
       lastName,
       dni,
@@ -133,7 +133,7 @@ const deleteAdmin = async (req, res) => {
     }
     const adminToDelete = await Admin.findById(id);
 
-    await firebaseApp.auth().deleteUser(adminToDelete.fireBaseUid);
+    await firebaseApp.auth().deleteUser(adminToDelete.firebaseUid);
 
     const adminDeleted = await Admin.deleteOne({ id });
     if (!adminDeleted) {
