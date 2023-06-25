@@ -18,6 +18,6 @@ router.use('/class', classes);
 router.use('/member', members);
 router.use('/super-admins', superAdmins);
 router.use('/subscription', subscriptions);
-router.use('./auth', auth);
+router.use('/auth', auth);
 
 module.exports = router;
