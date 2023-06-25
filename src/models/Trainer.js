@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const trainerSchema = new mongoose.Schema({
+  fireBaseUid: {
+    type: String,
+    required: true,
+  },
   firstName: {
     type: String,
     required: true,
@@ -17,10 +21,6 @@ const trainerSchema = new mongoose.Schema({
     type: String,
   },
   email: {
-    type: String,
-    required: true,
-  },
-  password: {
     type: String,
     required: true,
   },
