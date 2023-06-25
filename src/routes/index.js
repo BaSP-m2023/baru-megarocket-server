@@ -1,5 +1,4 @@
 const express = require('express');
-const { default: verifyToken } = require('../middlewares/authMiddleware');
 const subscriptions = require('./subscription');
 const members = require('./member');
 const superAdmins = require('./super-admins');
@@ -11,7 +10,7 @@ const classes = require('./class');
 const router = express.Router();
 
 router.use('/subscription', subscriptions);
-router.use('/trainer', verifyToken, trainers);
+router.use('/trainer', trainers);
 router.use('/admins', admins);
 router.use('/activities', activity);
 router.use('/class', classes);
