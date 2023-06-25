@@ -1,6 +1,7 @@
 import Member from '../models/Member';
 import Admin from '../models/Admin';
 import SuperAdmins from '../models/SuperAdmin';
+import Trainer from '../models/Trainer';
 
 const getAuth = async (req, res) => {
   try {
@@ -30,6 +31,16 @@ const getAuth = async (req, res) => {
         error: false,
       });
     }
+
+    const trainer = await Trainer.findOne({ firebaseUid: req.headers.firebaseUid });
+    if (trainer) {
+      return res.status(201).json({
+        message: 'Trainer found',
+        data: trainer,
+        error: false,
+      });
+    }
+
     return res.status(404).json({
       message: 'User not found',
       data: undefined,
