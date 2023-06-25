@@ -6,6 +6,7 @@ const trainers = require('./trainer');
 const admins = require('./admins');
 const activity = require('./activity');
 const classes = require('./class');
+const auth = require('./auth');
 
 const router = express.Router();
 
@@ -17,5 +18,6 @@ router.use('/class', classes);
 router.use('/member', members);
 router.use('/super-admins', superAdmins);
 router.use('/subscription', subscriptions);
+router.use('/auth', auth);
 
 module.exports = router;
