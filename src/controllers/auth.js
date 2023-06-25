@@ -1,7 +1,7 @@
-import Member from '../models/Member';
-import Admin from '../models/Admin';
-import SuperAdmins from '../models/SuperAdmin';
-import Trainer from '../models/Trainer';
+const Member = require('../models/Member');
+const Admin = require('../models/Admin');
+const SuperAdmins = require('../models/SuperAdmin');
+const Trainer = require('../models/Trainer');
 
 const getAuth = async (req, res) => {
   try {
@@ -55,4 +55,4 @@ const getAuth = async (req, res) => {
   }
 };
 
-export default { getAuth };
+module.exports = { getAuth };
