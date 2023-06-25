@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const memberSchema = new mongoose.Schema({
+  fireBaseUid: {
+    type: String,
+    required: true,
+  },
   name: 'string',
   lastName: 'string',
   dni: 'string',
@@ -14,7 +18,6 @@ const memberSchema = new mongoose.Schema({
     type: String,
     enum: ['classic', 'only_classes', 'black'],
   },
-  password: 'string',
 });
 
 module.exports = mongoose.model('Member', memberSchema);
