@@ -66,25 +66,16 @@ const createMember = async (req, res) => {
     email,
   } = req.body;
 
-  const memberExists = await Member.findOne({ email });
-  if (memberExists) {
-    return res.status(400).json({
-      message: 'EMail is already in use by another member',
-      data: undefined,
-      error: true,
-    });
-  }
-
   const newFirebaseUser = await firebaseApp.auth().createUser({
     email: req.body.email,
     password: req.body.password,
   });
 
-  const firebaseUid = newFirebaseUser.uid;
+  const fireBaseUid = newFirebaseUser.uid;
   await firebaseApp.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'MEMBER' });
 
   return Member.create({
-    firebaseUid,
+    fireBaseUid,
     name,
     lastName,
     phone,
@@ -188,7 +179,7 @@ const deleteMember = (req, res) => {
           error: true,
         });
       }
-      firebaseApp.auth().deleteUser(result.firebaseUid);
+      firebaseApp.auth().deleteUser(result.fireBaseUid);
       return res.status(200).json({
         message: 'Member deleted',
         data: result,
