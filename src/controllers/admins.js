@@ -124,6 +124,14 @@ const deleteAdmin = async (req, res) => {
     }
     const adminToDelete = await Admin.findById(id);
 
+    if (!adminToDelete) {
+      return res.status(404).json({
+        message: 'Admin not found',
+        data: undefined,
+        error: true,
+      });
+    }
+
     await firebaseApp.auth().deleteUser(adminToDelete.firebaseUid);
 
     const adminDeleted = await Admin.deleteOne({ id });
