@@ -2,18 +2,18 @@ const { default: firebaseApp } = require('../helper/firebase');
 const Trainer = require('../models/Trainer');
 
 const createTrainer = async (req, res) => {
-  let firebaseUid;
+  let fireBaseUid;
   try {
     const newFirebaseUser = await firebaseApp.auth().createUser({
       email: req.body.email,
       password: req.body.password,
     });
-    firebaseUid = newFirebaseUser.uid;
+    fireBaseUid = newFirebaseUser.uid;
 
     await firebaseApp.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'TRAINER' });
 
     const trainer = new Trainer({
-      firebaseUid,
+      fireBaseUid,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       dni: req.body.dni,
@@ -97,7 +97,7 @@ const deleteTrainer = (req, res) => {
           error: true,
         });
       } else {
-        firebaseApp.auth().deleteUser(trainer.firebaseUid);
+        firebaseApp.auth().deleteUser(trainer.fireBaseUid);
         res.status(200).json({
           message: 'Trainer deleted',
           data: trainer,
