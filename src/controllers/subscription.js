@@ -99,6 +99,7 @@ const updateSub = (req, res) => {
       return res.status(200).json({
         message: 'Subscription Updated',
         data: result,
+        error: false,
       });
     })
     .catch((error) => {
