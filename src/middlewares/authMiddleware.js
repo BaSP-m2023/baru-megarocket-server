@@ -11,7 +11,7 @@ const verifyToken = async (req, res, next) => {
   }
   try {
     const response = await firebaseApp.auth().verifyIdToken(token);
-    req.headers.firebaseApp = response.user_id;
+    req.headers.firebaseUid = response.user_id;
     return next();
   } catch (error) {
     return res.status(401).json({

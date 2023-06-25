@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 
 const adminSchema = new Schema(
   {
+    firebaseUid: {
+      type: String,
+      required: true,
+    },
     firstName: {
       type: String,
       required: true,
@@ -27,14 +31,6 @@ const adminSchema = new Schema(
     city: {
       type: String,
       required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    deleted: {
-      type: Boolean,
-      default: false,
     },
   },
   {

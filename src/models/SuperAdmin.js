@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const superAdminSchema = new Schema({
-  fireBaseUid: {
+  firebaseUid: {
     type: String,
     required: true,
   },

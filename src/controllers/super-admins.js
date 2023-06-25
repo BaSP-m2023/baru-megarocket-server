@@ -6,7 +6,7 @@ const createSuperAdmin = (req, res) => {
     name, lastName, email,
   } = req.body;
 
-  let fireBaseUid;
+  let firebaseUid;
 
   firebaseApp
     .auth()
@@ -15,12 +15,12 @@ const createSuperAdmin = (req, res) => {
       password: req.body.password,
     })
     .then((newFireBaseUser) => {
-      fireBaseUid = newFireBaseUser.uid;
+      firebaseUid = newFireBaseUser.uid;
 
       return firebaseApp.auth().setCustomUserClaims(newFireBaseUser.uid, { role: 'SUPER_ADMIN' });
     })
     .then(() => SuperAdmin.create({
-      fireBaseUid,
+      firebaseUid,
       name,
       lastName,
       email,
@@ -45,7 +45,7 @@ const deleteSuperAdmin = (req, res) => {
   SuperAdmin.findByIdAndDelete(id)
     .then((superAdmin) => {
       if (superAdmin) {
-        firebaseApp.auth().deleteUser(superAdmin.fireBaseUid);
+        firebaseApp.auth().deleteUser(superAdmin.firebaseUid);
         return res.status(200).json({
           message: 'Super Admin deleted',
           data: superAdmin,
