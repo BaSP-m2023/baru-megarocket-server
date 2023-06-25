@@ -3,13 +3,6 @@ const { default: firebaseApp } = require('../helper/firebase');
 
 const regexObjectId = /^[0-9a-fA-F]{24}$/;
 
-// const getFirebase = (req, res) => {
-//   firebaseApp.auth().listUsers().then((userRecords) => {
-//     const users = userRecords.users.map((user) => user.toJSON());
-//     res.json(users);
-//   }).catch((error) => console.log(error));
-// };
-
 const getAllMembers = (req, res) => {
   Member.find()
     .then((member) => res.status(200).json({
