@@ -46,9 +46,6 @@ const validateTrainerUpdate = (req, res, next) => {
       .message({ 'string.pattern.base': 'DNI must be only numbers' }),
     phone: Joi.string().min(10).max(12).regex(/^[0-9]+$/)
       .message({ 'string.pattern.base': 'Phone must be only numbers' }),
-    email: Joi.string().email(),
-    password: Joi.string().min(8).max(20).regex(/^[a-zA-Z0-9]+$/)
-      .message({ 'string.pattern.base': 'Password must be numbers, letters or both' }),
     salary: Joi.string().min(2).max(7).regex(/^[0-9]+$/)
       .message({ 'string.pattern.base': 'Salary must be only numbers' }),
     isActive: Joi.boolean(),

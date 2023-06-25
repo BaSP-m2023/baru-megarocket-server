@@ -37,8 +37,6 @@ const validateMemberUpdate = (req, res, next) => {
     zip: Joi.number().min(1000).max(9999),
     isActive: Joi.boolean(),
     membership: Joi.string().valid('classic', 'only_classes', 'black'),
-    email: Joi.string().email(),
-    password: Joi.string().pattern(/^[a-zA-Z0-9]{6,20}$/),
   });
   const UpdateValidation = UpdatememberValidation.validate(req.body);
 

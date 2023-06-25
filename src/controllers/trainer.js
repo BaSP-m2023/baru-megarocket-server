@@ -1,35 +1,42 @@
+const { default: firebaseApp } = require('../helper/firebase');
 const Trainer = require('../models/Trainer');
 
-const createTrainer = (req, res) => {
-  const {
-    firstName,
-    lastName,
-    dni,
-    phone,
-    email,
-    password,
-    salary,
-    isActive,
-  } = req.body;
-  Trainer.create({
-    firstName,
-    lastName,
-    dni,
-    phone,
-    email,
-    password,
-    salary,
-    isActive,
-  })
-    .then((result) => res.status(201).json({
+const createTrainer = async (req, res) => {
+  let fireBaseUid;
+  try {
+    const newFirebaseUser = await firebaseApp.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+    fireBaseUid = newFirebaseUser.uid;
+
+    await firebaseApp.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'TRAINER' });
+
+    const trainer = new Trainer({
+      fireBaseUid,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      dni: req.body.dni,
+      phone: req.body.phone,
+      email: req.body.email,
+      salary: req.body.salary,
+      isActive: true,
+    });
+
+    const trainerSaved = await trainer.save();
+
+    return res.status(201).json({
       message: 'Trainer created',
-      data: result,
+      data: trainerSaved,
       error: false,
-    }))
-    .catch((error) => res.status(400).json({
-      message: 'An error ocurred!',
-      error,
-    }));
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: error.toString(),
+      error: true,
+      data: undefined,
+    });
+  }
 };
 
 const getTrainers = (req, res) => {
@@ -45,44 +52,39 @@ const getTrainers = (req, res) => {
     }));
 };
 
-const updateTrainer = (req, res) => {
+const updateTrainer = async (req, res) => {
+  const { id } = req.params;
   const toUpdate = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     dni: req.body.dni,
     phone: req.body.phone,
-    email: req.body.email,
-    password: req.body.password,
     salary: req.body.salary,
     isActive: req.body.isActive,
   };
-  Trainer.findById(req.params.id)
-    .then((trainer) => {
-      if (!trainer) {
-        res.status(404).json({
-          message: 'Trainer not found',
-          data: undefined,
-          error: true,
-        });
-      } else {
-        Object.keys(toUpdate).forEach((attr) => {
-          if (toUpdate[attr] !== undefined) {
-            // eslint-disable-next-line no-param-reassign
-            trainer[attr] = toUpdate[attr];
-          }
-        });
-        trainer.save();
-        res.status(200).json({
-          message: 'Trainer updated',
-          data: trainer,
-          error: false,
-        });
-      }
-    })
-    .catch((error) => res.status(400).json({
-      message: 'An error ocurred!',
-      error,
-    }));
+
+  Trainer.findByIdAndUpdate(
+    id,
+    toUpdate,
+    { new: true },
+  ).then((updated) => {
+    if (!updated) {
+      return res.status(404).json({
+        message: `Trainer with id: ${id} doesn't exist.`,
+        data: undefined,
+        error: true,
+      });
+    }
+    return res.status(200).json({
+      message: 'Trainer updated',
+      data: updated,
+      error: false,
+    });
+  }).catch((error) => res.status(500).json({
+    message: error.toString(),
+    data: undefined,
+    error: true,
+  }));
 };
 
 const deleteTrainer = (req, res) => {
@@ -95,6 +97,7 @@ const deleteTrainer = (req, res) => {
           error: true,
         });
       } else {
+        firebaseApp.auth().deleteUser(trainer.fireBaseUid);
         res.status(200).json({
           message: 'Trainer deleted',
           data: trainer,
