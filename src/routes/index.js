@@ -6,7 +6,6 @@ const trainers = require('./trainer');
 const admins = require('./admins');
 const activity = require('./activity');
 const classes = require('./class');
-// const verifyToken = require('../middlewares/authMiddleware').default;
 
 const router = express.Router();
 
