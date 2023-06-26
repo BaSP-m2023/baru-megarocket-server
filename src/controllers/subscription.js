@@ -96,7 +96,11 @@ const updateSub = (req, res) => {
           message: `${id} Subscription was not found`,
         });
       }
-      return res.status(200).json(result);
+      return res.status(200).json({
+        message: 'Subscription Updated',
+        data: result,
+        error: false,
+      });
     })
     .catch((error) => {
       return res.status(400).json(error);
