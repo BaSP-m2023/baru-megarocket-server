@@ -17,7 +17,7 @@ router.use('/trainer', verifyToken, trainers);
 router.use('/admins', verifyToken, admins);
 router.use('/activities', activity);
 router.use('/class', classes);
-router.use('/member', verifyToken, members);
+router.use('/member', members);
 router.use('/super-admins', verifyToken, superAdmins);
 router.use('/subscription', subscriptions);
 router.use('/auth', verifyToken, auth);
