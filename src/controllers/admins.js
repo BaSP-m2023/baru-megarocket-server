@@ -11,15 +11,22 @@ const createAdmin = async (req, res) => {
   let firebaseUid;
 
   try {
-    const adminExists = await Admin.findOne({ dni });
-    if (adminExists) {
+    const adminDNIExists = await Admin.findOne({ dni });
+    if (adminDNIExists) {
       return res.status(400).json({
         message: 'There is another admin with that dni.',
         data: undefined,
         error: true,
       });
     }
-
+    const adminEmailExists = await Admin.findOne({ email });
+    if (adminEmailExists) {
+      return res.status(400).json({
+        message: 'There is another admin with that Email.',
+        data: undefined,
+        error: true,
+      });
+    }
     const newFirebaseUser = await firebaseApp.auth().createUser({
       email: req.body.email,
       password: req.body.password,
@@ -163,7 +170,8 @@ const updateAdmin = async (req, res) => {
   }
 
   const adminExists = await Admin.findOne({ dni });
-  if (adminExists) {
+  // eslint-disable-next-line no-underscore-dangle
+  if (adminExists && adminExists._id.toString() !== id) {
     return res.status(400).json({
       message: 'There is another admin with that DNI.',
       data: undefined,
