@@ -19,14 +19,6 @@ const createAdmin = async (req, res) => {
         error: true,
       });
     }
-    const adminEmailExists = await Admin.findOne({ email });
-    if (adminEmailExists) {
-      return res.status(400).json({
-        message: 'There is another admin with that Email.',
-        data: undefined,
-        error: true,
-      });
-    }
     const newFirebaseUser = await firebaseApp.auth().createUser({
       email: req.body.email,
       password: req.body.password,
