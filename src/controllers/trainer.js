@@ -3,6 +3,25 @@ const Trainer = require('../models/Trainer');
 
 const createTrainer = async (req, res) => {
   let firebaseUid;
+  const trainer = new Trainer({
+    firebaseUid,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    dni: req.body.dni,
+    phone: req.body.phone,
+    email: req.body.email,
+    salary: req.body.salary,
+    isActive: true,
+  });
+  const trainerExists = await Trainer.findOne(trainer.dni);
+  // eslint-disable-next-line no-underscore-dangle
+  if (trainerExists) {
+    return res.status(400).json({
+      message: 'There is another Trainer with that DNI.',
+      data: undefined,
+      error: true,
+    });
+  }
   try {
     const newFirebaseUser = await firebaseApp.auth().createUser({
       email: req.body.email,
@@ -11,17 +30,6 @@ const createTrainer = async (req, res) => {
     firebaseUid = newFirebaseUser.uid;
 
     await firebaseApp.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'TRAINER' });
-
-    const trainer = new Trainer({
-      firebaseUid,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      dni: req.body.dni,
-      phone: req.body.phone,
-      email: req.body.email,
-      salary: req.body.salary,
-      isActive: true,
-    });
 
     const trainerSaved = await trainer.save();
 
@@ -52,6 +60,7 @@ const getTrainers = (req, res) => {
     }));
 };
 
+// eslint-disable-next-line consistent-return
 const updateTrainer = async (req, res) => {
   const { id } = req.params;
   const toUpdate = {
@@ -63,6 +72,15 @@ const updateTrainer = async (req, res) => {
     isActive: req.body.isActive,
   };
 
+  const trainerExists = await Trainer.findOne(toUpdate.dni);
+  // eslint-disable-next-line no-underscore-dangle
+  if (trainerExists && trainerExists._id.toString() !== id) {
+    return res.status(400).json({
+      message: 'There is another Trainer with that DNI.',
+      data: undefined,
+      error: true,
+    });
+  }
   Trainer.findByIdAndUpdate(
     id,
     toUpdate,

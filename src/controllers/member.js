@@ -58,7 +58,14 @@ const createMember = async (req, res) => {
     membership,
     email,
   } = req.body;
-
+  const memberDNIExists = await Member.findOne({ dni });
+  if (memberDNIExists) {
+    return res.status(400).json({
+      message: 'There is another Member with that dni.',
+      data: undefined,
+      error: true,
+    });
+  }
   const newFirebaseUser = await firebaseApp.auth().createUser({
     email: req.body.email,
     password: req.body.password,
@@ -116,6 +123,15 @@ const updateMember = async (req, res) => {
     membership,
   } = req.body;
 
+  const memberExists = await Member.findOne({ dni });
+  // eslint-disable-next-line no-underscore-dangle
+  if (memberExists && memberExists._id.toString() !== id) {
+    return res.status(400).json({
+      message: 'There is another Member with that DNI.',
+      data: undefined,
+      error: true,
+    });
+  }
   Member.findByIdAndUpdate(
     id,
     {
