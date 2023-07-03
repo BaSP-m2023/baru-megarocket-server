@@ -15,13 +15,17 @@ const classSchema = new Schema({
   day: {
     type: String,
     required: true,
-    enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   },
   time: {
     type: String,
     required: true,
   },
   capacity: {
+    type: Number,
+    required: true,
+  },
+  available: {
     type: Number,
     required: true,
   },

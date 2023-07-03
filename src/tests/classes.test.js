@@ -14,6 +14,7 @@ const mockClass = {
   time: '20:00',
   trainer: '6480a02325ed27c6d94bb1b0',
   capacity: 3,
+  available: 3,
 };
 describe('GET all class /api/class', () => {
   test('should return status 200', async () => {
@@ -44,6 +45,7 @@ describe('Create class /api/class/', () => {
     expect(response.body.data.day).toBeDefined();
     expect(response.body.data.time).toBeDefined();
     expect(response.body.data.capacity).toBeDefined();
+    expect(response.body.data.available).toBeDefined();
   });
   test('should return status 404', async () => {
     const response = await request(app).post('/api/classs').send(mockClass);
