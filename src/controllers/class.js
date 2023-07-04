@@ -51,10 +51,10 @@ const getClassById = (req, res) => {
 
 const createClass = (req, res) => {
   const {
-    activity, trainer, day, time, capacity, available,
+    activity, trainer, day, time, capacity, subscribed,
   } = req.body;
   Class.create({
-    activity, trainer, day, time, capacity, available,
+    activity, trainer, day, time, capacity, subscribed,
   })
     .then((result) => Class.findById(result.id)
       .populate('activity trainer'))
@@ -80,7 +80,7 @@ const updateClass = (req, res) => {
     day,
     time,
     capacity,
-    available,
+    subscribed,
   } = req.body;
 
   Class.findByIdAndUpdate(
@@ -91,7 +91,7 @@ const updateClass = (req, res) => {
       day,
       time,
       capacity,
-      available,
+      subscribed,
     },
     { new: true },
   )

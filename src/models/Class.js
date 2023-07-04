@@ -25,7 +25,7 @@ const classSchema = new Schema({
     type: Number,
     required: true,
   },
-  available: {
+  subscribed: {
     type: Number,
     required: true,
   },

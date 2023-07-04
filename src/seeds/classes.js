@@ -49,7 +49,7 @@ export default [
     day: 'Monday',
     time: '10:00',
     capacity: 15,
-    avilable: 15,
+    subscribed: 0,
     deleted: false,
   },
 ];
