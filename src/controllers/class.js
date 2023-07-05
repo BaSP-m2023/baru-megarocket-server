@@ -51,10 +51,10 @@ const getClassById = (req, res) => {
 
 const createClass = (req, res) => {
   const {
-    activity, trainer, day, time, capacity, subscribed,
+    activity, trainer, day, time, capacity,
   } = req.body;
   Class.create({
-    activity, trainer, day, time, capacity, subscribed,
+    activity, trainer, day, time, capacity, subscribed: 0,
   })
     .then((result) => Class.findById(result.id)
       .populate('activity trainer'))
