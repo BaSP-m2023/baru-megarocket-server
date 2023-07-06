@@ -113,36 +113,30 @@ const getAdminById = (req, res) => {
 
 const deleteAdmin = async (req, res) => {
   const { id } = req.params;
-  try {
-    if (!mongoose.isValidObjectId(id)) {
-      return res.status(400).json({
-        message: 'Invalid id',
-        data: id,
-        error: true,
-      });
-    }
-    const adminToDelete = await Admin.findById(id);
 
-    if (!adminToDelete) {
+  try {
+    const result = await Admin.findByIdAndDelete(id);
+
+    if (!result) {
       return res.status(404).json({
-        message: 'Admin not found',
+        message: `Admin with id ${id} was not found`,
         data: undefined,
         error: true,
       });
     }
 
-    await firebaseApp.auth().deleteUser(adminToDelete.firebaseUid);
+    await firebaseApp.auth().deleteUser(result.firebaseUid);
 
-    const adminDeleted = await Admin.deleteOne({ id });
     return res.status(200).json({
       message: 'Admin deleted',
-      data: adminDeleted,
+      data: result,
       error: false,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: 'An error has ocurred',
-      error: error.message,
+    return res.status(400).json({
+      message: 'An error occurred',
+      data: undefined,
+      error,
     });
   }
 };
