@@ -22,7 +22,7 @@ export default [
         isActive: false,
       },
     day: 'Monday',
-    time: '19:10',
+    time: '19:00',
     capacity: 100000000000000,
     deleted: false,
   },
@@ -49,6 +49,7 @@ export default [
     day: 'Monday',
     time: '10:00',
     capacity: 15,
+    subscribed: 0,
     deleted: false,
   },
 ];
