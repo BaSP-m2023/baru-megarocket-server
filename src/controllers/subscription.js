@@ -30,23 +30,30 @@ const deleteSubs = (req, res) => {
     .catch((error) => res.status(400).json({ message: 'Invalid request: incorrect parameters provided!', error }));
 };
 
-const getAllSubs = (req, res) => {
-  Subscription.find()
-    .populate('classes')
-    .populate('members')
-    .then((subscriptions) => {
-      return res.status(200).json({
-        message: 'All subscriptions list',
-        data: subscriptions,
-        error: false,
-      });
+const getAllSubs = async (req, res) => {
+  try {
+    const response = await Subscription.find().populate({
+      path: 'classes',
+      populate: {
+        path: 'activity trainer',
+      },
     })
-    .catch((error) => {
-      return res.status(500).json({
-        message: 'Internal error',
-        error,
+      .populate({
+        path: 'members',
       });
+
+    return res.status(200).json({
+      message: 'Subscriptions list',
+      data: response,
+      error: false,
     });
+  } catch (error) {
+    return res.status(500).json({
+      error: true,
+      message: error.message,
+      data: undefined,
+    });
+  }
 };
 
 const getSubById = (req, res) => {
