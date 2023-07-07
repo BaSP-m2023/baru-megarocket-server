@@ -71,7 +71,6 @@ const updateTrainer = async (req, res) => {
     salary: req.body.salary,
     isActive: req.body.isActive,
   };
-  console.log(toUpdate);
   const trainerExists = await Trainer.findOne({ dni: toUpdate.dni });
   // eslint-disable-next-line no-underscore-dangle
   if (trainerExists && trainerExists._id.toString() !== id) {
