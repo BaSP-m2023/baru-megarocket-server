@@ -3,17 +3,7 @@ const Trainer = require('../models/Trainer');
 
 const createTrainer = async (req, res) => {
   let firebaseUid;
-  const trainer = new Trainer({
-    firebaseUid,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    dni: req.body.dni,
-    phone: req.body.phone,
-    email: req.body.email,
-    salary: req.body.salary,
-    isActive: true,
-  });
-  const trainerExists = await Trainer.findOne(trainer.dni);
+  const trainerExists = await Trainer.findOne({ dni: req.body.dni });
   // eslint-disable-next-line no-underscore-dangle
   if (trainerExists) {
     return res.status(400).json({
@@ -31,6 +21,16 @@ const createTrainer = async (req, res) => {
 
     await firebaseApp.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'TRAINER' });
 
+    const trainer = new Trainer({
+      firebaseUid,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      dni: req.body.dni,
+      phone: req.body.phone,
+      email: req.body.email,
+      salary: req.body.salary,
+      isActive: true,
+    });
     const trainerSaved = await trainer.save();
 
     return res.status(201).json({
@@ -71,8 +71,7 @@ const updateTrainer = async (req, res) => {
     salary: req.body.salary,
     isActive: req.body.isActive,
   };
-
-  const trainerExists = await Trainer.findOne(toUpdate.dni);
+  const trainerExists = await Trainer.findOne({ dni: toUpdate.dni });
   // eslint-disable-next-line no-underscore-dangle
   if (trainerExists && trainerExists._id.toString() !== id) {
     return res.status(400).json({
