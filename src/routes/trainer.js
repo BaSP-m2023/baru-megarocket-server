@@ -6,7 +6,8 @@ const trainerController = require('../controllers/trainer');
 
 const trainerValidation = require('../validations/trainer');
 
-trainerRouter.get('/', trainerController.getTrainers)
+trainerRouter
+  .get('/', trainerController.getTrainers)
   .post('/', trainerValidation.validateTrainerCreate, trainerController.createTrainer)
   .put('/:id', trainerValidation.validateTrainerUpdate, trainerController.updateTrainer)
   .delete('/:id', trainerController.deleteTrainer)
