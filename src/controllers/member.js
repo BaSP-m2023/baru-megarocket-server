@@ -59,9 +59,17 @@ const createMember = async (req, res) => {
     email,
   } = req.body;
   const memberDNIExists = await Member.findOne({ dni });
+  const memberEmailExists = await Member.findOne({ email });
   if (memberDNIExists) {
     return res.status(400).json({
       message: 'There is another Member with that dni.',
+      data: undefined,
+      error: true,
+    });
+  }
+  if (memberEmailExists) {
+    return res.status(400).json({
+      message: 'There is another Member with that email.',
       data: undefined,
       error: true,
     });
