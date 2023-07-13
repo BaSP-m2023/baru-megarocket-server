@@ -8,8 +8,6 @@ const validateCreation = (req, res, next) => {
     time: Joi.string().regex(/^([0-9]|[01]\d|2[0-3]):([00]\d)$/).required(),
     capacity: Joi.number().min(1).max(50).required()
       .integer(),
-    subscribed: Joi.number().min(0).max(50).integer(),
-
   });
 
   const validation = classValidation.validate(req.body);
@@ -62,7 +60,6 @@ const validateUpdate = (req, res, next) => {
     day: Joi.string().regex(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)$/),
     time: Joi.string().regex(/^([0-9]|[01]\d|2[0-3]):([00]\d)$/),
     capacity: Joi.number().min(1).max(50).integer(),
-    subscribed: Joi.number().min(0).max(50).integer(),
   });
 
   const validation = classValidation.validate(req.body);
