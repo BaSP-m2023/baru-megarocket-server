@@ -25,9 +25,5 @@ const classSchema = new Schema({
     type: Number,
     required: true,
   },
-  subscribed: {
-    type: Number,
-    required: true,
-  },
 });
 module.exports = mongoose.model('Class', classSchema);
