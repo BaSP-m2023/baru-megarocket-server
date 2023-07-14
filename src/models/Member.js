@@ -7,6 +7,7 @@ const memberSchema = new mongoose.Schema({
   },
   name: 'string',
   lastName: 'string',
+  avatar: 'string',
   dni: 'string',
   phone: 'string',
   email: 'string',

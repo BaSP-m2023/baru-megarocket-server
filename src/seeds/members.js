@@ -5,6 +5,7 @@ export default [
     _id: new mongoose.Types.ObjectId('646f10810596acb1db833e25'),
     name: 'Pablo',
     lastName: 'Morad',
+    avatar: 'astrocat',
     dni: 40120964,
     phone: 3416762323,
     email: 'moradpablo@hotmail.com',
