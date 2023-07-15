@@ -8,9 +8,12 @@ const validateCreation = (req, res, next) => {
         'string.pattern.base': 'The name must contains only letters.',
       })
       .required(),
-    description: Joi.string().min(20).max(100).pattern(/^[A-Za-z\s]+$/)
-      .message({
-        'string.pattern.base': 'The description must contains only letters.',
+    description: Joi.string()
+      .min(20)
+      .max(100)
+      .messages({
+        'string.min': 'Description should have a minimun of 20 characters',
+        'string.empty': 'Description is required',
       })
       .required(),
     isActive: Joi.boolean(),
@@ -32,9 +35,12 @@ const validateUpdateActivity = (req, res, next) => {
       .message({
         'string.pattern.base': 'The name must contains only letters.',
       }),
-    description: Joi.string().min(20).max(100).pattern(/^[A-Za-z\s]+$/)
-      .message({
-        'string.pattern.base': 'The description must contains only letters.',
+    description: Joi.string()
+      .min(20)
+      .max(100)
+      .messages({
+        'string.min': 'Description should have a minimun of 20 characters',
+        'string.empty': 'Description is required',
       }),
     isActive: Joi.boolean(),
     trainers: Joi.array().min(1),
