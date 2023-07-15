@@ -7,6 +7,7 @@ const validateMember = (req, res, next) => {
     lastName: Joi.string().pattern(/^[a-zA-Z]+$/).min(4).max(10)
       .required(),
     phone: Joi.string().min(10).required(),
+    avatar: Joi.string().min(3),
     dni: Joi.string().pattern(/^(?!^0)[0-9]{7,11}$/).required(),
     city: Joi.string().min(3).required(),
     dob: Joi.date().greater('1923-01-01').less('2005-01-01').required(),
@@ -30,6 +31,7 @@ const validateMemberUpdate = (req, res, next) => {
   const UpdatememberValidation = Joi.object({
     name: Joi.string().pattern(/^[a-zA-Z]+$/).min(4).max(10),
     lastName: Joi.string().pattern(/^[a-zA-Z]+$/).min(4).max(10),
+    avatar: Joi.string().min(3),
     phone: Joi.string(),
     dni: Joi.string().pattern(/^(?!^0)[0-9]{7,11}$/),
     city: Joi.string().min(3),

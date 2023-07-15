@@ -10,6 +10,7 @@ beforeAll(async () => {
 const mockMember = {
   name: 'Sully',
   lastName: 'Bernan',
+  avatar: 'astrocat',
   phone: '3416822457',
   dni: '40120120',
   city: 'baigorria',
