@@ -108,19 +108,18 @@ const deleteTrainer = (req, res) => {
   Trainer.findByIdAndDelete(req.params.id)
     .then((trainer) => {
       if (!trainer) {
-        res.status(404).json({
+        return res.status(404).json({
           message: 'Trainer not found',
           data: undefined,
           error: true,
         });
-      } else {
-        firebaseApp.auth().deleteUser(trainer.firebaseUid);
-        res.status(200).json({
-          message: 'Trainer deleted',
-          data: trainer,
-          error: false,
-        });
       }
+      firebaseApp.auth().deleteUser(trainer.firebaseUid);
+      return res.status(200).json({
+        message: 'Trainer deleted',
+        data: trainer,
+        error: false,
+      });
     })
     .catch((error) => res.status(400).json({
       message: 'An error ocurred!',
